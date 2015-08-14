@@ -1,7 +1,24 @@
 #include "common.hpp"
 using namespace std;
+/* test vector
+std::vector<vector<int> > newVector(){
+  std::vector<vector<int> > myvector;
+  myvector.resize(2);
+  for(int i=1;i<=10;i++) myvector[0].push_back(i);
+  for(int j=3;j<=12;j++) myvector[0].push_back(j);
+  return myvector;
+}*/
+int findPos(std::vector<string> inputVector, string a){
+  for(int i=0; i<=inputVector.size(); i++){
+    if(inputVector[i] == a) return i;
+  }
+  return 20;
+}
 
-string readCSVFile( const char * fileName){
+//string readCSVFile( const char * fileName){
+std::vector<vector<string> > readCSVFile( const char * fileName){
+  std::vector<vector<string> > myvector;
+  myvector.resize(2);
   ifstream file;
   stringstream ss;
   string str;
@@ -50,7 +67,8 @@ string readCSVFile( const char * fileName){
 
   commaPos = line1.find(delimiter);
   lineID = line1.substr(0, commaPos);
-  cout << lineID << endl;
+  //cout << lineID << endl;
+  myvector[0].push_back(lineID);
 
   while(breakPos > 2){
   line1 = line1.erase(0, commaPos + delimiter.length());
@@ -59,13 +77,15 @@ string readCSVFile( const char * fileName){
   //cout << std::string::npos << endl;
   commaPos = line1.find(delimiter);
   lineID = line1.substr(0, commaPos);
-  cout << lineID << endl;
+  //cout << lineID << endl;
+  myvector[0].push_back(lineID);
 }
 
   breakPos = line2.find(linebreak);
   commaPos = line2.find(delimiter);
   lineID = line2.substr(0, commaPos);
-  cout << lineID << endl;
+  //cout << lineID << endl;
+  myvector[1].push_back(lineID);
 
   while(breakPos > 2){
   line2 = line2.erase(0, commaPos + delimiter.length());
@@ -74,10 +94,11 @@ string readCSVFile( const char * fileName){
   //cout << std::string::npos << endl;
   commaPos = line2.find(delimiter);
   lineID = line2.substr(0, commaPos);
-  cout << lineID << endl;
+  //cout << lineID << endl;
+  myvector[1].push_back(lineID);
   }
 
-  return str;
+  return myvector;
 }
 
 int main(int argc, char *argv[]) {
@@ -131,7 +152,24 @@ int main(int argc, char *argv[]) {
         cout << id << ", " << name << ", " << money << endl;
     }
     std::cout << "Hello, World!\n";*/
-    std::cout << readCSVFile(inputFile);
+
+    //std::vector<vector<int> > my = newVector();
+    std::vector<vector<string> > my = readCSVFile(inputFile);
+    //for(int i=1;i<=5;i++) myvector.push_back(i);
+
+    for(std::vector<string>::iterator it = my[0].begin();it != my[0].end();it++){std::cout << " " << *it;}
+    for(std::vector<string>::iterator it = my[1].begin();it != my[1].end();it++){std::cout << " " << *it;}
+    std::cout << endl;
+    cout << my[1][1];
+    cout << endl;
+    cout << (my[1][1] == "8");
+    cout << endl;
+    cout << my[0].size();
+    cout << endl;
+    string b = "3";
+    cout << findPos(my[0],b);
+    cout << endl;
+    //std::cout << readCSVFile(inputFile);
     //std::cout << name;
     return 0;
 }
