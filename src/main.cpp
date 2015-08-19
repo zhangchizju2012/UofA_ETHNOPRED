@@ -284,9 +284,9 @@ void DecisionTree::RemoveNode(TreeNode *node)
 double DecisionTree::findPosReturnValue(std::vector<vector<string> > inputVector, string a){
 	for (int i = 0; i <= (inputVector[0].size()-1); i++){
 		if (inputVector[0][i] == a){
-			if (inputVector[1][i] == "AA") return 1;
-			else if (inputVector[1][i] == "Aa") return 2;
-			else if (inputVector[1][i] == "aa") return 3;
+			if (inputVector[1][i] == "A_A") return 1;
+			else if (inputVector[1][i] == "A_B") return 2;
+			else if (inputVector[1][i] == "B_B") return 3;
 			else return 0;
 		}
 
@@ -364,9 +364,38 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	line2 = str.substr(0, breakPos + linebreak.length());
 	//std::cout << line1;
 	//std::cout << line2;
+	std::vector<size_t>posvector1;
+	posvector1.push_back(-1);
+	std::vector<size_t>posvector2;
+	posvector2.push_back(-1);
+	for (size_t i = 0; i < line1.length(); ++i)
+	{
+		//std::cout << str.at(i);
+		if (line1.at(i) == ','){
+				posvector1.push_back(i);
+			}
+	}
+	posvector1.push_back(line1.find(linebreak)-linebreak.length());
+	for (int j = 0; j < (posvector1.size()-2); j++){
+		myvector[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] -1));
+	}
+
+	for (size_t i = 0; i < line2.length(); ++i)
+	{
+		//std::cout << str.at(i);
+		if (line2.at(i) == ','){
+			posvector2.push_back(i);
+		}
+	}
+	posvector2.push_back(line2.find(linebreak) - linebreak.length());
+	for (int j = 0; j < (posvector2.size() - 2); j++){
+		myvector[1].push_back(line2.substr(posvector2[j] + delimiter.length(), posvector2[j + 1] - posvector2[j] - 1));
+	}
+	/*
 	breakPos = line1.find(linebreak);
 	//cout << breakPos << endl;
 	//cout << std::string::npos << endl;
+
 	size_t commaPos;
 
 	commaPos = line1.find(delimiter);
@@ -393,7 +422,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	//cout << lineID << endl;
 	myvector[1].push_back(lineID);
 
-	while (breakPos > 4){
+	while (breakPos > 5){
 		line2 = line2.erase(0, commaPos + delimiter.length());
 		breakPos = line2.find(linebreak);
 		//cout << breakPos << endl;
@@ -405,7 +434,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 		//cout << lineID << endl;
 		myvector[1].push_back(lineID);
 	}
-
+*/
 	return myvector;
 }
 
@@ -509,18 +538,19 @@ int main(int argc, char *argv[]) {
     //std::cout << readCSVFile(inputFile);
     //std::cout << name;
 		*/
+
 		std::vector<string> myresult;
 	//create he new decision tree object
 	DecisionTree* newTree1 = new DecisionTree();
 	//add the required root node
-	newTree1->CreateRootNode("3", "Q1", 2.5);
+	newTree1->CreateRootNode("rs12042782", "Q1", 2.5);
 	//add subsequent nodes based on problem definition
-	newTree1->AddYesNode("3", "2", "Q2", 1.5);
-	newTree1->AddNoNode("3", "4", "Q3", 2.5);
-	newTree1->AddYesNode("2", "56", "CHN", 2.5);
-	newTree1->AddNoNode("2", "67", "JPN", 2.5);
-	newTree1->AddYesNode("4", "78", "EUR", 2.5);
-	newTree1->AddNoNode("4", "89", "AMR", 2.5);
+	newTree1->AddYesNode("rs12042782", "rs10799241", "Q2", 1.5);
+	newTree1->AddNoNode("rs12042782", "rs3766959", "Q3", 2.5);
+	newTree1->AddYesNode("rs10799241", "x", "CHN", 2.5);
+	newTree1->AddNoNode("rs10799241", "x", "JPN", 2.5);
+	newTree1->AddYesNode("rs3766959", "x", "EUR", 2.5);
+	newTree1->AddNoNode("rs3766959", "x", "AMR", 2.5);
 	//output the created tree
 	newTree1->Output();
 	//query the tree
@@ -532,16 +562,16 @@ int main(int argc, char *argv[]) {
 
 	DecisionTree* newTree2 = new DecisionTree();
 	//add the required root node
-	newTree2->CreateRootNode("54", "Q1", 2.5);
+	newTree2->CreateRootNode("rs414909", "Q1", 2.5);
 	//add subsequent nodes based on problem definition
-	newTree2->AddYesNode("54", "11", "Q2", 1.5);
-	newTree2->AddNoNode("54", "9", "Q3", 2.5);
-	newTree2->AddYesNode("11", "56", "CHN", 2.5);
-	newTree2->AddNoNode("11", "1", "Q4", 1.5);
-	newTree2->AddYesNode("9", "78", "EUR", 2.5);
-	newTree2->AddNoNode("9", "89", "AMR", 2.5);
-	newTree2->AddYesNode("1", "79", "EUR", 2.5);
-	newTree2->AddNoNode("1", "86", "JPN", 2.5);
+	newTree2->AddYesNode("rs414909", "rs397559", "Q2", 1.5);
+	newTree2->AddNoNode("rs414909", "rs10752732", "Q3", 2.5);
+	newTree2->AddYesNode("rs397559", "x", "CHN", 2.5);
+	newTree2->AddNoNode("rs397559", "rs6695834", "Q4", 1.5);
+	newTree2->AddYesNode("rs10752732", "x", "EUR", 2.5);
+	newTree2->AddNoNode("rs10752732", "x", "AMR", 2.5);
+	newTree2->AddYesNode("rs6695834", "x", "EUR", 2.5);
+	newTree2->AddNoNode("rs6695834", "x", "JPN", 2.5);
 	//output the created tree
 	newTree2->Output();
 	//query the tree

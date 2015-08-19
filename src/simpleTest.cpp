@@ -18,7 +18,10 @@ int main(int argc, char* argv[])
 	string str = "rs801";
 	size_t breakPos = str.find(rsbreak);
 	str = str.erase(0, breakPos + rsbreak.length());
+	double a = stringToNum<int>(str);
+	double b = a + 1;
 	cout << stringToNum<int>(str) << endl;
+	cout << b << endl;
 
 	system("pause");
 	return 0;
