@@ -362,8 +362,8 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	str = str.erase(0, breakPos + linebreak.length());
 	breakPos = str.find(linebreak);
 	line2 = str.substr(0, breakPos + linebreak.length());
-	std::cout << line1;
-	std::cout << line2;
+	//std::cout << line1;
+	//std::cout << line2;
 	breakPos = line1.find(linebreak);
 	//cout << breakPos << endl;
 	//cout << std::string::npos << endl;
