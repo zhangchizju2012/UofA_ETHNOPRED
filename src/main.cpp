@@ -1240,7 +1240,7 @@ int main(int argc, char *argv[]) {
 	myresult.push_back(result30);
 
 	calNumReturnResult(myresult);
-
+//took about 15 seconds
 	system("pause");
 	return 0;
 
