@@ -832,14 +832,18 @@ int main(int argc, char *argv[]) {
 
 	DecisionTree* newTree14 = new DecisionTree();
 	//add the required root node
-	newTree14->CreateRootNode("rs2675345", "Q", 1.5);
+	newTree14->CreateRootNode("rs590616", "Q", 1.5);
 	//add subsequent nodes based on problem definition
-	newTree14->AddYesNode("rs2675345", "rs9931378", "Q", 2.5);
-	newTree14->AddNoNode("rs2675345", "rs6546753", "Q", 2.5);
-	newTree14->AddYesNode("rs9931378", "x", "1", 5);
-	newTree14->AddNoNode("rs9931378", "x", "3", 5);
-	newTree14->AddYesNode("rs6546753", "x", "3", 5);
-	newTree14->AddNoNode("rs6546753", "x", "2", 5);
+	newTree14->AddYesNode("rs590616", "rs2605419", "Q", 2.5);
+	newTree14->AddNoNode("rs590616", "rs12895262", "Q", 1.5);
+	newTree14->AddYesNode("rs2605419", "x", "3", 5);
+	newTree14->AddNoNode("rs2605419", "x", "1", 5);
+	newTree14->AddYesNode("rs12895262", "x", "1", 5);
+	newTree14->AddNoNode("rs12895262", "rs1909338", "Q", 2.5);
+	newTree14->AddYesNode("rs1909338", "rs10758940", "Q", 1.5);
+	newTree14->AddNoNode("rs1909338", "x", "3", 5);
+	newTree14->AddYesNode("rs10758940", "x", "1", 5);
+	newTree14->AddNoNode("rs10758940", "x", "2", 5);
 	//output the created tree
 	newTree14->Output();
 	//query the tree
@@ -848,6 +852,248 @@ int main(int argc, char *argv[]) {
 	cout << result14 << endl;
 	delete newTree14;
 	myresult.push_back(result14);
+
+	DecisionTree* newTree15 = new DecisionTree();
+	//add the required root node
+	newTree15->CreateRootNode("rs533571", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree15->AddYesNode("rs533571", "rs6468344", "Q", 2.5);
+	newTree15->AddNoNode("rs533571", "rs4577845", "Q", 2.5);
+	newTree15->AddYesNode("rs6468344", "rs11098948", "Q", 1.5);
+	newTree15->AddNoNode("rs6468344", "rs2029623", "Q", 1.5);
+	newTree15->AddYesNode("rs4577845", "x", "3", 5);
+	newTree15->AddNoNode("rs4577845", "x", "1", 5);
+	newTree15->AddYesNode("rs11098948", "x", "3", 5);
+	newTree15->AddNoNode("rs11098948", "x", "2", 5);
+	newTree15->AddYesNode("rs2029623", "x", "2", 5);
+	newTree15->AddNoNode("rs2029623", "x", "1", 5);
+	//output the created tree
+	newTree15->Output();
+	//query the tree
+	string result15;
+	result15 = newTree15->Query(my);
+	cout << result15 << endl;
+	delete newTree15;
+	myresult.push_back(result15);
+
+	DecisionTree* newTree16 = new DecisionTree();
+	//add the required root node
+	newTree16->CreateRootNode("rs260709", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree16->AddYesNode("rs260709", "rs11691947", "Q", 2.5);
+	newTree16->AddNoNode("rs260709", "rs1437724", "Q", 1.5);
+	newTree16->AddYesNode("rs11691947", "rs7158108", "3", 2.5);
+	newTree16->AddNoNode("rs11691947", "rs4705115", "1", 1.5);
+	newTree16->AddYesNode("rs1437724", "x", "2", 5);
+	newTree16->AddNoNode("rs1437724", "x", "3", 5);
+	newTree16->AddYesNode("rs7158108", "x", "1", 5);
+	newTree16->AddNoNode("rs7158108", "x", "2", 5);
+	newTree16->AddYesNode("rs4705115", "x", "3", 5);
+	newTree16->AddNoNode("rs4705115", "rs2214965", "Q", 1.5);
+	newTree16->AddYesNode("rs2214965", "x", "1", 5);
+	newTree16->AddNoNode("rs2214965", "x", "2", 5);
+	//output the created tree
+	newTree16->Output();
+	//query the tree
+	string result16;
+	result16 = newTree16->Query(my);
+	cout << result16 << endl;
+	delete newTree16;
+	myresult.push_back(result16);
+
+	DecisionTree* newTree17 = new DecisionTree();
+	//add the required root node
+	newTree17->CreateRootNode("rs6534999", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree17->AddYesNode("rs6534999", "rs7689609", "Q", 2.5);
+	newTree17->AddNoNode("rs6534999", "rs12542990", "Q", 2.5);
+	newTree17->AddYesNode("rs7689609", "x", "1", 5);
+	newTree17->AddNoNode("rs7689609", "rs1450428", "Q", 1.5);
+	newTree17->AddYesNode("rs12542990", "rs7551132", "Q", 1.5);
+	newTree17->AddNoNode("rs12542990", "x", "3", 5);
+	newTree17->AddYesNode("rs1450428", "x", "3", 5);
+	newTree17->AddNoNode("rs1450428", "x", "2", 5);
+	newTree17->AddYesNode("rs7551132", "x", "1", 5);
+	newTree17->AddNoNode("rs7551132", "x", "2", 5);
+	//output the created tree
+	newTree17->Output();
+	//query the tree
+	string result17;
+	result17 = newTree17->Query(my);
+	cout << result17 << endl;
+	delete newTree17;
+	myresult.push_back(result17);
+
+	DecisionTree* newTree18 = new DecisionTree();
+	//add the required root node
+	newTree18->CreateRootNode("rs4832501", "Q", 1.5);
+	//add subsequent nodes based on problem definition
+	newTree18->AddYesNode("rs4832501", "rs2200402", "Q", 2.5);
+	newTree18->AddNoNode("rs4832501", "rs931410", "Q", 1.5);
+	newTree18->AddYesNode("rs2200402", "rs2546001", "Q", 1.5);
+	newTree18->AddNoNode("rs2200402", "rs8091955", "Q", 2.5);
+	newTree18->AddYesNode("rs931410", "rs1099968", "Q", 2.5);
+	newTree18->AddNoNode("rs931410", "x", "1", 5);
+	newTree18->AddYesNode("rs2546001", "x", "2", 5);
+	newTree18->AddNoNode("rs2546001", "x", "1", 5);
+	newTree18->AddYesNode("rs8091955", "x", "3", 5);
+	newTree18->AddNoNode("rs8091955", "x", "2", 5);
+	newTree18->AddYesNode("rs1099968", "rs7921545", "Q", 2.5);
+	newTree18->AddNoNode("rs1099968", "x", "1", 5);
+	newTree18->AddYesNode("rs7921545", "x", "2", 5);
+	newTree18->AddNoNode("rs7921545", "x", "3", 5);
+	//output the created tree
+	newTree18->Output();
+	//query the tree
+	string result18;
+	result18 = newTree18->Query(my);
+	cout << result18 << endl;
+	delete newTree18;
+	myresult.push_back(result18);
+
+	DecisionTree* newTree19 = new DecisionTree();
+	//add the required root node
+	newTree19->CreateRootNode("rs1437787", "Q", 1.5);
+	//add subsequent nodes based on problem definition
+	newTree19->AddYesNode("rs1437787", "rs11170991", "Q", 2.5);
+	newTree19->AddNoNode("rs1437787", "rs1805972", "Q", 1.5);
+	newTree19->AddYesNode("rs11170991", "x", "3", 5);
+	newTree19->AddNoNode("rs11170991", "x", "1", 1.5);
+	newTree19->AddYesNode("rs1805972", "rs2422098", "Q", 1.5);
+	newTree19->AddNoNode("rs1805972", "rs9821525", "Q", 1.5);
+	newTree19->AddYesNode("rs2422098", "x", "2", 5);
+	newTree19->AddNoNode("rs2422098", "x", "1", 5);
+	newTree19->AddYesNode("rs9821525", "x", "3", 5);
+	newTree19->AddNoNode("rs9821525", "rs12511245", "Q", 2.5);
+	newTree19->AddYesNode("rs12511245", "x", "2", 5);
+	newTree19->AddNoNode("rs12511245", "x", "1", 5);
+	//output the created tree
+	newTree19->Output();
+	//query the tree
+	string result19;
+	result19 = newTree19->Query(my);
+	cout << result19 << endl;
+	delete newTree19;
+	myresult.push_back(result19);
+
+	DecisionTree* newTree20 = new DecisionTree();
+	//add the required root node
+	newTree20->CreateRootNode("rs4749305", "Q", 1.5);
+	//add subsequent nodes based on problem definition
+	newTree20->AddYesNode("rs4749305", "rs2631899", "Q", 2.5);
+	newTree20->AddNoNode("rs4749305", "rs7956796", "Q", 2.5);
+	newTree20->AddYesNode("rs2631899", "x", "3", 5);
+	newTree20->AddNoNode("rs2631899", "x", "2", 5);
+	newTree20->AddYesNode("rs7956796", "x", "1", 5);
+	newTree20->AddNoNode("rs7956796", "rs4877791", "Q", 2.5);
+	newTree20->AddYesNode("rs4877791", "rs1932366", "Q", 1.5);
+	newTree20->AddNoNode("rs4877791", "x", "3", 5);
+	newTree20->AddYesNode("rs1932366", "x", "1", 5);
+	newTree20->AddNoNode("rs1932366", "x", "2", 5);
+	//output the created tree
+	newTree20->Output();
+	//query the tree
+	string result20;
+	result20 = newTree20->Query(my);
+	cout << result20 << endl;
+	delete newTree20;
+	myresult.push_back(result20);
+
+	DecisionTree* newTree21 = new DecisionTree();
+	//add the required root node
+	newTree21->CreateRootNode("rs542405", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree21->AddYesNode("rs542405", "rs6977118", "Q", 1.5);
+	newTree21->AddNoNode("rs542405", "rs2305858", "Q", 2.5);
+	newTree21->AddYesNode("rs6977118", "rs11563620", "Q", 1.5);
+	newTree21->AddNoNode("rs6977118", "x", "3", 5);
+	newTree21->AddYesNode("rs2305858", "rs2040704", "Q", 1.5);
+	newTree21->AddNoNode("rs2305858", "x", "1", 5);
+	newTree21->AddYesNode("rs11563620", "x", "2", 5);
+	newTree21->AddNoNode("rs11563620", "x", "1", 5);
+	newTree21->AddYesNode("rs2040704", "x", "3", 5);
+	newTree21->AddNoNode("rs2040704", "x", "2", 5);
+	//output the created tree
+	newTree21->Output();
+	//query the tree
+	string result21;
+	result21 = newTree21->Query(my);
+	cout << result21 << endl;
+	delete newTree21;
+	myresult.push_back(result21);
+
+	DecisionTree* newTree22 = new DecisionTree();
+	//add the required root node
+	newTree22->CreateRootNode("rs738276", "Q", 1.5);
+	//add subsequent nodes based on problem definition
+	newTree22->AddYesNode("rs738276", "rs4615248", "Q", 2.5);
+	newTree22->AddNoNode("rs738276", "rs7983489", "Q", 1.5);
+	newTree22->AddYesNode("rs4615248", "rs12681671", "Q", 1.5);
+	newTree22->AddNoNode("rs4615248", "x", "3", 5);
+	newTree22->AddYesNode("rs7983489", "rs6035761", "Q", 1.5);
+	newTree22->AddNoNode("rs7983489", "rs2324520", "Q", 2.5);
+	newTree22->AddYesNode("rs12681671", "x", "2", 5);
+	newTree22->AddNoNode("rs12681671", "x", "1", 5);
+	newTree22->AddYesNode("rs6035761", "x", "2", 5);
+	newTree22->AddNoNode("rs6035761", "x", "1", 5);
+	newTree22->AddYesNode("rs2324520", "rs3181372", "Q", 2.5);
+	newTree22->AddNoNode("rs2324520", "x", "3", 5);
+	newTree22->AddYesNode("rs3181372", "x", "2", 5);
+	newTree22->AddNoNode("rs3181372", "x", "1", 5);
+	//output the created tree
+	newTree22->Output();
+	//query the tree
+	string result22;
+	result22 = newTree22->Query(my);
+	cout << result22 << endl;
+	delete newTree22;
+	myresult.push_back(result22);
+
+	DecisionTree* newTree23 = new DecisionTree();
+	//add the required root node
+	newTree23->CreateRootNode("rs6534999", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree23->AddYesNode("rs6534999", "rs7689609", "Q", 2.5);
+	newTree23->AddNoNode("rs6534999", "rs12542990", "Q", 2.5);
+	newTree23->AddYesNode("rs7689609", "x", "1", 5);
+	newTree23->AddNoNode("rs7689609", "rs1450428", "Q", 1.5);
+	newTree23->AddYesNode("rs12542990", "rs7551132", "Q", 1.5);
+	newTree23->AddNoNode("rs12542990", "x", "3", 5);
+	newTree23->AddYesNode("rs1450428", "x", "3", 5);
+	newTree23->AddNoNode("rs1450428", "x", "2", 5);
+	newTree23->AddYesNode("rs7551132", "x", "1", 5);
+	newTree23->AddNoNode("rs7551132", "x", "2", 5);
+	//output the created tree
+	newTree23->Output();
+	//query the tree
+	string result23;
+	result23 = newTree23->Query(my);
+	cout << result23 << endl;
+	delete newTree23;
+	myresult.push_back(result23);
+
+	DecisionTree* newTree24 = new DecisionTree();
+	//add the required root node
+	newTree24->CreateRootNode("rs6534999", "Q", 2.5);
+	//add subsequent nodes based on problem definition
+	newTree24->AddYesNode("rs6534999", "rs7689609", "Q", 2.5);
+	newTree24->AddNoNode("rs6534999", "rs12542990", "Q", 2.5);
+	newTree24->AddYesNode("rs7689609", "x", "1", 5);
+	newTree24->AddNoNode("rs7689609", "rs1450428", "Q", 1.5);
+	newTree24->AddYesNode("rs12542990", "rs7551132", "Q", 1.5);
+	newTree24->AddNoNode("rs12542990", "x", "3", 5);
+	newTree24->AddYesNode("rs1450428", "x", "3", 5);
+	newTree24->AddNoNode("rs1450428", "x", "2", 5);
+	newTree24->AddYesNode("rs7551132", "x", "1", 5);
+	newTree24->AddNoNode("rs7551132", "x", "2", 5);
+	//output the created tree
+	newTree24->Output();
+	//query the tree
+	string result24;
+	result24 = newTree24->Query(my);
+	cout << result24 << endl;
+	delete newTree24;
+	myresult.push_back(result24);
 
 	calNumReturnResult(myresult);
 
