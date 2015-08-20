@@ -445,9 +445,9 @@ void calNumReturnResult(vector<string> result){
 	int numJPN = 0;
 	int numNoValue = 0;
 	for (int i = 0; i <= (result.size() - 1); i++){
-		if (result[i] == "EUR"){ numEUR++; }
-		else if (result[i] == "CHN"){ numCHN++; }
-		else if (result[i] == "AMR"){ numAMR++; }
+		if (result[i] == "1"){ numEUR++; }
+		else if (result[i] == "2"){ numCHN++; }
+		else if (result[i] == "3"){ numAMR++; }
 		else if (result[i] == "JPN"){ numJPN++; }
 		else if (result[i] == "No Value"){ numNoValue++; }
 	}
@@ -543,14 +543,14 @@ int main(int argc, char *argv[]) {
 	//create he new decision tree object
 	DecisionTree* newTree1 = new DecisionTree();
 	//add the required root node
-	newTree1->CreateRootNode("rs12042782", "Q1", 2.5);
+	newTree1->CreateRootNode("rs6437783", "Q", 1.5);
 	//add subsequent nodes based on problem definition
-	newTree1->AddYesNode("rs12042782", "rs10799241", "Q2", 1.5);
-	newTree1->AddNoNode("rs12042782", "rs3766959", "Q3", 2.5);
-	newTree1->AddYesNode("rs10799241", "x", "CHN", 2.5);
-	newTree1->AddNoNode("rs10799241", "x", "JPN", 2.5);
-	newTree1->AddYesNode("rs3766959", "x", "EUR", 2.5);
-	newTree1->AddNoNode("rs3766959", "x", "AMR", 2.5);
+	newTree1->AddYesNode("rs6437783", "rs4835141", "Q", 1.5);
+	newTree1->AddNoNode("rs6437783", "rs735480", "Q", 1.5);
+	newTree1->AddYesNode("rs4835141", "x", "2", 5);
+	newTree1->AddNoNode("rs4835141", "x", "3", 5);
+	newTree1->AddYesNode("rs735480", "x", "3", 5);
+	newTree1->AddNoNode("rs735480", "x", "1", 5);
 	//output the created tree
 	newTree1->Output();
 	//query the tree
@@ -562,16 +562,16 @@ int main(int argc, char *argv[]) {
 
 	DecisionTree* newTree2 = new DecisionTree();
 	//add the required root node
-	newTree2->CreateRootNode("rs414909", "Q1", 2.5);
+	newTree2->CreateRootNode("rs35389", "Q", 2.5);
 	//add subsequent nodes based on problem definition
-	newTree2->AddYesNode("rs414909", "rs397559", "Q2", 1.5);
-	newTree2->AddNoNode("rs414909", "rs10752732", "Q3", 2.5);
-	newTree2->AddYesNode("rs397559", "x", "CHN", 2.5);
-	newTree2->AddNoNode("rs397559", "rs6695834", "Q4", 1.5);
-	newTree2->AddYesNode("rs10752732", "x", "EUR", 2.5);
-	newTree2->AddNoNode("rs10752732", "x", "AMR", 2.5);
-	newTree2->AddYesNode("rs6695834", "x", "EUR", 2.5);
-	newTree2->AddNoNode("rs6695834", "x", "JPN", 2.5);
+	newTree2->AddYesNode("rs35389", "rs4787645", "Q", 1.5);
+	newTree2->AddNoNode("rs35389", "rs1726254", "Q", 2.5);
+	newTree2->AddYesNode("rs4787645", "rs4847428", "Q", 1.5);
+	newTree2->AddNoNode("rs4787645", "x", "3", 5);
+	newTree2->AddYesNode("rs1726254", "x", "1", 5);
+	newTree2->AddNoNode("rs1726254", "x", "2", 5);
+	newTree2->AddYesNode("rs4847428", "x", "1", 5);
+	newTree2->AddNoNode("rs4847428", "x", "2", 5);
 	//output the created tree
 	newTree2->Output();
 	//query the tree
@@ -583,16 +583,14 @@ int main(int argc, char *argv[]) {
 
 	DecisionTree* newTree3 = new DecisionTree();
 	//add the required root node
-	newTree3->CreateRootNode("89", "Q1", 2.5);
+	newTree3->CreateRootNode("rs1986420", "Q", 2.5);
 	//add subsequent nodes based on problem definition
-	newTree3->AddYesNode("89", "11", "Q2", 1.5);
-	newTree3->AddNoNode("89", "9", "Q3", 2.5);
-	newTree3->AddYesNode("11", "56", "CHN", 2.5);
-	newTree3->AddNoNode("11", "5", "Q4", 1.5);
-	newTree3->AddYesNode("9", "78", "EUR", 2.5);
-	newTree3->AddNoNode("9", "88", "AMR", 2.5);
-	newTree3->AddYesNode("5", "79", "EUR", 2.5);
-	newTree3->AddNoNode("5", "86", "JPN", 2.5);
+	newTree3->AddYesNode("rs1986420", "rs12135904", "Q", 2.5);
+	newTree3->AddNoNode("rs1986420", "x", "1", 5);
+	newTree3->AddYesNode("rs12135904", "rs1679012", "CHN", 1.5);
+	newTree3->AddNoNode("rs12135904", "x", "3", 5);
+	newTree3->AddYesNode("rs1679012", "x", "2", 5);
+	newTree3->AddNoNode("rs1679012", "x", "1", 5);
 	//output the created tree
 	newTree3->Output();
 	//query the tree
@@ -604,18 +602,14 @@ int main(int argc, char *argv[]) {
 
 	DecisionTree* newTree4 = new DecisionTree();
 	//add the required root node
-	newTree4->CreateRootNode("155329", "Q1", 2.5);
+	newTree4->CreateRootNode("rs2675345", "Q", 1.5);
 	//add subsequent nodes based on problem definition
-	newTree4->AddYesNode("155329", "12783", "Q2", 1.5);
-	newTree4->AddNoNode("155329", "37720", "Q3", 2.5);
-	newTree4->AddYesNode("12783", "392", "CHN", 1.5);
-	newTree4->AddNoNode("12783", "243", "Q4", 1.5);
-	newTree4->AddYesNode("392", "x", "EUR", 5);
-	newTree4->AddNoNode("392", "x", "AMR", 5);
-	newTree4->AddYesNode("243", "x", "EUR", 5);
-	newTree4->AddNoNode("243", "x", "JPN", 5);
-	newTree4->AddYesNode("37720", "x", "JPN", 5);
-	newTree4->AddNoNode("37720", "x", "CHN", 5);
+	newTree4->AddYesNode("rs2675345", "rs9931378", "Q", 2.5);
+	newTree4->AddNoNode("rs2675345", "rs6546753", "Q", 2.5);
+	newTree4->AddYesNode("rs9931378", "x", "1", 5);
+	newTree4->AddNoNode("rs9931378", "x", "3", 5);
+	newTree4->AddYesNode("rs6546753", "x", "3", 5);
+	newTree4->AddNoNode("rs6546753", "x", "2", 5);
 	//output the created tree
 	newTree4->Output();
 	//query the tree
