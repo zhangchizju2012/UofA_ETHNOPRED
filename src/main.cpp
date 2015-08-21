@@ -405,9 +405,10 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	}
 	posvector1.push_back(line1.find(linebreak)-linebreak.length());
 	for (int j = 0; j < (posvector1.size()-2); j++){
-		myvectorinitial[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
+		//myvectorinitial[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
 		if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1))){
 			dataposvector.push_back(j);
+			myvector[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
 		}
 	}
 
@@ -423,7 +424,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 		myvectorinitial[1].push_back(line2.substr(posvector2[j] + delimiter.length(), posvector2[j + 1] - posvector2[j] - 1));
 	}
 	for (int k = 0; k <= dataposvector.size() - 1; k++){
-		myvector[0].push_back(myvectorinitial[0][dataposvector[k]]);
+		//myvector[0].push_back(myvectorinitial[0][dataposvector[k]]);
 		myvector[1].push_back(myvectorinitial[1][dataposvector[k]]);
 	}
 	/*
