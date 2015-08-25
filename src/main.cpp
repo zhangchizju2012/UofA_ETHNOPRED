@@ -315,6 +315,15 @@ int findPosReturnValue(std::vector<vector<string> > inputVector, string a){
   //return 20;
 }
 */
+template <class Type>
+Type stringToNum(const string& str)
+{
+	istringstream iss(str);
+	Type num;
+	iss >> num;
+	return num;
+}
+
 bool inTheTreeOrNot(vector<string> treevector, string a){
 	for (int i = 0; i <= (treevector.size() - 1); i++){
 		if (treevector[i] == a){
@@ -406,7 +415,10 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	posvector1.push_back(line1.find(linebreak)-linebreak.length());
 	for (int j = 0; j < (posvector1.size()-2); j++){
 		//myvectorinitial[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
-		if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1))){
+		//if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1))){
+		std::vector<string>::iterator it;
+	  it = find (treevector.begin(), treevector.end(), (line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1)));
+		if (it != treevector.end()){
 			dataposvector.push_back(j);
 			myvector[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
 		}
@@ -576,6 +588,86 @@ int main(int argc, char *argv[]) {
 		*/
 
 		std::vector<string> myresult;
+
+		string treeWordBreak = ",";
+	  string treeLineBreak = "\n";
+	  string treeNodeBreak = "_";
+	  string treeInfo = "Create_rs6437783_Q_1.5,Yes_rs6437783_rs4835141_Q_1.5,No_rs6437783_rs735480_Q_1.5,Yes_rs4835141_x_2_5,No_rs4835141_x_3_5,Yes_rs735480_x_3_5,No_rs735480_x_1_5,\nCreate_rs35389_Q_2.5,Yes_rs35389_rs4787645_Q_1.5,No_rs35389_rs1726254_Q_2.5,Yes_rs4787645_rs4847428_Q_1.5,No_rs4787645_x_3_5,Yes_rs1726254_x_1_5,No_rs1726254_x_2_5,Yes_rs4847428_x_1_5,No_rs4847428_x_2_5,\n";
+
+	  string treeLineInfo;
+	  string treeWordInfo;
+	  std::vector<string> treeNodeInfo;
+	  size_t treeNodePos;
+	  size_t treeWordPos;
+	  size_t treeLinePos;
+	  treeLinePos = treeInfo.find(treeLineBreak);
+	  while(treeLinePos < 1000000){//应该为while循环
+	    treeLineInfo = treeInfo.substr(0, treeLinePos + treeLineBreak.length());
+
+			DecisionTree* newTree = new DecisionTree();
+
+	    treeWordPos = treeLineInfo.find(treeWordBreak);
+	    while(treeWordPos < 1000000){
+	      treeWordInfo = treeLineInfo.substr(0, treeWordPos + treeWordBreak.length());
+
+	      treeNodePos = treeWordInfo.find(treeNodeBreak);
+	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	      //cout << treeNodeInfo[0] << endl;
+	      treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	      treeNodePos = treeWordInfo.find(treeNodeBreak);
+	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	      //cout << treeNodeInfo[1] << endl;
+	      treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	      treeNodePos = treeWordInfo.find(treeNodeBreak);
+	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	      //cout << treeNodeInfo[2] << endl;
+	      if(treeNodeInfo[0] == "Create"){
+	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	        treeNodePos = treeWordInfo.find(treeNodeBreak);
+	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	        double a = stringToNum<double>(treeNodeInfo[3]);
+	        newTree->CreateRootNode(treeNodeInfo[1], treeNodeInfo[2], a);
+	        treeNodeInfo.clear();
+	      }
+	      else if (treeNodeInfo[0] == "Yes"){
+	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	        treeNodePos = treeWordInfo.find(treeNodeBreak);
+	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+
+	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	        treeNodePos = treeWordInfo.find(treeNodeBreak);
+	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	        double a = stringToNum<double>(treeNodeInfo[4]);
+	        newTree->AddYesNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
+	        treeNodeInfo.clear();
+	      }
+	      else if (treeNodeInfo[0] == "No"){
+	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	        treeNodePos = treeWordInfo.find(treeNodeBreak);
+	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+
+	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+	        treeNodePos = treeWordInfo.find(treeNodeBreak);
+	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	        double a = stringToNum<double>(treeNodeInfo[4]);
+	        newTree->AddNoNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
+	        treeNodeInfo.clear();
+	      }
+
+	      treeLineInfo.erase(0, treeWordPos + treeWordBreak.length());
+	      treeWordPos = treeLineInfo.find(treeWordBreak);
+	    }
+	    newTree->Output();
+			string result;
+			result = newTree->Query(my);
+			cout << result << endl;
+			delete newTree;
+			myresult.push_back(result);
+
+			treeInfo.erase(0, treeLinePos + treeLineBreak.length());
+	    treeLinePos = treeInfo.find(treeLineBreak);
+	  }
+
 	//create he new decision tree object
 	DecisionTree* newTree1 = new DecisionTree();
 	//add the required root node

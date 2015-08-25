@@ -15,10 +15,10 @@ Type stringToNum(const string& str)
 int main(int argc, char* argv[])
 {
 	string rsbreak = "rs";
-	string str = "rs801";
+	string str = "rs801.5";
 	size_t breakPos = str.find(rsbreak);
 	str = str.erase(0, breakPos + rsbreak.length());
-	double a = stringToNum<int>(str);
+	double a = stringToNum<double>(str);
 	double b = a + 1;
 	cout << stringToNum<int>(str) << endl;
 	cout << b << endl;
