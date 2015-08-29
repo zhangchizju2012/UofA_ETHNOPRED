@@ -214,25 +214,55 @@ string readCSVFile(const char * fileName){
 	std::vector<size_t>posvector2;
 	posvector2.push_back(-1);
 	std::string line1 = readCSVFile(inputFile);
-	std::string line2 = "34i5,3kjher,356,236,345dg,34563,22d,2356,342,567,\n";
+	//std::string line2 = "34i5,3kjher,356,236,345dg,34563,22d,2356,342,567,\n";
   //std::string treedata = "if 536407<5.5 then node 2 elseif 536407>=5.5 then node 3 else 3,if 1162126<5.5 then node 4 elseif 1162126>=5.5 then node 5 else 3,if 1062721<6 then node 6 elseif 1062721>=6 then node 7 else 6,if 857198<8.5 then node 8 elseif 857198>=8.5 then node 9 else 3,if 1219<5.5 then node 10 elseif 1219>=5.5 then node 11 else 6,if 55583<6 then node 12 elseif 55583>=6 then node 13 else 3,if 541343<2 then node 14 elseif 541343>=2 then node 15 else 6,class = 6,if 44<5.5 then node 16 elseif 44>=5.5 then node 17 else 3,class = 6,class = 3,if 23927<2 then node 18 elseif 23927>=2 then node 19 else 3,class = 6,if 687113<9.5 then node 20 elseif 687113>=9.5 then node 21 else 6,class = 3,class = 3,class = 6,if 1362<7 then node 22 elseif 1362>=7 then node 23 else 3,class = 6,if 26788<6 then node 24 elseif 26788>=6 then node 25 else 6,class = 3,class = 3,class = 6,class = 3,class = 6,\n";
-  std::string treedata = "if 536419<9.5 then node 2 elseif 536419>=9.5 then node 3 else 3,if 1162121<5.5 then node 4 elseif 1162121>=5.5 then node 5 else 3,if 541351<1.5 then node 6 elseif 541351>=1.5 then node 7 else 6,if 1225<5.5 then node 8 elseif 1225>=5.5 then node 9 else 6,if 857205<8.5 then node 10 elseif 857205>=8.5 then node 11 else 3,if 485429<8.5 then node 12 elseif 485429>=8.5 then node 13 else 6,class = 3,class = 6,class = 3,class = 6,if 75<6 then node 14 elseif 75>=6 then node 15 else 3,if 1086819<6 then node 16 elseif 1086819>=6 then node 17 else 3,if 943390<5.5 then node 18 elseif 943390>=5.5 then node 19 else 6,class = 6,class = 3,class = 6,class = 3,class = 3,if 1065239<5.5 then node 20 elseif 1065239>=5.5 then node 21 else 6,class = 3,if 513230<6 then node 22 elseif 513230>=6 then node 23 else 6,class = 3,if 55348<8.5 then node 24 elseif 55348>=8.5 then node 25 else 6,class = 3,class = 6,\n";
+  std::string treedata = "if 536407<5.5 then node 2 elseif 536407>=5.5 then node 3 else 3,if 1162126<5.5 then node 4 elseif 1162126>=5.5 then node 5 else 3,if 1062721<6 then node 6 elseif 1062721>=6 then node 7 else 6,if 857198<8.5 then node 8 elseif 857198>=8.5 then node 9 else 3,if 1219<5.5 then node 10 elseif 1219>=5.5 then node 11 else 6,if 55583<6 then node 12 elseif 55583>=6 then node 13 else 3,if 541343<2 then node 14 elseif 541343>=2 then node 15 else 6,class = 6,if 44<5.5 then node 16 elseif 44>=5.5 then node 17 else 3,class = 6,class = 3,if 23927<2 then node 18 elseif 23927>=2 then node 19 else 3,class = 6,if 687113<9.5 then node 20 elseif 687113>=9.5 then node 21 else 6,class = 3,class = 3,class = 6,if 1362<7 then node 22 elseif 1362>=7 then node 23 else 3,class = 6,if 26788<6 then node 24 elseif 26788>=6 then node 25 else 6,class = 3,class = 3,class = 6,class = 3,class = 6,\nif 536419<9.5 then node 2 elseif 536419>=9.5 then node 3 else 3,if 1162121<5.5 then node 4 elseif 1162121>=5.5 then node 5 else 3,if 541351<1.5 then node 6 elseif 541351>=1.5 then node 7 else 6,if 1225<5.5 then node 8 elseif 1225>=5.5 then node 9 else 6,if 857205<8.5 then node 10 elseif 857205>=8.5 then node 11 else 3,if 485429<8.5 then node 12 elseif 485429>=8.5 then node 13 else 6,class = 3,class = 6,class = 3,class = 6,if 75<6 then node 14 elseif 75>=6 then node 15 else 3,if 1086819<6 then node 16 elseif 1086819>=6 then node 17 else 3,if 943390<5.5 then node 18 elseif 943390>=5.5 then node 19 else 6,class = 6,class = 3,class = 6,class = 3,class = 3,if 1065239<5.5 then node 20 elseif 1065239>=5.5 then node 21 else 6,class = 3,if 513230<6 then node 22 elseif 513230>=6 then node 23 else 6,class = 3,if 55348<8.5 then node 24 elseif 55348>=8.5 then node 25 else 6,class = 3,class = 6,\n";
   //std::string treedata = "if 9813<1.5 then node 2 else node 3,if 13640<2.5 then node 4 else node 5,if 115365<1.5 then node 6 else node 7,fit = 3,fit = 1.25,if 731<1.5 then node 8 else node 9,if 1406<1.5 then node 10 else node 11,fit = 2,fit = 1,fit = 3,if 241<2.5 then node 12 else node 13,fit = 2,fit = 1,\n";
   vector<string> treevector;
 	vector<string> idvector;
 	vector<double> idnumber;
 	std::vector<size_t>postree;
-	postree.push_back(-1);
+	//postree.push_back(-1);
 	std::vector<double>dataposvector;
+
+  vector<string> treeSeperate;
+	std::vector<size_t> posSeperateTree;
+	posSeperateTree.push_back(-1);
 	for (size_t i = 0; i < treedata.length(); ++i)
 	{
-		if (treedata.at(i) == ','){
+		if (treedata.at(i) == '\n'){
+			posSeperateTree.push_back(i);
+		}
+	}
+	posSeperateTree.push_back(treedata.find(linebreak) - linebreak.length());
+	for (int j = 0; j < (posSeperateTree.size() - 2); j++){
+		treeSeperate.push_back(treedata.substr(posSeperateTree[j] + delimiter.length(), posSeperateTree[j + 1] - posSeperateTree[j] ));
+	}
+
+	for (size_t i = 0; i < line1.length(); ++i)
+	{
+		if (line1.at(i) == ','){
+			posvector1.push_back(i);
+		}
+	}
+	posvector1.push_back(line1.find(linebreak) - linebreak.length());
+	for (int j = 0; j < (posvector1.size() - 2); j++){
+		idvector.push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
+		//idnumber.push_back(j - 2);
+	}
+
+	for (int x = 0; x < treeSeperate.size(); x++){
+    postree.push_back(-1);
+
+	for (size_t i = 0; i < treeSeperate[x].length(); ++i)
+	{
+		if (treeSeperate[x].at(i) == ','){
 			postree.push_back(i);
 		}
 	}
-	postree.push_back(treedata.find(linebreak) - linebreak.length());
+	postree.push_back(treeSeperate[x].find(linebreak) - linebreak.length());
 	for (double j = 0; j < (postree.size() - 2); j++){
-		treevector.push_back(treedata.substr(postree[j] + delimiter.length(), postree[j + 1] - postree[j] - 1));
+		treevector.push_back(treeSeperate[x].substr(postree[j] + delimiter.length(), postree[j + 1] - postree[j] - 1));
 	}
 
 	for (size_t i = 0; i < line1.length(); ++i)
@@ -304,9 +334,10 @@ string readCSVFile(const char * fileName){
 			}
 		}
 	}
+  /*
   for(int j=0; j < important.size();j++){
     cout << important[j]<<endl;
-  }
+  }*/
 	/*
 	Create_rs4832501_Q_1.5,
 	Yes_rs4832501_rs2200402_Q_2.5,
@@ -342,7 +373,15 @@ string readCSVFile(const char * fileName){
 			}
 		}
 	}
-
-
+      cout << "Tree" << endl;
+  		important.clear();
+  		posdetails.clear();
+  		numberID.clear();
+  		details.clear();
+  		numberSize.clear();
+  		posvector1.clear();
+  		postree.clear();
+  		treevector.clear();
+}
 	return 0;
 }
