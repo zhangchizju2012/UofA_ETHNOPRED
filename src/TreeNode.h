@@ -6,7 +6,7 @@
 #define AFX_TREENODE_H__9D1BC16A_8BBF_47A2_81D2_9D10927220B0__INCLUDED_
 
 #include <string>
-using namespace std;
+//using namespace std;
 
 #if _MSC_VER > 1000
 #pragma once
@@ -18,11 +18,11 @@ class TreeNode;
 class TreeNode
 {
 public:
-	TreeNode(string nodeID, string newQorA, double nodeValue);
+	TreeNode(std::string nodeID, std::string newQorA, double nodeValue);
 	TreeNode();
 	virtual ~TreeNode();
-	string m_strQuestOrAns;
-	string m_iNodeID;
+	std::string m_strQuestOrAns;
+	std::string m_iNodeID;
 	double m_NodeValue;
 	//the pointers to the two nodes for the yes no question or answer states
 	//remember the uniform design of the BDT requires two branches at each node.

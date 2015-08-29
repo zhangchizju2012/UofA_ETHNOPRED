@@ -3,7 +3,7 @@
 #include "DecisionTree.h"
 //#include <conio.h>
 #include <iostream>
-using namespace std;
+//using namespace std;
 
 TreeNode::TreeNode()
 {
@@ -18,7 +18,7 @@ TreeNode::~TreeNode()
 
 }
 
-TreeNode::TreeNode(string nodeID, string newQorA, double nodeValue)
+TreeNode::TreeNode(std::string nodeID, std::string newQorA, double nodeValue)
 {
 	//create a tree node with a specific node id and string
 	m_iNodeID = nodeID;
@@ -42,18 +42,18 @@ DecisionTree::~DecisionTree()
 	RemoveNode(m_pRootNode);
 }
 
-void DecisionTree::CreateRootNode(string nodeID, string newQorA, double nodeValue)
+void DecisionTree::CreateRootNode(std::string nodeID, std::string newQorA, double nodeValue)
 {
 	//create the root node with a specific ID and string
 	m_pRootNode = new TreeNode(nodeID, newQorA, nodeValue);
 }
 
-void DecisionTree::AddYesNode(string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
+void DecisionTree::AddYesNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
 {
 	//if you dont have a root node you cant add another node
 	if (m_pRootNode == NULL)
 	{
-		cout << "Error - no root node in AddYesNode()\n";
+		std::cout << "Error - no root node in AddYesNode()\n";
 		return;
 	}
 
@@ -68,13 +68,13 @@ void DecisionTree::AddYesNode(string existingNodeID, string newNodeID, string ne
 	}
 	else
 	{
-		cout << "Node ";
-		cout << existingNodeID;
-		cout << " not found \n";
+		std::cout << "Node ";
+		std::cout << existingNodeID;
+		std::cout << " not found \n";
 	}
 }
 
-bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
+bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
 {
 
 	if (currentNode->m_iNodeID == existingNodeID)
@@ -114,11 +114,11 @@ bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, string existin
 	}
 }
 
-void DecisionTree::AddNoNode(string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
+void DecisionTree::AddNoNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
 {
 	if (m_pRootNode == NULL)
 	{
-		cout << "Error no root node in AddNoNode()\n";
+		std::cout << "Error no root node in AddNoNode()\n";
 		return;
 	}
 	if (SearchTreeAndAddNoNode(m_pRootNode, existingNodeID, newNodeID, newQorA, newNodeValue))
@@ -131,14 +131,14 @@ void DecisionTree::AddNoNode(string existingNodeID, string newNodeID, string new
 	}
 	else
 	{
-		cout << "Node ";
-		cout << existingNodeID;
-		cout << " not found \n";
+		std::cout << "Node ";
+		std::cout << existingNodeID;
+		std::cout << " not found \n";
 	}
 
 }
 
-bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
+bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
 {
 	if (currentNode->m_iNodeID == existingNodeID)
 	{
@@ -176,7 +176,7 @@ bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, string existing
 	}
 }
 
-string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<vector<string> > inputVector)
+std::string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<std::vector<std::string> > inputVector)
 {
 	if (currentNode->m_pYesBranch == NULL)
 	{
@@ -185,33 +185,33 @@ string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<vector<s
 		//the string
 		if (currentNode->m_pNoBranch == NULL){
 			//cout << currentNode->m_strQuestOrAns << endl;
-			string a = currentNode->m_strQuestOrAns;
+			std::string a = currentNode->m_strQuestOrAns;
 			return a;
 		}
 		else{
-			cout << "Missing yes branch at " + currentNode->m_strQuestOrAns + " question\n";
+			std::cout << "Missing yes branch at " + currentNode->m_strQuestOrAns + " question\n";
 			return "0";
 		}
 	}
 	if (currentNode->m_pNoBranch == NULL)
 	{
-		cout << "Missing no branch at " + currentNode->m_strQuestOrAns + " question\n";
+		std::cout << "Missing no branch at " + currentNode->m_strQuestOrAns + " question\n";
 		return "0";
 	}
 
 	//otherwise default to asking the question at the currentNode
-	string d;
+	std::string d;
 	d = AskQuestion(currentNode, inputVector);
 	return d;
 }
 
-string DecisionTree::Query(std::vector<vector<string> > inputVector)
+std::string DecisionTree::Query(std::vector<std::vector<std::string> > inputVector)
 {
-	string result = QueryBinaryTree(m_pRootNode, inputVector);
+	std::string result = QueryBinaryTree(m_pRootNode, inputVector);
 	return result;
 }
 
-string DecisionTree::AskQuestion(TreeNode *node, std::vector<vector<string> > inputVector)
+std::string DecisionTree::AskQuestion(TreeNode *node, std::vector<std::vector<std::string> > inputVector)
 {
 	//cout << node->m_strQuestOrAns + " (enter yes or no)\n";
 	double answer;
@@ -220,21 +220,21 @@ string DecisionTree::AskQuestion(TreeNode *node, std::vector<vector<string> > in
 	//cout << inputVector[1][4];
 	//cout << findPosReturnValue(inputVector, b);
 	if (answer == 0){
-		string e = "No Value";
+		std::string e = "No Value";
 		return e;
 	}
 	else {
 		if (answer < (node->m_NodeValue)){
-			string c = QueryBinaryTree(node->m_pYesBranch, inputVector);
+			std::string c = QueryBinaryTree(node->m_pYesBranch, inputVector);
 			return c;
 		}
 		else if (answer >(node->m_NodeValue)){
-			string b = QueryBinaryTree(node->m_pNoBranch, inputVector);
+			std::string b = QueryBinaryTree(node->m_pNoBranch, inputVector);
 			return b;
 		}
 		else//看起来好像没用了现在
 		{
-			cout << "Error please answer yes or no\n";
+			std::cout << "Error please answer yes or no\n";
 			AskQuestion(node, inputVector);
 		}
 	}
@@ -246,7 +246,7 @@ void DecisionTree::Output()
 	OutputBinaryTree("1", m_pRootNode);
 }
 
-void DecisionTree::OutputBinaryTree(string tag, TreeNode* currentNode)
+void DecisionTree::OutputBinaryTree(std::string tag, TreeNode* currentNode)
 {
 	if (currentNode == NULL)
 		return;
@@ -281,7 +281,7 @@ void DecisionTree::RemoveNode(TreeNode *node)
 	}
 }
 
-double DecisionTree::findPosReturnValue(std::vector<vector<string> > inputVector, string a){
+double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, std::string a){
 	for (int i = 0; i <= (inputVector[0].size()-1); i++){
 		if (inputVector[0][i] == a){
 			if (inputVector[1][i] == "A_A") return 1;
@@ -316,15 +316,15 @@ int findPosReturnValue(std::vector<vector<string> > inputVector, string a){
 }
 */
 template <class Type>
-Type stringToNum(const string& str)
+Type stringToNum(const std::string & str)
 {
-	istringstream iss(str);
+	std::istringstream iss(str);
 	Type num;
 	iss >> num;
 	return num;
 }
 
-bool inTheTreeOrNot(vector<string> treevector, string a){
+bool inTheTreeOrNot(std::vector<std::string> treevector, std::string a){
 	for (int i = 0; i <= (treevector.size() - 1); i++){
 		if (treevector[i] == a){
 			return true;
@@ -333,32 +333,32 @@ bool inTheTreeOrNot(vector<string> treevector, string a){
 	return false;
 }
 //string readCSVFile( const char * fileName){
-std::vector<vector<string> > readCSVFile(const char * fileName){
-	std::vector<vector<string> > myvectorinitial;
+std::vector<std::vector<std::string> > readCSVFile(const char * fileName){
+	std::vector<std::vector<std::string> > myvectorinitial;
 	myvectorinitial.resize(2);
-	std::vector<vector<string> > myvector;
+	std::vector<std::vector<std::string> > myvector;
 	myvector.resize(2);
-	ifstream file;
-	stringstream ss;
-	string str;
-	file.exceptions(ifstream::failbit | ifstream::badbit);
+	std::ifstream file;
+	std::stringstream ss;
+	std::string str;
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try {
 		file.open(fileName);
 		ss << file.rdbuf();
 		str = ss.str();
 		file.close();
 	}
-	catch (ifstream::failure e) {
-		std::cerr << "Exception opening file\n" << e.what() << endl;
+	catch (std::ifstream::failure e) {
+		std::cerr << "Exception opening file\n" << e.what() << std::endl;
 		exit(1);
 	}
 	//std::cout << str;
-	string delimiter = ",";
-	string linebreak = "\n";
-	string line1;
-	string line2;
-	string lineID;
-	string lineInfo;
+	std::string delimiter = ",";
+	std::string linebreak = "\n";
+	std::string line1;
+	std::string line2;
+	std::string lineID;
+	std::string lineInfo;
 	/*
 	size_t breakPos = str.find(linebreak);
 	lineID = str.substr(0, breakPos);
@@ -388,7 +388,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	std::vector<size_t>posvector2;
 	posvector2.push_back(-1);
 
-	vector<string> treevector;
+	std::vector<std::string> treevector;
 	std::vector<size_t>postree;
 	postree.push_back(-1);
 	std::vector<int>dataposvector;
@@ -416,7 +416,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	for (int j = 0; j < (posvector1.size()-2); j++){
 		//myvectorinitial[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
 		//if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1))){
-		std::vector<string>::iterator it;
+		std::vector<std::string>::iterator it;
 	  it = find (treevector.begin(), treevector.end(), (line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1)));
 		if (it != treevector.end()){
 			dataposvector.push_back(j);
@@ -486,7 +486,7 @@ std::vector<vector<string> > readCSVFile(const char * fileName){
 	return myvector;
 }
 
-void calNumReturnResult(vector<string> result){
+void calNumReturnResult(std::vector<std::string> result){
 	int numEUR = 0;
 	int numCHN = 0;
 	int numAMR = 0;
@@ -499,19 +499,19 @@ void calNumReturnResult(vector<string> result){
 		else if (result[i] == "JPN"){ numJPN++; }
 		else if (result[i] == "No Value"){ numNoValue++; }
 	}
-	cout << "EUR: " << numEUR << endl;
-	cout << "CHN: " << numCHN << endl;
-	cout << "AMR: " << numAMR << endl;
-	cout << "JPN: " << numJPN << endl;
-	cout << "NoValue: " << numNoValue << endl;
+	std::cout << "EUR: " << numEUR << std::endl;
+	std::cout << "CHN: " << numCHN << std::endl;
+	std::cout << "AMR: " << numAMR << std::endl;
+	std::cout << "JPN: " << numJPN << std::endl;
+	std::cout << "NoValue: " << numNoValue << std::endl;
 	if ((numEUR >= numCHN) && (numEUR >= numAMR) && (numEUR >= numJPN))
-		cout << "This is EUR." << endl;
+		std::cout << "This is EUR." << std::endl;
 	if ((numEUR <= numCHN) && (numCHN >= numAMR) && (numCHN >= numJPN))
-		cout << "This is CHN." << endl;
+		std::cout << "This is CHN." << std::endl;
 	if ((numAMR >= numCHN) && (numEUR <= numAMR) && (numAMR >= numJPN))
-		cout << "This is AMR." << endl;
+		std::cout << "This is AMR." << std::endl;
 	if ((numJPN >= numCHN) && (numJPN >= numAMR) && (numEUR <= numJPN))
-		cout << "This is JPN." << endl;
+		std::cout << "This is JPN." << std::endl;
 
 }
 
@@ -568,7 +568,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Hello, World!\n";*/
 
     //std::vector<vector<int> > my = newVector();
-    std::vector<vector<string> > my = readCSVFile(inputFile);
+    std::vector<std::vector<std::string> > my = readCSVFile(inputFile);
     //for(int i=1;i<=5;i++) myvector.push_back(i);
 		/*
     for(std::vector<string>::iterator it = my[0].begin();it != my[0].end();it++){std::cout << " " << *it;}
@@ -587,16 +587,16 @@ int main(int argc, char *argv[]) {
     //std::cout << name;
 		*/
 
-		std::vector<string> myresult;
+		std::vector<std::string> myresult;
 
-		string treeWordBreak = ",";
-	  string treeLineBreak = "\n";
-	  string treeNodeBreak = "_";
-	  string treeInfo = "Create_rs6437783_Q_1.5,Yes_rs6437783_rs4835141_Q_1.5,No_rs6437783_rs735480_Q_1.5,Yes_rs4835141_x_2_5,No_rs4835141_x_3_5,Yes_rs735480_x_3_5,No_rs735480_x_1_5,\nCreate_rs35389_Q_2.5,Yes_rs35389_rs4787645_Q_1.5,No_rs35389_rs1726254_Q_2.5,Yes_rs4787645_rs4847428_Q_1.5,No_rs4787645_x_3_5,Yes_rs1726254_x_1_5,No_rs1726254_x_2_5,Yes_rs4847428_x_1_5,No_rs4847428_x_2_5,\n";
-
-	  string treeLineInfo;
-	  string treeWordInfo;
-	  std::vector<string> treeNodeInfo;
+		std::string treeWordBreak = ",";
+	  std::string treeLineBreak = "\n";
+	  std::string treeNodeBreak = "_";
+	  std::string treeInfo = "Create_rs6437783_Q_1.5,Yes_rs6437783_rs4835141_Q_1.5,No_rs6437783_rs735480_Q_1.5,Yes_rs4835141_x_2_5,No_rs4835141_x_3_5,Yes_rs735480_x_3_5,No_rs735480_x_1_5,\nCreate_rs35389_Q_2.5,Yes_rs35389_rs4787645_Q_1.5,No_rs35389_rs1726254_Q_2.5,Yes_rs4787645_rs4847428_Q_1.5,No_rs4787645_x_3_5,Yes_rs1726254_x_1_5,No_rs1726254_x_2_5,Yes_rs4847428_x_1_5,No_rs4847428_x_2_5,\nCreate_rs1986420_Q_2.5,Yes_rs1986420_rs12135904_Q_2.5,No_rs1986420_x_1_5,Yes_rs12135904_rs1679012_CHN_1.5,No_rs12135904_x_3_5,Yes_rs1679012_x_2_5,No_rs1679012_x_1_5,\nCreate_rs2675345_Q_1.5,Yes_rs2675345_rs9931378_Q_2.5,No_rs2675345_rs6546753_Q_2.5,Yes_rs9931378_x_1_5,No_rs9931378_x_3_5,Yes_rs6546753_x_3_5,No_rs6546753_x_2_5,\nCreate_rs2700392_Q_1.5,Yes_rs2700392_rs1924381_Q_1.5,No_rs2700392_rs747094_Q_2.5,Yes_rs1924381_x_2_5,No_rs1924381_x_1_5,Yes_rs747094_x_3_5,No_rs747094_rs17671597_Q_1.5,Yes_rs17671597_x_2_5,No_rs17671597_x_1_5,\nCreate_rs260700_Q_2.5,Yes_rs260700_rs6451268_Q_2.5,No_rs260700_rs12204275_Q_1.5,Yes_rs6451268_rs987435_Q_1.5,No_rs6451268_rs16953500_Q_2.5,Yes_rs12204275_x_2_5,No_rs12204275_x_3_5,Yes_rs987435_x_3_5,No_rs987435_rs4242682_Q_2.5,Yes_rs16953500_x_1_5,No_rs16953500_x_2_5,Yes_rs4242682_x_2_5,No_rs4242682_x_1_5,\nCreate_rs260699_Q_1.5,Yes_rs260699_rs11130791_Q_2.5,No_rs260699_rs6897135_Q_1.5,Yes_rs11130791_x_2_5,No_rs11130791_x_3_5,Yes_rs6897135_x_1_5,No_rs6897135_rs1588040_Q_1.5,Yes_rs1588040_x_3_5,No_rs1588040_rs7974633_Q_1.5,Yes_rs7974633_x_1_5,No_rs7974633_x_2_5,\nCreate_rs260705_Q_1.5,Yes_rs260705_rs11649653_Q_1.5,No_rs260705_rs2433354_Q_2.5,Yes_rs11649653_x_2_5,No_rs11649653_x_3_5,Yes_rs2433354_rs2204738_Q_2.5,No_rs2433354_rs4791868_Q_1.5,Yes_rs2204738_x_2_5,No_rs2204738_x_3_5,Yes_rs4791868_x_2_5,No_rs4791868_x_1_5,\nCreate_rs282162_Q_2.5,Yes_rs282162_rs4825_Q_2.5,No_rs282162_rs864386_Q_1.5,Yes_rs4825_rs1814538_Q_1.5,No_rs4825_rs10187056_Q_1.5,Yes_rs864386_x_3_5,No_rs864386_x_1_5,Yes_rs1814538_x_2_5,No_rs1814538_x_1_5,Yes_rs10187056_x_3_5,No_rs10187056_x_2_5,\nCreate_rs2002739_Q_2.5,Yes_rs2002739_rs12120383_Q_1.5,No_rs2002739_rs2000743_Q_2.5,Yes_rs12120383_rs7111521_Q_1.5,No_rs12120383_rs12921822_Q_1.5,Yes_rs2000743_x_3_5,No_rs2000743_x_1_5,Yes_rs7111521_x_2_5,No_rs7111521_x_1_5,Yes_rs12921822_x_3_5,No_rs12921822_x_2_5,\nCreate_rs4722760_Q_1.5,Yes_rs4722760_rs13086858_Q_2.5,No_rs4722760_rs1320385_Q_2.5,Yes_rs13086858_rs7676617_Q_1.5,No_rs13086858_x_3_5,Yes_rs1320385_rs7215008_Q_1.5,No_rs1320385_rs6698919_Q_2.5,Yes_rs7676617_x_1_5,No_rs7676617_x_2_5,Yes_rs7215008_x_3_5,No_rs7215008_x_2_5,Yes_rs6698919_x_1_5,No_rs6698919_x_2_5,\nCreate_rs2907599_Q_1.5,Yes_rs2907599_rs12036675_Q_2.5,No_rs2907599_rs10814993_Q_1.5,Yes_rs12036675_x_2_5,No_rs12036675_x_1_5,Yes_rs10814993_rs2463383_Q_1.5,No_rs10814993_rs1484213_Q_2.5,Yes_rs2463383_x_2_5,No_rs2463383_x_3_5,Yes_rs1484213_x_2_5,No_rs1484213_x_1_5,\nCreate_rs2893312_Q_1.5,Yes_rs2893312_rs868622_Q_1.5,No_rs2893312_rs12062528_Q_2.5,Yes_rs868622_x_3_5,No_rs868622_rs2578669_Q_2.5,Yes_rs12062528_rs519381_Q_1.5,No_rs12062528_rs9595066_Q_2.5,Yes_rs2578669_x_2_5,No_rs2578669_x_1_5,Yes_rs519381_x_3_5,No_rs519381_x_2_5,Yes_rs9595066_x_1_5,No_rs9595066_x_2_5,\nCreate_rs590616_Q_1.5,Yes_rs590616_rs2605419_Q_2.5,No_rs590616_rs12895262_Q_1.5,Yes_rs2605419_x_3_5,No_rs2605419_x_1_5,Yes_rs12895262_x_1_5,No_rs12895262_rs1909338_Q_2.5,Yes_rs1909338_rs10758940_Q_1.5,No_rs1909338_x_3_5,Yes_rs10758940_x_1_5,No_rs10758940_x_2_5,\nCreate_rs533571_Q_2.5,Yes_rs533571_rs6468344_Q_2.5,No_rs533571_rs4577845_Q_2.5,Yes_rs6468344_rs11098948_Q_1.5,No_rs6468344_rs2029623_Q_1.5,Yes_rs4577845_x_3_5,No_rs4577845_x_1_5,Yes_rs11098948_x_3_5,No_rs11098948_x_2_5,Yes_rs2029623_x_2_5,No_rs2029623_x_1_5,\nCreate_rs260709_Q_2.5,Yes_rs260709_rs11691947_Q_2.5,No_rs260709_rs1437724_Q_1.5,Yes_rs11691947_rs7158108_3_2.5,No_rs11691947_rs4705115_1_1.5,Yes_rs1437724_x_2_5,No_rs1437724_x_3_5,Yes_rs7158108_x_1_5,No_rs7158108_x_2_5,Yes_rs4705115_x_3_5,No_rs4705115_rs2214965_Q_1.5,Yes_rs2214965_x_1_5,No_rs2214965_x_2_5,\nCreate_rs6534999_Q_2.5,Yes_rs6534999_rs7689609_Q_2.5,No_rs6534999_rs12542990_Q_2.5,Yes_rs7689609_x_1_5,No_rs7689609_rs1450428_Q_1.5,Yes_rs12542990_rs7551132_Q_1.5,No_rs12542990_x_3_5,Yes_rs1450428_x_3_5,No_rs1450428_x_2_5,Yes_rs7551132_x_1_5,No_rs7551132_x_2_5,\nCreate_rs4832501_Q_1.5,Yes_rs4832501_rs2200402_Q_2.5,No_rs4832501_rs931410_Q_1.5,Yes_rs2200402_rs2546001_Q_1.5,No_rs2200402_rs8091955_Q_2.5,Yes_rs931410_rs1099968_Q_2.5,No_rs931410_x_1_5,Yes_rs2546001_x_2_5,No_rs2546001_x_1_5,Yes_rs8091955_x_3_5,No_rs8091955_x_2_5,Yes_rs1099968_rs7921545_Q_2.5,No_rs1099968_x_1_5,Yes_rs7921545_x_2_5,No_rs7921545_x_3_5,\nCreate_rs1437787_Q_1.5,Yes_rs1437787_rs11170991_Q_2.5,No_rs1437787_rs1805972_Q_1.5,Yes_rs11170991_x_3_5,No_rs11170991_x_1_1.5,Yes_rs1805972_rs2422098_Q_1.5,No_rs1805972_rs9821525_Q_1.5,Yes_rs2422098_x_2_5,No_rs2422098_x_1_5,Yes_rs9821525_x_3_5,No_rs9821525_rs12511245_Q_2.5,Yes_rs12511245_x_2_5,No_rs12511245_x_1_5,\nCreate_rs4749305_Q_1.5,Yes_rs4749305_rs2631899_Q_2.5,No_rs4749305_rs7956796_Q_2.5,Yes_rs2631899_x_3_5,No_rs2631899_x_2_5,Yes_rs7956796_x_1_5,No_rs7956796_rs4877791_Q_2.5,Yes_rs4877791_rs1932366_Q_1.5,No_rs4877791_x_3_5,Yes_rs1932366_x_1_5,No_rs1932366_x_2_5,\nCreate_rs542405_Q_2.5,Yes_rs542405_rs6977118_Q_1.5,No_rs542405_rs2305858_Q_2.5,Yes_rs6977118_rs11563620_Q_1.5,No_rs6977118_x_3_5,Yes_rs2305858_rs2040704_Q_1.5,No_rs2305858_x_1_5,Yes_rs11563620_x_2_5,No_rs11563620_x_1_5,Yes_rs2040704_x_3_5,No_rs2040704_x_2_5,\nCreate_rs738276_Q_1.5,Yes_rs738276_rs4615248_Q_2.5,No_rs738276_rs7983489_Q_1.5,Yes_rs4615248_rs12681671_Q_1.5,No_rs4615248_x_3_5,Yes_rs7983489_rs6035761_Q_1.5,No_rs7983489_rs2324520_Q_2.5,Yes_rs12681671_x_2_5,No_rs12681671_x_1_5,Yes_rs6035761_x_2_5,No_rs6035761_x_1_5,Yes_rs2324520_rs3181372_Q_2.5,No_rs2324520_x_3_5,Yes_rs3181372_x_2_5,No_rs3181372_x_1_5,\nCreate_rs943773_Q_1.5,Yes_rs943773_rs4789182_Q_1.5,No_rs943773_rs702032_Q_2.5,Yes_rs4789182_x_2_5,No_rs4789182_x_3_5,Yes_rs702032_rs6926482_Q_1.5,No_rs702032_x_1_5,Yes_rs6926482_x_3_5,No_rs6926482_rs2490385_Q_1.5,Yes_rs2490385_x_1_5,No_rs2490385_x_2_5,\nCreate_rs8097206_Q_2.5,Yes_rs8097206_rs39639_Q_1.5,No_rs8097206_rs12641411_Q_2.5,Yes_rs39639_rs9866028_Q_1.5,No_rs39639_rs4713659_Q_2.5,Yes_rs12641411_x_1_5,No_rs12641411_x_3_5,Yes_rs9866028_x_2_5,No_rs9866028_x_1_5,Yes_rs4713659_rs27162_Q_2.5,No_rs4713659_x_3_5,Yes_rs27162_x_2_5,No_rs27162_x_1_5,\nCreate_rs10851731_Q_1.5,Yes_rs10851731_rs6560084_Q_2.5,No_rs10851731_rs11085023_Q_2.5,Yes_rs6560084_x_1_5,No_rs6560084_x_2_5,Yes_rs11085023_rs277639_Q_1.5,No_rs11085023_x_3_5,Yes_rs277639_x_1_5,No_rs277639_rs7677859_Q_1.5,Yes_rs7677859_x_3_5,No_rs7677859_x_2_5,\nCreate_rs2228511_Q_2.5,Yes_rs2228511_rs738987_Q_1.5,No_rs2228511_rs2500090_Q_2.5,Yes_rs738987_rs560767_2_2.5,No_rs738987_rs2967391_3_2.5,Yes_rs2500090_x_1_5,No_rs2500090_x_2_5,Yes_rs560767_x_3_5,No_rs560767_x_2_5,Yes_rs2967391_x_2_5,No_rs2967391_x_1_5,\nCreate_rs1942885_Q_2.5,Yes_rs1942885_rs11903376_Q_1.5,No_rs1942885_rs12677218_Q_2.5,Yes_rs11903376_x_1_5,No_rs11903376_rs2035247_Q_1.5,Yes_rs12677218_rs2849372_Q_2.5,No_rs12677218_x_3_5,Yes_rs2035247_x_1_5,No_rs2035247_rs6679430_Q_2.5,Yes_rs2849372_x_2_5,No_rs2849372_x_1_5,Yes_rs6679430_x_2_5,No_rs6679430_x_3_5,\nCreate_rs260711_Q_1.5,Yes_rs260711_rs10998087_Q_2.5,No_rs260711_rs1117382_Q_2.5,Yes_rs10998087_x_3_5,No_rs10998087_x_2_5,Yes_rs1117382_x_1_5,No_rs1117382_rs7376483_Q_2.5,Yes_rs7376483_rs12446781_Q_1.5,No_rs7376483_x_3_5,Yes_rs12446781_x_1_5,No_rs12446781_x_2_5,\nCreate_rs1250253_Q_2.5,Yes_rs1250253_rs1478446_Q_2.5,No_rs1250253_rs6763648_Q_1.5,Yes_rs1478446_rs2673884_Q_2.5,No_rs1478446_rs2506898_Q_2.5,Yes_rs6763648_x_3_5,No_rs6763648_x_2_5,Yes_rs2673884_rs158512_Q_1.5,No_rs2673884_x_3_5,Yes_rs2506898_x_1_5,No_rs2506898_x_2_5,Yes_rs158512_x_1_5,No_rs158512_x_2_5,\nCreate_rs7923368_Q_2.5,Yes_rs7923368_rs1419138_Q_2.5,No_rs7923368_rs10759290_Q_1.5,Yes_rs1419138_rs10185826_Q_2.5,No_rs1419138_x_1_5,Yes_rs10759290_x_1_5,No_rs10759290_x_3_5,Yes_rs10185826_rs1854935_Q_1.5,No_rs10185826_x_3_5,Yes_rs1854935_x_1_5,No_rs1854935_x_2_5,\n";
+		//string treeInfo = "Create_rs198642_Q_2.5,Yes_rs198642_rs1213594_Q_2.5,No_rs198642_x_1_5,Yes_rs1213594_rs167912_CHN_1.5,No_rs1213594_x_3_5,Yes_rs167912_x_2_5,No_rs167912_x_1_5,\n";
+		std::string treeLineInfo;
+	  std::string treeWordInfo;
+	  std::vector<std::string> treeNodeInfo;
 	  size_t treeNodePos;
 	  size_t treeWordPos;
 	  size_t treeLinePos;
@@ -658,16 +658,16 @@ int main(int argc, char *argv[]) {
 	      treeWordPos = treeLineInfo.find(treeWordBreak);
 	    }
 	    newTree->Output();
-			string result;
+			std::string result;
 			result = newTree->Query(my);
-			cout << result << endl;
+			std::cout << result << std::endl;
 			delete newTree;
 			myresult.push_back(result);
 
 			treeInfo.erase(0, treeLinePos + treeLineBreak.length());
 	    treeLinePos = treeInfo.find(treeLineBreak);
 	  }
-
+/*
 	//create he new decision tree object
 	DecisionTree* newTree1 = new DecisionTree();
 	//add the required root node
@@ -1366,7 +1366,7 @@ int main(int argc, char *argv[]) {
 	cout << result30 << endl;
 	delete newTree30;
 	myresult.push_back(result30);
-
+*/
 	calNumReturnResult(myresult);
 //took about 15 seconds
 	system("pause");

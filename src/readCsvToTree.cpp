@@ -48,7 +48,7 @@ int main(){
   string treeLineBreak = "\n";
   string treeNodeBreak = "_";
   //string treeInfo = "Create_rs6437783_Q_1.5,Yes_rs6437783_rs4835141_Q_1.5,No_rs6437783_rs735480_Q_1.5,Yes_rs4835141_x_2_5,No_rs4835141_x_3_5,Yes_rs735480_x_3_5,No_rs735480_x_1_5,\n";
-  string treeInfo = "Create_rs35389_Q_2.5,Yes_rs35389_rs4787645_Q_1.5,No_rs35389_rs1726254_Q_2.5,Yes_rs4787645_rs4847428_Q_1.5,No_rs4787645_x_3_5,Yes_rs1726254_x_1_5,No_rs1726254_x_2_5,Yes_rs4847428_x_1_5,No_rs4847428_x_2_5,\n";
+  string treeInfo = "Create_rs27392_Q_1.5,Yes_rs27392_rs1924381_Q_1.5,No_rs27392_rs74794_Q_2.5,Yes_rs1924381_x_2_5,No_rs1924381_x_1_5,Yes_rs74794_x_3_5,No_rs74794_rs17671597_Q_1.5,Yes_rs17671597_x_2_5,No_rs17671597_x_1_5,\nCreate_rs35389_Q_2.5,Yes_rs35389_rs4787645_Q_1.5,No_rs35389_rs1726254_Q_2.5,Yes_rs4787645_rs4847428_Q_1.5,No_rs4787645_x_3_5,Yes_rs1726254_x_1_5,No_rs1726254_x_2_5,Yes_rs4847428_x_1_5,No_rs4847428_x_2_5,\n";
   string treeLineInfo;
   string treeWordInfo;
   std::vector<string> treeNodeInfo;
