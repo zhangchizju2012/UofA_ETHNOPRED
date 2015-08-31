@@ -18,7 +18,7 @@ class TreeNode;
 class TreeNode
 {
 public:
-	TreeNode(std::string nodeID, std::string newQorA, double nodeValue);
+	TreeNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue);
 	TreeNode();
 	virtual ~TreeNode();
 	std::string m_strQuestOrAns;

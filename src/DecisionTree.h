@@ -14,17 +14,17 @@ class DecisionTree
 {
 public:
 	void RemoveNode(TreeNode* node);
-	void OutputBinaryTree(std::string tag, TreeNode* currentNode);
+	void OutputBinaryTree(const std::string & tag, TreeNode* currentNode);
 	void Output();
 	std::string AskQuestion(TreeNode* node, std::vector<std::vector<std::string> > inputVector);
 	std::string Query(std::vector<std::vector<std::string> > inputVector);
 	std::string QueryBinaryTree(TreeNode* rootNode, std::vector<std::vector<std::string> > inputVector);
-	bool SearchTreeAndAddNoNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue);
-	void AddNoNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue);
-	bool SearchTreeAndAddYesNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue);
-	void AddYesNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue);
-	void CreateRootNode(std::string nodeID, std::string newQorA, double nodeValue);
-	double findPosReturnValue(std::vector<std::vector<std::string> > inputVector, std::string a);
+	bool SearchTreeAndAddNoNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue);
+	void AddNoNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue);
+	bool SearchTreeAndAddYesNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue);
+	void AddYesNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue);
+	void CreateRootNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue);
+	double findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a);
 	//the key root node to which all other nodes are added.
 	TreeNode* m_pRootNode;
 	DecisionTree();

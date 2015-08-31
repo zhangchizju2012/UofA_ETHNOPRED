@@ -18,7 +18,7 @@ TreeNode::~TreeNode()
 
 }
 
-TreeNode::TreeNode(std::string nodeID, std::string newQorA, double nodeValue)
+TreeNode::TreeNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue)
 {
 	//create a tree node with a specific node id and string
 	m_iNodeID = nodeID;
@@ -42,13 +42,13 @@ DecisionTree::~DecisionTree()
 	RemoveNode(m_pRootNode);
 }
 
-void DecisionTree::CreateRootNode(std::string nodeID, std::string newQorA, double nodeValue)
+void DecisionTree::CreateRootNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue)
 {
 	//create the root node with a specific ID and string
 	m_pRootNode = new TreeNode(nodeID, newQorA, nodeValue);
 }
 
-void DecisionTree::AddYesNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
+void DecisionTree::AddYesNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const	double & newNodeValue)
 {
 	//if you dont have a root node you cant add another node
 	if (m_pRootNode == NULL)
@@ -74,7 +74,7 @@ void DecisionTree::AddYesNode(std::string existingNodeID, std::string newNodeID,
 	}
 }
 
-bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
+bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
 {
 
 	if (currentNode->m_iNodeID == existingNodeID)
@@ -114,7 +114,7 @@ bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, std::string ex
 	}
 }
 
-void DecisionTree::AddNoNode(std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
+void DecisionTree::AddNoNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
 {
 	if (m_pRootNode == NULL)
 	{
@@ -138,7 +138,7 @@ void DecisionTree::AddNoNode(std::string existingNodeID, std::string newNodeID, 
 
 }
 
-bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, std::string existingNodeID, std::string newNodeID, std::string newQorA, double newNodeValue)
+bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
 {
 	if (currentNode->m_iNodeID == existingNodeID)
 	{
@@ -246,7 +246,7 @@ void DecisionTree::Output()
 	OutputBinaryTree("1", m_pRootNode);
 }
 
-void DecisionTree::OutputBinaryTree(std::string tag, TreeNode* currentNode)
+void DecisionTree::OutputBinaryTree(const std::string & tag, TreeNode* currentNode)
 {
 	if (currentNode == NULL)
 		return;
@@ -281,7 +281,7 @@ void DecisionTree::RemoveNode(TreeNode *node)
 	}
 }
 
-double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, std::string a){
+double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a){
 	for (int i = 0; i <= (inputVector[0].size()-1); i++){
 		if (inputVector[0][i] == a){
 			if (inputVector[1][i] == "A_A") return 1;
@@ -324,7 +324,7 @@ Type stringToNum(const std::string & str)
 	return num;
 }
 
-bool inTheTreeOrNot(std::vector<std::string> treevector, std::string a){
+bool inTheTreeOrNot(std::vector<std::string> treevector, const std::string & a){
 	for (int i = 0; i <= (treevector.size() - 1); i++){
 		if (treevector[i] == a){
 			return true;
