@@ -77,23 +77,23 @@ void DecisionTree::AddYesNode(const std::string & existingNodeID, const std::str
 bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
 {
 
-	if (currentNode->m_iNodeID == existingNodeID)
+	if (currentNode->m_iNodeID == existingNodeID)//for root
 	{
 		//create node
 		if (currentNode->m_pYesBranch == NULL)
 		{
 			currentNode->m_pYesBranch = new TreeNode(newNodeID, newQorA, newNodeValue);
 		}
-		else
+		else//take the place
 		{
 			currentNode->m_pYesBranch = new TreeNode(newNodeID, newQorA, newNodeValue);
 		}
 		return true;
 	}
-	else
+	else//for not root
 	{
 		//try yes branch if it exists
-		if (currentNode->m_pYesBranch != NULL)
+		if (currentNode->m_pYesBranch != NULL)//可以一层一层查进去
 		{
 			if (SearchTreeAndAddYesNode(currentNode->m_pYesBranch, existingNodeID, newNodeID, newQorA, newNodeValue))
 			{
@@ -188,7 +188,7 @@ std::string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<std
 			std::string a = currentNode->m_strQuestOrAns;
 			return a;
 		}
-		else{
+		else{//useless if the tree I built is right
 			std::cout << "Missing yes branch at " + currentNode->m_strQuestOrAns + " question\n";
 			return "0";
 		}
@@ -200,9 +200,9 @@ std::string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<std
 	}
 
 	//otherwise default to asking the question at the currentNode
-	std::string d;
-	d = AskQuestion(currentNode, inputVector);
-	return d;
+	std::string a;
+	a = AskQuestion(currentNode, inputVector);
+	return a;
 }
 
 std::string DecisionTree::Query(std::vector<std::vector<std::string> > inputVector)
@@ -220,32 +220,32 @@ std::string DecisionTree::AskQuestion(TreeNode *node, std::vector<std::vector<st
 	//cout << inputVector[1][4];
 	//cout << findPosReturnValue(inputVector, b);
 	if (answer == 0){
-		std::string e = "No Value";
-		return e;
+		std::string a = "No Value";
+		return a;
 	}
 	else {
 		if (answer < (node->m_NodeValue)){
-			std::string c = QueryBinaryTree(node->m_pYesBranch, inputVector);
-			return c;
+			std::string a = QueryBinaryTree(node->m_pYesBranch, inputVector);
+			return a;
 		}
-		else if (answer >(node->m_NodeValue)){
-			std::string b = QueryBinaryTree(node->m_pNoBranch, inputVector);
-			return b;
+		else if (answer >= (node->m_NodeValue)){
+			std::string a = QueryBinaryTree(node->m_pNoBranch, inputVector);
+			return a;
 		}
-		else//看起来好像没用了现在
-		{
-			std::cout << "Error please answer yes or no\n";
-			AskQuestion(node, inputVector);
-		}
+		//else//看起来好像没用了现在
+		//{
+		//	std::cout << "Error please answer yes or no\n";
+		//	AskQuestion(node, inputVector);
+		//}
 	}
 
 }
-
+//not use now
 void DecisionTree::Output()
 {
 	OutputBinaryTree("1", m_pRootNode);
 }
-
+//not use now
 void DecisionTree::OutputBinaryTree(const std::string & tag, TreeNode* currentNode)
 {
 	if (currentNode == NULL)
@@ -657,7 +657,7 @@ int main(int argc, char *argv[]) {
 	      treeLineInfo.erase(0, treeWordPos + treeWordBreak.length());
 	      treeWordPos = treeLineInfo.find(treeWordBreak);
 	    }
-	    newTree->Output();
+	    //newTree->Output();
 			std::string result;
 			result = newTree->Query(my);
 			std::cout << result << std::endl;
