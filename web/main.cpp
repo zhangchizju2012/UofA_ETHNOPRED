@@ -303,15 +303,6 @@ Type stringToNum(const std::string & str)
 	return num;
 }
 
-bool inTheTreeOrNot(std::vector<std::string> treevector, const std::string & a){
-	for (int i = 0; i <= (treevector.size() - 1); i++){
-		if (treevector[i] == a){
-			return true;
-		}
-	}
-	return false;
-}
-//string readCSVFile( const char * fileName){
 std::vector<std::vector<std::string> > readCSVFile(const char * fileName){
 	std::vector<std::vector<std::string> > myvectorinitial;
 	myvectorinitial.resize(2);
