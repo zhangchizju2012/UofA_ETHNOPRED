@@ -1,3 +1,4 @@
+
 #include "common.hpp"
 #include "TreeNode.h"
 #include "DecisionTree.h"
@@ -325,7 +326,6 @@ int findPosReturnValue(std::vector<vector<string> > inputVector, string a){
       else if(inputVector[1][i] == "Aa") return 222;
       else if(inputVector[1][i] == "aa") return 333;
     }
-
   }
   //return 20;
 }
@@ -465,14 +465,11 @@ std::vector<std::vector<std::string> > readCSVFile(const char * fileName){
 	breakPos = line1.find(linebreak);
 	//cout << breakPos << endl;
 	//cout << std::string::npos << endl;
-
 	size_t commaPos;
-
 	commaPos = line1.find(delimiter);
 	lineID = line1.substr(0, commaPos);
 	//cout << lineID << endl;
 	myvector[0].push_back(lineID);
-
 	while (breakPos > 11){
 		line1 = line1.erase(0, commaPos + delimiter.length());
 		breakPos = line1.find(linebreak);
@@ -485,13 +482,11 @@ std::vector<std::vector<std::string> > readCSVFile(const char * fileName){
 		//cout << lineID << endl;
 		myvector[0].push_back(lineID);
 	}
-
 	breakPos = line2.find(linebreak);
 	commaPos = line2.find(delimiter);
 	lineID = line2.substr(0, commaPos);
 	//cout << lineID << endl;
 	myvector[1].push_back(lineID);
-
 	while (breakPos > 5){
 		line2 = line2.erase(0, commaPos + delimiter.length());
 		breakPos = line2.find(linebreak);
@@ -718,7 +713,6 @@ int main(int argc, char *argv[]) {
 	cout << result1 << endl;
 	delete newTree1;
 	myresult.push_back(result1);
-
 	DecisionTree* newTree2 = new DecisionTree();
 	//add the required root node
 	newTree2->CreateRootNode("rs35389", "Q", 2.5);
@@ -739,7 +733,6 @@ int main(int argc, char *argv[]) {
 	cout << result2 << endl;
 	delete newTree2;
 	myresult.push_back(result2);
-
 	DecisionTree* newTree3 = new DecisionTree();
 	//add the required root node
 	newTree3->CreateRootNode("rs1986420", "Q", 2.5);
@@ -758,7 +751,6 @@ int main(int argc, char *argv[]) {
 	cout << result3 << endl;
 	delete newTree3;
 	myresult.push_back(result3);
-
 	DecisionTree* newTree4 = new DecisionTree();
 	//add the required root node
 	newTree4->CreateRootNode("rs2675345", "Q", 1.5);
@@ -777,7 +769,6 @@ int main(int argc, char *argv[]) {
 	cout << result4 << endl;
 	delete newTree4;
 	myresult.push_back(result4);
-
 	DecisionTree* newTree5 = new DecisionTree();
 	//add the required root node
 	newTree5->CreateRootNode("rs2700392", "Q", 1.5);
@@ -798,7 +789,6 @@ int main(int argc, char *argv[]) {
 	cout << result5 << endl;
 	delete newTree5;
 	myresult.push_back(result5);
-
 	DecisionTree* newTree6 = new DecisionTree();
 	//add the required root node
 	newTree6->CreateRootNode("rs260700", "Q", 2.5);
@@ -823,7 +813,6 @@ int main(int argc, char *argv[]) {
 	cout << result6 << endl;
 	delete newTree6;
 	myresult.push_back(result6);
-
 	DecisionTree* newTree7 = new DecisionTree();
 	//add the required root node
 	newTree7->CreateRootNode("rs260699", "Q", 1.5);
@@ -846,7 +835,6 @@ int main(int argc, char *argv[]) {
 	cout << result7 << endl;
 	delete newTree7;
 	myresult.push_back(result7);
-
 	DecisionTree* newTree8 = new DecisionTree();
 	//add the required root node
 	newTree8->CreateRootNode("rs260705", "Q", 1.5);
@@ -869,7 +857,6 @@ int main(int argc, char *argv[]) {
 	cout << result8 << endl;
 	delete newTree8;
 	myresult.push_back(result8);
-
 	DecisionTree* newTree9 = new DecisionTree();
 	//add the required root node
 	newTree9->CreateRootNode("rs282162", "Q", 2.5);
@@ -892,7 +879,6 @@ int main(int argc, char *argv[]) {
 	cout << result9 << endl;
 	delete newTree9;
 	myresult.push_back(result9);
-
 	DecisionTree* newTree10 = new DecisionTree();
 	//add the required root node
 	newTree10->CreateRootNode("rs2002739", "Q", 2.5);
@@ -915,7 +901,6 @@ int main(int argc, char *argv[]) {
 	cout << result10 << endl;
 	delete newTree10;
 	myresult.push_back(result10);
-
 	DecisionTree* newTree11 = new DecisionTree();
 	//add the required root node
 	newTree11->CreateRootNode("rs4722760", "Q", 1.5);
@@ -940,7 +925,6 @@ int main(int argc, char *argv[]) {
 	cout << result11 << endl;
 	delete newTree11;
 	myresult.push_back(result11);
-
 	DecisionTree* newTree12 = new DecisionTree();
 	//add the required root node
 	newTree12->CreateRootNode("rs2907599", "Q", 1.5);
@@ -963,7 +947,6 @@ int main(int argc, char *argv[]) {
 	cout << result12 << endl;
 	delete newTree12;
 	myresult.push_back(result12);
-
 	DecisionTree* newTree13 = new DecisionTree();
 	//add the required root node
 	newTree13->CreateRootNode("rs2893312", "Q", 1.5);
@@ -988,7 +971,6 @@ int main(int argc, char *argv[]) {
 	cout << result13 << endl;
 	delete newTree13;
 	myresult.push_back(result13);
-
 	DecisionTree* newTree14 = new DecisionTree();
 	//add the required root node
 	newTree14->CreateRootNode("rs590616", "Q", 1.5);
@@ -1011,7 +993,6 @@ int main(int argc, char *argv[]) {
 	cout << result14 << endl;
 	delete newTree14;
 	myresult.push_back(result14);
-
 	DecisionTree* newTree15 = new DecisionTree();
 	//add the required root node
 	newTree15->CreateRootNode("rs533571", "Q", 2.5);
@@ -1034,7 +1015,6 @@ int main(int argc, char *argv[]) {
 	cout << result15 << endl;
 	delete newTree15;
 	myresult.push_back(result15);
-
 	DecisionTree* newTree16 = new DecisionTree();
 	//add the required root node
 	newTree16->CreateRootNode("rs260709", "Q", 2.5);
@@ -1059,7 +1039,6 @@ int main(int argc, char *argv[]) {
 	cout << result16 << endl;
 	delete newTree16;
 	myresult.push_back(result16);
-
 	DecisionTree* newTree17 = new DecisionTree();
 	//add the required root node
 	newTree17->CreateRootNode("rs6534999", "Q", 2.5);
@@ -1082,7 +1061,6 @@ int main(int argc, char *argv[]) {
 	cout << result17 << endl;
 	delete newTree17;
 	myresult.push_back(result17);
-
 	DecisionTree* newTree18 = new DecisionTree();
 	//add the required root node
 	newTree18->CreateRootNode("rs4832501", "Q", 1.5);
@@ -1109,7 +1087,6 @@ int main(int argc, char *argv[]) {
 	cout << result18 << endl;
 	delete newTree18;
 	myresult.push_back(result18);
-
 	DecisionTree* newTree19 = new DecisionTree();
 	//add the required root node
 	newTree19->CreateRootNode("rs1437787", "Q", 1.5);
@@ -1134,7 +1111,6 @@ int main(int argc, char *argv[]) {
 	cout << result19 << endl;
 	delete newTree19;
 	myresult.push_back(result19);
-
 	DecisionTree* newTree20 = new DecisionTree();
 	//add the required root node
 	newTree20->CreateRootNode("rs4749305", "Q", 1.5);
@@ -1157,7 +1133,6 @@ int main(int argc, char *argv[]) {
 	cout << result20 << endl;
 	delete newTree20;
 	myresult.push_back(result20);
-
 	DecisionTree* newTree21 = new DecisionTree();
 	//add the required root node
 	newTree21->CreateRootNode("rs542405", "Q", 2.5);
@@ -1180,7 +1155,6 @@ int main(int argc, char *argv[]) {
 	cout << result21 << endl;
 	delete newTree21;
 	myresult.push_back(result21);
-
 	DecisionTree* newTree22 = new DecisionTree();
 	//add the required root node
 	newTree22->CreateRootNode("rs738276", "Q", 1.5);
@@ -1207,7 +1181,6 @@ int main(int argc, char *argv[]) {
 	cout << result22 << endl;
 	delete newTree22;
 	myresult.push_back(result22);
-
 	DecisionTree* newTree23 = new DecisionTree();
 	//add the required root node
 	newTree23->CreateRootNode("rs943773", "Q", 1.5);
@@ -1230,7 +1203,6 @@ int main(int argc, char *argv[]) {
 	cout << result23 << endl;
 	delete newTree23;
 	myresult.push_back(result23);
-
 	DecisionTree* newTree24 = new DecisionTree();
 	//add the required root node
 	newTree24->CreateRootNode("rs8097206", "Q", 2.5);
@@ -1255,7 +1227,6 @@ int main(int argc, char *argv[]) {
 	cout << result24 << endl;
 	delete newTree24;
 	myresult.push_back(result24);
-
 	DecisionTree* newTree25 = new DecisionTree();
 	//add the required root node
 	newTree25->CreateRootNode("rs10851731", "Q", 1.5);
@@ -1278,7 +1249,6 @@ int main(int argc, char *argv[]) {
 	cout << result25 << endl;
 	delete newTree25;
 	myresult.push_back(result25);
-
 	DecisionTree* newTree26 = new DecisionTree();
 	//add the required root node
 	newTree26->CreateRootNode("rs2228511", "Q", 2.5);
@@ -1301,7 +1271,6 @@ int main(int argc, char *argv[]) {
 	cout << result26 << endl;
 	delete newTree26;
 	myresult.push_back(result26);
-
 	DecisionTree* newTree27 = new DecisionTree();
 	//add the required root node
 	newTree27->CreateRootNode("rs1942885", "Q", 2.5);
@@ -1326,7 +1295,6 @@ int main(int argc, char *argv[]) {
 	cout << result27 << endl;
 	delete newTree27;
 	myresult.push_back(result27);
-
 	DecisionTree* newTree28 = new DecisionTree();
 	//add the required root node
 	newTree28->CreateRootNode("rs260711", "Q", 1.5);
@@ -1349,7 +1317,6 @@ int main(int argc, char *argv[]) {
 	cout << result28 << endl;
 	delete newTree28;
 	myresult.push_back(result28);
-
 	DecisionTree* newTree29 = new DecisionTree();
 	//add the required root node
 	newTree29->CreateRootNode("rs1250253", "Q", 2.5);
@@ -1374,7 +1341,6 @@ int main(int argc, char *argv[]) {
 	cout << result29 << endl;
 	delete newTree29;
 	myresult.push_back(result29);
-
 	DecisionTree* newTree30 = new DecisionTree();
 	//add the required root node
 	newTree30->CreateRootNode("rs7923368", "Q", 2.5);
@@ -1409,14 +1375,12 @@ int main(int argc, char *argv[]) {
 /*
 #include "common.hpp"
 int main(int argc, char *argv[]){
-
   int c;
   char * inputFile = NULL;
   char * output_file = NULL;
   while ((c = getopt (argc, argv, "i:o:")) != -1){
         switch (c)
   	{
-
   	case 'i':
   //          fprintf(stderr,"[%s]-> ",optarg);
   	  if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
@@ -1424,11 +1388,8 @@ int main(int argc, char *argv[]){
   		       "Found illegal or NULL parameter for the option -i.\n");
   	      return 1;
   	  }
-
   	  inputFile = optarg;
-
   	  break;
-
     case 'o':
   //          fprintf(stderr,"[%s]-> ",optarg);
       if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
@@ -1436,11 +1397,8 @@ int main(int argc, char *argv[]){
              "Found illegal or NULL parameter for the option -o.\n");
           return 1;
       }
-
       output_file = optarg;
-
       break;
-
   case '?':
     fprintf (stderr, "Unknown option `-%c'.\n", optopt);
     return 1;
@@ -1449,12 +1407,10 @@ int main(int argc, char *argv[]){
 if (inputFile != NULL){
   std::cout << inputFile << std::endl;
 }
-
 if (output_file != NULL){
   std::cout << output_file << std::endl;
 }
   auto str = "Hello World!!";
-
   return 0;
 }
 */
