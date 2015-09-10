@@ -17,6 +17,9 @@ var express  = require( 'express' ),
     bodyParser = require( 'body-parser' ),
     app = express(),
     expressValidator = require( 'express-validator' );
+    //connect-busy used to uploaded file
+  var busboy = require( 'connect-busboy' );
+  app.use(busboy());
 
 /*Set EJS template Engine*/
 app.set( 'views', path.join(__dirname, 'app') );
@@ -29,6 +32,7 @@ app.use( expressValidator() );
 app.use( allowCrossDomain );
 
 //No MySql
+
 
 /* Use in-house prepated query lib*/
 app.get( '/',function( req,res ){

@@ -1,11 +1,14 @@
 <html>
 <head>
+  <title><%=title%></title>
+
   <script src="/jquery/dist/jquery.min.js"></script>
   <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
 
 </head>
 <body>
 
+<%=ajaxUrl%>
 <p>Choose a Ethnicity Classifier and see SNPs needed</p>
 <p>----</p>
 
@@ -31,13 +34,13 @@
     <p>----</p>
 
 </form>
-<form method="post"  action="" enctype='multipart/form-data'>
+<form method="post"  action="dtree.json" enctype='multipart/form-data'>
     <table>
         <tr>
             <td >Select your File</td>
         </tr>
         <tr>
-            <td><input type="file" name="image" /></td>
+            <td><input type="file" name="csvFile"/></td>
         </tr>
 
         <tr>
