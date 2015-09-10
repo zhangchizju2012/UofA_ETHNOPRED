@@ -22,7 +22,7 @@ var express  = require( 'express' ),
 app.set( 'views', path.join(__dirname, 'app') );
 app.set( 'view engine','ejs' );
 
-app.use( express.static( path.join(__dirname, 'public')) );
+app.use( express.static( path.join(__dirname, '/bower_components')) );
 app.use( bodyParser.urlencoded({ extended: true }) ); //support x-www-form-urlencoded
 app.use( bodyParser() );
 app.use( expressValidator() );
@@ -45,7 +45,7 @@ var options = new globalOption( __dirname ).getGlobalOption();
 
 
 //Bind routing to the whole
-app.use( require( './app/ETHNOPRED.js' )( options ) );
+app.use( require( './app/ETHNOPRED/ETHNOPRED.js' )( options ) );
 
 var server = app.listen( port, '0.0.0.0', function() {
    console.log( "Listening to port %s", server.address().port );

@@ -1,0 +1,11 @@
+{
+  "name": "ethnopred-server-bower",
+  "description": "",
+  "version": "0.0.0",
+  "license": "GPL",
+  "private": false,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.0.0"
+  }
+}

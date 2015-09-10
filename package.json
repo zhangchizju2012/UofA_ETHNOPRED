@@ -1,6 +1,6 @@
 {
-  "name": "rest-crud",
-  "description": "REST CRUD Example Node.js & Mysql",
+  "name": "ethnopred-server",
+  "description": "",
   "version": "0.0.1",
   "private": true,
   "main": "server.js",
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "node": "*",
+    "bower": "*",
     "body-parser": "1.9.0",
+    "bootstrap": "3.3.5",
     "ejs": "^1.0.0",
     "express": "^4.9.5",
     "express-myconnection": "*",
