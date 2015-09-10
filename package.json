@@ -22,6 +22,7 @@
     "async": "0.9.0",
     "mocha": "2.2.5",
     "pm2": "*",
+    "temp": "*",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-concat": "~0.3.0",
@@ -29,7 +30,7 @@
     "grunt-mocha-test": "*",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "0.5.1",
-    "grunt-run": "*", 
+    "grunt-run": "*",
     "request": "*"
   },
   "devDependencies": {

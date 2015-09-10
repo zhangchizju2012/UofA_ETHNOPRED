@@ -12,8 +12,6 @@ var allowCrossDomain = function( req, res, next ) {
     }
 };
 
-var rootRut = '/idm/';
-
 var express  = require( 'express' ),
     path = require( 'path' ),
     bodyParser = require( 'body-parser' ),
