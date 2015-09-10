@@ -8,11 +8,10 @@
 </head>
 <body>
 
-<%=ajaxUrl%>
 <p>Choose a Ethnicity Classifier and see SNPs needed</p>
 <p>----</p>
 
-<form>
+<form method="post"  id="data" action=<%= ajaxUrl %> enctype='multipart/form-data'>
     Continental:
     <input type="radio" id="input_1" name="Classifier" value="Continental" /><br/>
     <span id="1">ClicK to see SNPs.</span>
@@ -32,9 +31,6 @@
     <input type="radio" id="input_4" name="Classifier" value="Kenyan" /><br/>
     <span id="4">ClicK to see SNPs.</span>
     <p>----</p>
-
-</form>
-<form method="post"  action="dtree.json" enctype='multipart/form-data'>
     <table>
         <tr>
             <td >Select your File</td>
@@ -44,16 +40,16 @@
         </tr>
 
         <tr>
-            <td><input type="submit" value="Submit" /></td>
+            <td><button>Submit</button></td>
         </tr>
     </table>
 </form>
+<span id="results"></span>
 </body>
 <script type="text/javascript">
 $( document ).ready(function() {
     //alert( "ready!" );
     var elm1 = $('#input_1');
-    alert('run');
     elm1.on('click', function () {
       //alert("Run");
       $('#1').text("SNPs for 1");
@@ -75,8 +71,29 @@ $( document ).ready(function() {
     });
     //document.getElementById("1").innerHTML="SNPs for 1";
     //document.getElementById("2").innerHTML="SNPs for 2";
-});
 
+    $("form#data").submit(function(){
+      alert('G');
+      var formData = new FormData($(this)[0]);
+      console.log(formData);
+
+      $.ajax({
+          url: "http://localhost:3001/ETHNOPRED/dtree.json",
+          type: 'POST',
+          data: formData,
+          async: false,
+          success: function (data) {
+
+            $("#results").text(data.data);
+          },
+          cache: false,
+          contentType: false,
+          processData: false
+      });
+
+      return false;
+  });
+});
 </script>
 
 </html>

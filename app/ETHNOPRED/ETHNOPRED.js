@@ -13,7 +13,7 @@ module.exports = function( options ) {
 
     //login page
     getJSONDtree.apply( dtreeJSONRut );
-    postJSONDtree.apply( dtreeJSONRut, [rootFolder] );
+    postJSONDtree.apply( dtreeJSONRut, [ rootFolder ] );
     pageNavigation.apply( dtreeRut, [ "./ETHNOPRED/ETHNOPRED.ejs", "Welcome to UofA ETHNOPRED"] );
 
     function getJSONDtree(){
@@ -28,7 +28,7 @@ module.exports = function( options ) {
         });
     }
 
-    function postJSONDtree(rootFolder){
+    function postJSONDtree(rootFolder, viewName){
         //use multipart middleware
         var multipart = require('connect-multiparty');
         var multipartMiddleware = multipart();
@@ -38,9 +38,7 @@ module.exports = function( options ) {
 
             var fs = require( 'fs' );
 
-            console.log(req.body, req.files);
             var filePath = req.files.csvFile.path;
-            console.log(filePath);
 
             async.waterfall([
 
@@ -56,7 +54,6 @@ module.exports = function( options ) {
                       callback( true, "" );
 
                   } else {
-                      console.log(stdout);
                       callback( null, stdout );
                   }
               });
@@ -65,16 +62,17 @@ module.exports = function( options ) {
 
             ], function( err, results ) {
                 if ( err ){
-
+                  if(debug){
+                    console.log( err );
+                  }
                 } else {
-                    console.log("Success");
-                    res.send( { data: {results: results } } );
+                    if( debug ){
+                      console.log( debug );
+                    }
+                    res.send( {data: results} );
+                    return next();
                 }
-
             });
-
-            return next();
-
         });
     }
 
@@ -82,7 +80,7 @@ module.exports = function( options ) {
     function pageNavigation( viewName, title ) {
         this.get( function( req, res, next ) {
             //change to the ajax url
-            var ajaxUrl = req.route.path + '.json';
+            var ajaxUrl = req.route.path;
             if (debug){
               console.log( ajaxUrl );
             }
