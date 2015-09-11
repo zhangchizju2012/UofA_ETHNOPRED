@@ -1,5 +1,5 @@
-#ifndef ETHNOPRED_HEADER
-#define ETHNOPRED_HEADER
+#ifndef ETHNOPRED_COMMON
+#define ETHNOPRED_COMMON
 
 #include <iostream>
 #include <fstream>
@@ -11,5 +11,8 @@
 #include <string.h>
 #include <vector>
 #include <algorithm>
+#include <map>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 #endif
