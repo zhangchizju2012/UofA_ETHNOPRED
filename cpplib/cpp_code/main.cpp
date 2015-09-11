@@ -14,7 +14,6 @@ int main(int argc, char *argv[]) {
       {
 
       case 'i':
-    //          fprintf(stderr,"[%s]-> ",optarg);
         if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
             fprintf (stderr,
                "Found illegal or NULL parameter for the option -i.\n");
@@ -46,8 +45,7 @@ int main(int argc, char *argv[]) {
     std::cout << inputFile << std::endl;
   }
 
-    std::vector<std::vector<std::string> > my = ETHNOPRED::IO::analysisCSVFile(inputFile);
-
+    std::vector<std::vector<std::string> > my = ETHNOPRED::IO::analyzeCSVFile(inputFile);
 		std::vector<std::string> myresult;
 
 		std::string treeWordBreak = ",";
@@ -73,58 +71,41 @@ int main(int argc, char *argv[]) {
 	  size_t treeWordPos;
 	  size_t treeLinePos;
 	  treeLinePos = treeInfo.find(treeLineBreak);
-	  while(treeLinePos < 1000000){
+
+	  while(treeLinePos != std::string::npos){
+
 	    treeLineInfo = treeInfo.substr(0, treeLinePos + treeLineBreak.length());
-
 			DecisionTree* newTree = new DecisionTree();
-
 	    treeWordPos = treeLineInfo.find(treeWordBreak);
-	    while(treeWordPos < 1000000){
-	      treeWordInfo = treeLineInfo.substr(0, treeWordPos + treeWordBreak.length());
 
+	    while(treeWordPos != std::string::npos){
+	      treeWordInfo = treeLineInfo.substr(0, treeWordPos + treeWordBreak.length());
 	      treeNodePos = treeWordInfo.find(treeNodeBreak);
 	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-	      //cout << treeNodeInfo[0] << endl;
-	      treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	      treeNodePos = treeWordInfo.find(treeNodeBreak);
-	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-	      //cout << treeNodeInfo[1] << endl;
-	      treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	      treeNodePos = treeWordInfo.find(treeNodeBreak);
-	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-	      //cout << treeNodeInfo[2] << endl;
+
+        //Yes_rs7573555_rs7561423_Q_6 forward 4 times based on '-'
+        //Create_rs7570971_Q_1.5 is still find, even if it is shorter
+        for ( auto i = 0; i < 4 ; ++i){
+          treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
+          treeNodePos = treeWordInfo.find(treeNodeBreak);
+          treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+        }
+;
 	      if(treeNodeInfo[0] == "Create"){
-	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	        treeNodePos = treeWordInfo.find(treeNodeBreak);
-	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
 	        double a = std::stof(treeNodeInfo[3]);
 	        newTree->CreateRootNode(treeNodeInfo[1], treeNodeInfo[2], a);
 	        treeNodeInfo.clear();
-	      }
-	      else if (treeNodeInfo[0] == "Yes"){
-	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	        treeNodePos = treeWordInfo.find(treeNodeBreak);
-	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-
-	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	        treeNodePos = treeWordInfo.find(treeNodeBreak);
-	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	      } else if (treeNodeInfo[0] == "Yes"){
 	        double a = std::stof(treeNodeInfo[4]);
 	        newTree->AddYesNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
 	        treeNodeInfo.clear();
-	      }
-	      else if (treeNodeInfo[0] == "No"){
-	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	        treeNodePos = treeWordInfo.find(treeNodeBreak);
-	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-
-	        treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-	        treeNodePos = treeWordInfo.find(treeNodeBreak);
-	        treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
+	      } else if (treeNodeInfo[0] == "No"){
 	        double a = std::stof(treeNodeInfo[4]);
 	        newTree->AddNoNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
 	        treeNodeInfo.clear();
-	      }
+	      } else {
+          //add warning
+        }
 
 	      treeLineInfo.erase(0, treeWordPos + treeWordBreak.length());
 	      treeWordPos = treeLineInfo.find(treeWordBreak);
@@ -132,7 +113,7 @@ int main(int argc, char *argv[]) {
 	    //newTree->Output();
 			std::string result;
 			result = newTree->Query(my);
-			std::cout << result << std::endl;
+
 			delete newTree;
 			myresult.push_back(result);
 
