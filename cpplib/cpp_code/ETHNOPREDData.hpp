@@ -29,7 +29,7 @@ namespace ETHNOPRED {
           {"CEU", { "1", 0 }},
           {"CHB/JPT", { "2", 0 }},
           {"YRI", { "3", 0 }},
-          {"No Value", { "No Value", 0 }}
+          {"NoValue", { "No Value", 0 }}
         };
         return voteNum;
       }
