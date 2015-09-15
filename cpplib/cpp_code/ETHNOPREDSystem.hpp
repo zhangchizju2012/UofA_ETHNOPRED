@@ -95,7 +95,7 @@ namespace ETHNOPRED {
     	breakPos = str.find(linebreak);
 
     	int h = 1;
-    	while (breakPos < 100000000){
+    	while (breakPos != std::string::npos){
     		auto line2 = str.substr(0, breakPos + linebreak.length());
 
     		posvector2.push_back(-1);
