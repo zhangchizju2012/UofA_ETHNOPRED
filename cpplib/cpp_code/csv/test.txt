@@ -1,0 +1,5 @@
+cd,bf,3,cn,5,6,7
+AA,Aa,AA,aa,Aa,AA,AA,AA,aa,Aa,aa,Aa,AA,aa,Aa,AA,aa
+Aa,aa,Aa,AA,aa,Aa,AA,aa
+2,3,4,5,6,7,8,9,10,11,12
+3,4,5,6,7,8,9,10,11,12

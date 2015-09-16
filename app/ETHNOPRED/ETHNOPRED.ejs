@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title><%=title%></title>
+
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+
+</head>
+<body>
+
+<p>Choose a Ethnicity Classifier and see SNPs needed</p>
+<p>----</p>
+
+<form method="post"  id="data" action=<%= ajaxUrl %> enctype='multipart/form-data'>
+    Continental:
+    <input type="radio" id="input_1" name="Classifier" value="Continental" /><br/>
+    <span id="1">ClicK to see SNPs.</span>
+    <p>----</p>
+
+    Subcontinental-East Asian:
+    <input type="radio" id="input_2" name="Classifier" value="East Asian" /><br/>
+    <span id="2">ClicK to see SNPs.</span>
+    <p>----</p>
+
+    Subcontinental-African:
+    <input type="radio" id="input_3" name="Classifier" value="African" /><br/>
+    <span id="3">ClicK to see SNPs.</span>
+    <p>----</p>
+
+    Subcontinental-Kenyan:
+    <input type="radio" id="input_4" name="Classifier" value="Kenyan" /><br/>
+    <span id="4">ClicK to see SNPs.</span>
+    <p>----</p>
+    <table>
+        <tr>
+            <td >Select your File</td>
+        </tr>
+        <tr>
+            <td><input type="file" name="csvFile"/></td>
+        </tr>
+
+        <tr>
+            <td><button>Submit</button></td>
+        </tr>
+    </table>
+</form>
+<span id="results"></span>
+</body>
+<script type="text/javascript">
+$( document ).ready(function() {
+    //alert( "ready!" );
+    var elm1 = $('#input_1');
+    elm1.on('click', function () {
+      //alert("Run");
+      $('#1').text("SNPs for 1");
+    });
+    var elm2 = $('#input_2');
+    elm2.on('click', function () {
+      //alert("Run");
+      $('#2').text("SNPs for 2");
+    });
+    var elm3 = $('#input_3');
+    elm3.on('click', function () {
+      //alert("Run");
+      $('#3').text("SNPs for 3");
+    });
+    var elm4 = $('#input_4');
+    elm4.on('click', function () {
+      //alert("Run");
+      $('#4').text("SNPs for 4");
+    });
+    //document.getElementById("1").innerHTML="SNPs for 1";
+    //document.getElementById("2").innerHTML="SNPs for 2";
+
+    $("form#data").submit(function(){
+      alert('G');
+      var formData = new FormData($(this)[0]);
+      console.log(formData);
+
+      $.ajax({
+          url: "http://localhost:3001/ETHNOPRED/dtree.json",
+          type: 'POST',
+          data: formData,
+          async: false,
+          success: function (data) {
+
+            $("#results").text(data.data);
+          },
+          cache: false,
+          contentType: false,
+          processData: false
+      });
+
+      return false;
+  });
+});
+</script>
+
+</html>
