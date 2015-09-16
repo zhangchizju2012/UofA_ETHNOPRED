@@ -37,8 +37,10 @@ module.exports = function( options ) {
                 var async = require( 'async' );
 
             var fs = require( 'fs' );
+            console.log(req.files);
 
-            var filePath = req.files.csvFile.path;
+            var filePath = req.files.file.path;
+            console.log(filePath);
 
             async.waterfall([
 
@@ -69,6 +71,7 @@ module.exports = function( options ) {
                     if( debug ){
                       console.log( debug );
                     }
+                    console.log(results);
                     res.send( {data: results} );
                     return next();
                 }

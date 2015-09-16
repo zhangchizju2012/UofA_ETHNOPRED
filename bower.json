@@ -6,6 +6,8 @@
   "private": false,
   "dependencies": {
     "jquery": "~2.1.1",
-    "bootstrap": "~3.0.0"
+    "bootstrap": "~3.0.0",
+    "ng-file-upload-shim": "*",
+    "ng-file-upload" "*"
   }
 }
