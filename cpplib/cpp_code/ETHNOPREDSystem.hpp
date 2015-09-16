@@ -9,9 +9,9 @@ namespace ETHNOPRED {
 
     VVS analyzeCSVFile(const char * fileName){
       VVS myvectorinitial;
-    	myvectorinitial.resize(6);
+    	myvectorinitial.resize(300);
     	VVS myvector;
-    	myvector.resize(6);
+    	myvector.resize(300);
     	std::ifstream file;
     	std::stringstream ss;
     	std::string str;
