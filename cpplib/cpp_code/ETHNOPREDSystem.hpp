@@ -5,7 +5,7 @@
 namespace ETHNOPRED {
   namespace IO {
     typedef std::vector<std::vector<std::string>> VVS;
-    typedef std::vector<std::string> VS;
+    typedef std::vector<std::vector<std::string>> VS;
 
     VVS analyzeCSVFile(const char * fileName){
       VVS myvectorinitial;
@@ -124,35 +124,54 @@ namespace ETHNOPRED {
     	return myvector;
     }
 
-    void getJSONResult(VS result,  const std::string& classifierType = "continent"){
-      //use boost property_tree lib to report final result
-      using boost::property_tree::ptree;
-      using boost::property_tree::basic_ptree;
+    void getJSONResult(VVS resultAll,  const std::string& classifierType = "continent"){
 
-      /* votedNum -> data structure: map<string, pair<string, int>>
-      <Name_of_Human_Species, <code_number, number_of_voted>>
-      e.g <"EUR", <"1", 20>>
-      */
-      auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
+        //use boost property_tree lib to report final result
+        using boost::property_tree::ptree;
+        using boost::property_tree::basic_ptree;
+        using namespace std;
 
-      for (auto &r : result){
-        for (auto &v : votedNum){
-           if (r == v.second.first){
-             v.second.second++;
-           }
+        //initial vote vector for all patients
+
+        vector<map<string, pair<string, int>>> voteNumAll;
+
+        for (auto &eachPatient : resultAll){
+            voteNumAll.push_back(votedNum);
         }
-      }
 
-      ptree JSONResult;
-      for(auto &v : votedNum){
-        JSONResult.put(v.first, v.second.second);
-      }
+        for (auto &eachPatient : resultAll){
+            for(auto &identifier: eachPatient){
 
-      //print out json
-      std::stringstream ss;
-      write_json(ss, JSONResult);
-      std::cout << ss.str() << std::endl;
+                /* votedNum -> data structure: map<string, pair<string, int>>
+                <Name_of_Human_Species, <code_number, number_of_voted>>
+                e.g <"EUR", <"1", 20>>
+                */
+                auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
 
+                for (auto &v : votedNum){
+                   if (identifier == v.second.first){
+                     v.second.second++;
+                   }
+                }
+                voteNumAll.push_back(votedNum)
+            }
+        }
+        
+        ptree JSONResultAll;
+
+        for(auto &voteEachPatient : voteNumAll){
+            basic_ptree JSONResultEach;
+            for( auto &vote : voteEachPatient){
+                JSONResultEach.put(vote.first, vote.second.second);
+            }
+
+            JSONResultAll.put_child('voteResult', JSONResultEach);
+        }
+
+        //print out json
+        std::stringstream ss;
+        write_json(ss, JSONResultAll);
+        std::cout << ss.str() << std::endl;
     }
   }
 }
