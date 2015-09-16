@@ -41,11 +41,9 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
-  if (inputFile != NULL){
-    std::cout << inputFile << std::endl;
-  }
 
-    std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
+  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
+  std::vector<std::vector<std::string>> resultAllPatient;
 
   for(int count=1; count < myFull.size(); count++){
     std::vector<std::vector<std::string> > my;
@@ -54,7 +52,7 @@ int main(int argc, char *argv[]) {
     my[1]=myFull[count];
 
 
-		std::vector<std::string> myresult;
+		std::vector<std::string> resultOnePatient;
 
 		std::string treeWordBreak = ",";
 	  std::string treeLineBreak = "\n";
@@ -98,7 +96,7 @@ int main(int argc, char *argv[]) {
           treeNodePos = treeWordInfo.find(treeNodeBreak);
           treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
         }
-;
+
 	      if(treeNodeInfo[0] == "Create"){
 	        double a = std::stof(treeNodeInfo[3]);
 	        newTree->CreateRootNode(treeNodeInfo[1], treeNodeInfo[2], a);
@@ -123,14 +121,17 @@ int main(int argc, char *argv[]) {
 			result = newTree->Query(my);
 
 			delete newTree;
-			myresult.push_back(result);
+			resultOnePatient.push_back(result);
 
 			treeInfo.erase(0, treeLinePos + treeLineBreak.length());
 	    treeLinePos = treeInfo.find(treeLineBreak);
 	  }
 
-	ETHNOPRED::IO::getJSONResult(myresult);
+  resultAllPatient.push_back(resultOnePatient);
 }
+
+  ETHNOPRED::IO::getJSONResult(resultAllPatient);
+
 	//system("pause");
 	return 0;
 
