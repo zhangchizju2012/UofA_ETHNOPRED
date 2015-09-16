@@ -132,41 +132,66 @@ namespace ETHNOPRED {
         using namespace std;
 
         //initial vote vector for all patients
-
         vector<map<string, pair<string, int>>> voteNumAll;
 
-        for (auto &eachPatient : resultAll){
-            for(auto &identifier: eachPatient){
+        //store the winner for each patients
+        vector<string> voteWinner;
 
+        for (auto &eachPatient : resultAll){
+
+            auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
+
+            for(auto &identifier: eachPatient){
                 /* votedNum -> data structure: map<string, pair<string, int>>
                 <Name_of_Human_Species, <code_number, number_of_voted>>
                 e.g <"EUR", <"1", 20>>
                 */
-                auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
-
                 for (auto &v : votedNum){
                    if (identifier == v.second.first){
                      v.second.second++;
                    }
                 }
-
-                voteNumAll.push_back(votedNum);
             }
+
+            voteNumAll.push_back(votedNum);
         }
         
         ptree JSONResultAll;
-        ptree JSONResultArr;
+        ptree JSONVoteForEach;
+        ptree JSONWinnerForEach;
 
         for(auto &voteEachPatient : voteNumAll){
             ptree JSONResultEach;
+
+            //append vote info to JSON file
             for( auto &vote : voteEachPatient){
+                //vote.second.second is the final vote for the given patient
                 JSONResultEach.put(vote.first, vote.second.second);
             }
-            JSONResultArr.push_back(make_pair("", JSONResultEach));
+
+
+            //find the best voted category (winner) for each patient
+            ptree JSONWinnerEach;
+
+            int winnerCount = 0;
+            std::string winnerName("");
+
+            for( auto &vote : voteEachPatient){
+                if (winnerCount < vote.second.second){
+                    winnerCount =  vote.second.second;
+                    winnerName = vote.first;
+                }
+            }
+
+            JSONWinnerEach.put(winnerName, winnerCount);
+
+            JSONWinnerForEach.push_back(make_pair("", JSONWinnerEach));
+            JSONVoteForEach.push_back(make_pair("", JSONResultEach));
 
         }
 
-        JSONResultAll.add_child("vote", JSONResultArr);
+        JSONResultAll.add_child("vote", JSONVoteForEach);
+        JSONResultAll.add_child("winner", JSONWinnerForEach);
 
         //print out json
         std::stringstream ss;
