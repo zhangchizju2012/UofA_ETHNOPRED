@@ -41,9 +41,6 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
-  if (inputFile != NULL){
-    std::cout << inputFile << std::endl;
-  }
 
   std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
   std::vector<std::vector<std::string>> resultAllPatient;
