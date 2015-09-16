@@ -56,6 +56,7 @@ module.exports = function( options ) {
                       callback( true, "" );
 
                   } else {
+                      var stdout = JSON.parse( stdout );
                       callback( null, stdout );
                   }
               });
