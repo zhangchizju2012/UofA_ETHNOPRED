@@ -136,10 +136,6 @@ namespace ETHNOPRED {
         vector<map<string, pair<string, int>>> voteNumAll;
 
         for (auto &eachPatient : resultAll){
-            voteNumAll.push_back(votedNum);
-        }
-
-        for (auto &eachPatient : resultAll){
             for(auto &identifier: eachPatient){
 
                 /* votedNum -> data structure: map<string, pair<string, int>>
@@ -153,20 +149,24 @@ namespace ETHNOPRED {
                      v.second.second++;
                    }
                 }
-                voteNumAll.push_back(votedNum)
+
+                voteNumAll.push_back(votedNum);
             }
         }
         
         ptree JSONResultAll;
+        ptree JSONResultArr;
 
         for(auto &voteEachPatient : voteNumAll){
-            basic_ptree JSONResultEach;
+            ptree JSONResultEach;
             for( auto &vote : voteEachPatient){
                 JSONResultEach.put(vote.first, vote.second.second);
             }
+            JSONResultArr.push_back(make_pair("", JSONResultEach));
 
-            JSONResultAll.put_child('voteResult', JSONResultEach);
         }
+
+        JSONResultAll.add_child("vote", JSONResultArr);
 
         //print out json
         std::stringstream ss;

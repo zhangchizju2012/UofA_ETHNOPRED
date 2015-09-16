@@ -45,7 +45,8 @@ int main(int argc, char *argv[]) {
     std::cout << inputFile << std::endl;
   }
 
-    std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
+  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
+  std::vector<std::vector<std::string>> resultAllPatient;
 
   for(int count=1; count < myFull.size(); count++){
     std::vector<std::vector<std::string> > my;
@@ -55,7 +56,6 @@ int main(int argc, char *argv[]) {
 
 
 		std::vector<std::string> resultOnePatient;
-    std::vector<std::vector<std::string>> resultAllPatient;
 
 		std::string treeWordBreak = ",";
 	  std::string treeLineBreak = "\n";
@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
 	    treeLinePos = treeInfo.find(treeLineBreak);
 	  }
 
-  resultAllPatient.push_back(resultOnePatient)
+  resultAllPatient.push_back(resultOnePatient);
 }
 
   ETHNOPRED::IO::getJSONResult(resultAllPatient);
