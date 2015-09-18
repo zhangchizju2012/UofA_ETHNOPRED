@@ -70,12 +70,13 @@ int main(int argc, char *argv[]) {
 
 		std::vector<std::string> resultOnePatient;
 
-		std::string treeWordBreak = ",";
-	  std::string treeLineBreak = "\n";
-	  std::string treeNodeBreak = "_";
+		std::string treeWordBreak(",");
+	  std::string treeLineBreak("\n");
+	  std::string treeNodeBreak("_");
 
     //treeName must be accordance with finename udner the tree_structure folder
 		std::string treeInfo = EPTree->ReadFile(std::string(treeName));
+    std::cout << "treeInfo" << treeInfo;
 
 		std::string treeLineInfo;
 	  std::string treeWordInfo;
