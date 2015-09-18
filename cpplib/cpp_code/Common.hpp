@@ -14,6 +14,7 @@
 #include <map>
 #include <mutex>
 #include <stdexcept>
+#include <memory>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
