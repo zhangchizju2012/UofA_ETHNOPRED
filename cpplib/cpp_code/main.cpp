@@ -60,17 +60,24 @@ int main(int argc, char *argv[]) {
   std::shared_ptr<ETHNOPRED::ETHNOPREDTree> EPTree;
   std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
 
-  EPTree->AnalyzeSNIP(selectedSNIPFile);
+  EPTree->AnalyzeSNIP(SNIPFile, selectedSNIPFile);
 
-  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(SNIPFile);
+  /*personInfo strcuture:
+    1st line: SNIP info
+    2nd - endNth: people's DNA info
+  */
+  std::vector<std::vector<std::string>> personInfo = EPTree->AnalyzeSNIP(SNIPFile, selectedSNIPFile);
+  std::vector<std::string> SNIPHeader = personInfo.at(0);
+  /*Now personInfo is only people's DNA info*/
+  personInfo.erase(personInfo.begin());
+
   std::vector<std::vector<std::string>> resultAllPatient;
 
-  for(int count=1; count < myFull.size(); count++){
-    std::vector<std::vector<std::string> > my;
-    my.resize(2);
-    my[0]=myFull[0];
-    my[1]=myFull[count];
 
+  for(int count=0; count < personInfo.size(); count++){
+    std::vector<std::vector<std::string> > my;
+    my.push_back(SNIPHeader);
+    my.push_back(personInfo.at(count));
 
 		std::vector<std::string> resultOnePatient;
 
@@ -79,8 +86,9 @@ int main(int argc, char *argv[]) {
 	  std::string treeNodeBreak("_");
 
     //treeName must be accordance with finename udner the tree_structure folder
-		std::string treeInfo = EPTree->ReadFile(std::string(treeName));
-    std::cout << "treeInfo" << treeInfo;
+    //The second parameter true make sure: here is a line break '\n' at the end
+		std::string treeInfo = EPTree->ReadFile(std::string(treeName), true);
+    std::cout << "treeInfo" << treeInfo.size();
 
 		std::string treeLineInfo;
 	  std::string treeWordInfo;
@@ -93,9 +101,10 @@ int main(int argc, char *argv[]) {
 	  while(treeLinePos != std::string::npos){
 
 	    treeLineInfo = treeInfo.substr(0, treeLinePos + treeLineBreak.length());
+      DecisionTree* newTree = EPTree->CreateEPTree(treeLineInfo);
+      /*
 			DecisionTree* newTree = new DecisionTree();
 	    treeWordPos = treeLineInfo.find(treeWordBreak);
-
 	    while(treeWordPos != std::string::npos){
 	      treeWordInfo = treeLineInfo.substr(0, treeWordPos + treeWordBreak.length());
 	      treeNodePos = treeWordInfo.find(treeNodeBreak);
@@ -128,6 +137,7 @@ int main(int argc, char *argv[]) {
 	      treeLineInfo.erase(0, treeWordPos + treeWordBreak.length());
 	      treeWordPos = treeLineInfo.find(treeWordBreak);
 	    }
+      */
 	    //newTree->Output();
 			std::string result;
 			result = newTree->Query(my);

@@ -9,10 +9,12 @@ namespace ETHNOPRED{
 	using namespace std;
 	class ETHNOPREDTree{
 		public:
-			string ReadFile(const string&);
-			void AnalyzeSNIP(const string&);
+		    //For ReadFile second parameter, isBreaklineLast is true, we are going to automatically add a breakline '\n' at the end of the string, if the end of string is not '\n'
+			string ReadFile(const string&, bool isBreaklineLast);
+			vector<vector<string>> AnalyzeSNIP(const string& SNIPFileAll, const string& SNIPFileSelected);
 			void GetSNPID();
-			void CreateETHNOPEDTree();
+			DecisionTree* CreateEPTree(string);
+			void CreateEPTreeArray();
 			~ETHNOPREDTree();
 			vector<string> GetSNPIdVec();
 			string GetTreeStructure();
