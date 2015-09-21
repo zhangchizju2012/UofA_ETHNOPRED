@@ -1,6 +1,5 @@
 #ifndef ETHNOPRED_COMMON
 #define ETHNOPRED_COMMON
-
 #include <iostream>
 #include <fstream>
 #include <sstream>

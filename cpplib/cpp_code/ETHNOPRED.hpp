@@ -10,7 +10,7 @@ namespace ETHNOPRED{
 	class ETHNOPREDTree{
 		public:
 			string ReadFile(const string&);
-			void ReadSNPIP();
+			void AnalyzeSNIP(const string&);
 			void GetSNPID();
 			void CreateETHNOPEDTree();
 			~ETHNOPREDTree();

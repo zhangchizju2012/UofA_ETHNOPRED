@@ -10,9 +10,10 @@
 
 int main(int argc, char *argv[]) {
   int c;
-  char * inputFile = NULL;
+  char * SNIPFile = NULL;
   char * outputFile = NULL;
   char * treeName = NULL;
+
   while ((c = getopt (argc, argv, "i:o:t:")) != -1){
     switch (c)
       {
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        inputFile = optarg;
+        SNIPFile = optarg;
 
         break;
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
       case 't':
         if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
             fprintf (stderr,
-               "Found illegal or NULL parameter for the option -t.\n");
+               "Found illegal or NULL parameter for the option -t.\n -t option provides the path for the tree structure.");
             return 1;
         }
 
@@ -56,9 +57,12 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  std::shared_ptr<ETHNOPRED::ETHNOPREDTree> EPTree; 
+  std::shared_ptr<ETHNOPRED::ETHNOPREDTree> EPTree;
+  std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
 
-  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
+  EPTree->AnalyzeSNIP(selectedSNIPFile);
+
+  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(SNIPFile);
   std::vector<std::vector<std::string>> resultAllPatient;
 
   for(int count=1; count < myFull.size(); count++){
