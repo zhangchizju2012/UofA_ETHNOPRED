@@ -19,10 +19,17 @@ namespace ETHNOPRED{
 			void CreateEPTreeArray();
 			void MakeDecision();
 
+			void Add2DecisionPool();
+			void EmptyDecisionPool();
 			string GetTreeStructure();
 			void SetTreesInfo(const string&);
 			void SetPersonInfo(const vector<string>&);
 			void SetSNIPInfo(const vector<string>&);
+			void PrintStat(const string&);
+
+			void PrintDecision();
+
+			map<string, pair<string, int>> GetVoteMap(const string&);
 
 			vector<DecisionTree* > GetTreeArray();
 		private:
@@ -32,6 +39,7 @@ namespace ETHNOPRED{
 			vector<DecisionTree*> m_DecisionTreeArray;
 			vector<string> m_SNIPInfo;
 			vector<string> m_Decisions;
+			vector<vector<string>> m_DecisionsPool;
 	};
 }
 

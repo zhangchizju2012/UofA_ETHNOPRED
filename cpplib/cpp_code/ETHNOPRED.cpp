@@ -198,7 +198,7 @@ namespace ETHNOPRED{
 
 	void ETHNOPREDTree::CreateEPTreeArray(){
 		//make a copy of the m_treesInfo
-		string treesInfo = this->m_treesInfo;
+		string treesInfo = this->m_TreesInfo;
 		string treeLineDelimiter("\n");
 	    auto treeLinePos = treesInfo.find(treeLineDelimiter);
 
@@ -235,8 +235,8 @@ namespace ETHNOPRED{
 			m_Decisions.clear();
 		}
 
-		for (auto & tree :m_DecisionTreeArray){
-			vector<vector<string> info;
+		for (auto & tree : m_DecisionTreeArray){
+			vector<vector<string>> info;
 			info.push_back(m_SNIPInfo);
 			info.push_back(m_PersonInfo);
 			string decision = tree->Query(info);
@@ -244,4 +244,120 @@ namespace ETHNOPRED{
 		}
 	}
 
+	void ETHNOPREDTree::PrintDecision(){
+		for(auto & decision : m_Decisions){
+			cout << decision << endl;
+		}
+	}
+
+	void ETHNOPREDTree::Add2DecisionPool(){	
+		this->m_DecisionsPool.push_back(this->m_Decisions);
+
+	}
+
+	void ETHNOPREDTree::EmptyDecisionPool(){
+		if (!m_DecisionsPool.empty()){
+			m_DecisionsPool.clear();
+		}
+	}
+
+	void ETHNOPREDTree::PrintStat(const string& classifierType = "country"){
+        //use boost property_tree lib to report final result
+        using boost::property_tree::ptree;
+        using boost::property_tree::basic_ptree;
+
+        vector<map<string, pair<string, int>>> voteNumAll;
+
+        //store the winner for each person
+        vector<string> voteWinner;
+
+        for (auto &eachPatient : this->m_DecisionsPool){
+
+            auto votedNum = this->GetVoteMap(classifierType);
+
+            for(auto &identifier: eachPatient){
+                /* votedNum -> data structure: map<string, pair<string, int>>
+                <Name_of_Human_Species, <code_number, number_of_voted>>
+                e.g <"EUR", <"1", 20>>
+                */
+                for (auto &v : votedNum){
+                   if (identifier == v.second.first){
+                     v.second.second++;
+                   }
+                }
+            }
+
+            voteNumAll.push_back(votedNum);
+        }
+        
+        ptree JSONResultAll;
+        ptree JSONVoteForEach;
+        ptree JSONWinnerForEach;
+
+        for(auto &voteEachPatient : voteNumAll){
+            ptree JSONResultEach;
+
+            //append vote info to JSON file
+            for( auto &vote : voteEachPatient){
+                //vote.second.second is the final vote for the given patient
+                JSONResultEach.put(vote.first, vote.second.second);
+            }
+
+            //find the most voted category (winner) for each patient
+            ptree JSONWinnerEach;
+
+            int winnerCount = 0;
+            std::string winnerName("");
+
+            for( auto &vote : voteEachPatient){
+                if (winnerCount < vote.second.second){
+                    winnerCount =  vote.second.second;
+                    winnerName = vote.first;
+                }
+            }
+
+            JSONWinnerEach.put(winnerName, winnerCount);
+            JSONWinnerForEach.push_back(make_pair("", JSONWinnerEach));
+            JSONVoteForEach.push_back(make_pair("", JSONResultEach));
+        }
+
+        JSONResultAll.add_child("vote", JSONVoteForEach);
+        JSONResultAll.add_child("winner", JSONWinnerForEach);
+
+        //print out json
+        std::stringstream ss;
+        write_json(ss, JSONResultAll);
+        std::cout << ss.str() << std::endl;
+	}
+
+	map<string, pair<string, int>> ETHNOPREDTree::GetVoteMap(const string& classifierType){
+        if (classifierType == "country"){
+	        map<string, pair<string, int>> voteNum =
+	        {
+	            {"EUR", { "1", 0 }},
+	            {"?", { "2", 0 }},
+	            {"?", { "3", 0 }},
+	            {"?", { "4", 0 }},
+	            {"?", { "5", 0 }},
+	            {"JPN", { "6", 0 }},
+	            {"AMR", { "7", 0 }},
+	            {"?", { "8", 0 }},
+	            {"CHN", { "9", 0 }},
+	            {"?", { "10", 0 }},
+	            {"?", { "11", 0 }},
+	            {"No Value", { "No Value", 0 }}
+	        };
+	        return voteNum;
+        } else if (classifierType == "continent"){
+	        map<string, pair<string, int>> voteNum =
+	        {
+	            {"CEU", { "1", 0 }},
+	            {"CHB/JPT", { "2", 0 }},
+	            {"YRI", { "3", 0 }},
+	            {"NoValue", { "No Value", 0 }}
+	        };
+
+	        return voteNum;
+        }
+	}
 }

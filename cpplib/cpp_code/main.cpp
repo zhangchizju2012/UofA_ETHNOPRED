@@ -55,10 +55,11 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
-
+  
+  //Create EP Tree
   std::unique_ptr<ETHNOPRED::ETHNOPREDTree> EPTree(new ETHNOPRED::ETHNOPREDTree());
-  std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
 
+  std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
   /*personInfo strcuture <vector<vector<string>>:
     1st line: SNIP info 
     2nd - endNth: people's DNA info
@@ -75,43 +76,15 @@ int main(int argc, char *argv[]) {
   EPTree->SetTreesInfo(treeInfo);
   EPTree->CreateEPTreeArray();
   EPTree->SetSNIPInfo(SNIPHeader);
+  EPTree->EmptyDecisionPool();
 
-  for(int count=0; count < personInfo.size(); count++){
-    EPTree->SetPersonInfo(personInfo.at(count));
-
+  for(auto &p : personInfo){
+    EPTree->SetPersonInfo(p);
+    EPTree->MakeDecision();
+    EPTree->Add2DecisionPool();
   }
 
-		/*std::vector<std::string> resultOnePatient;
-
-	  std::string treeLineBreak("\n");
-
-
-		std::string treeLineInfo;
-	  std::string treeWordInfo;
-	  size_t treeNodePos;
-	  size_t treeLinePos;
-	  treeLinePos = treeInfo.find(treeLineBreak);
-
-	  while(treeLinePos != std::string::npos){
-
-	    treeLineInfo = treeInfo.substr(0, treeLinePos + treeLineBreak.length());
-
-      DecisionTree* newTree = EPTree->CreateEPTree(treeLineInfo);
-
-			std::string result;
-			result = newTree->Query(my);
-
-			resultOnePatient.push_back(result);
-
-			treeInfo.erase(0, treeLinePos + treeLineBreak.length());
-	    treeLinePos = treeInfo.find(treeLineBreak);
-	  }
-
-  resultAllPatient.push_back(resultOnePatient);
-}*/
-
-  /*ETHNOPRED::IO::getJSONResult(resultAllPatient);*/
-	//system("pause");
+  EPTree->PrintStat();
 	return 0;
 
 }
