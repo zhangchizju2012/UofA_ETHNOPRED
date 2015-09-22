@@ -7,12 +7,12 @@
 #include "ETHNOPRED.hpp"
 #include "ETHNOPRED.cpp"
 
-
 int main(int argc, char *argv[]) {
   int c;
-  char * inputFile = NULL;
+  char * SNIPFile = NULL;
   char * outputFile = NULL;
   char * treeName = NULL;
+
   while ((c = getopt (argc, argv, "i:o:t:")) != -1){
     switch (c)
       {
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        inputFile = optarg;
+        SNIPFile = optarg;
 
         break;
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
       case 't':
         if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
             fprintf (stderr,
-               "Found illegal or NULL parameter for the option -t.\n");
+               "Found illegal or NULL parameter for the option -t.\n -t option provides the path for the tree structure.");
             return 1;
         }
 
@@ -55,91 +55,36 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
+  
+  //Create EP Tree
+  std::unique_ptr<ETHNOPRED::ETHNOPREDTree> EPTree(new ETHNOPRED::ETHNOPREDTree());
 
-  std::shared_ptr<ETHNOPRED::ETHNOPREDTree> EPTree; 
+  std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
+  /*personInfo strcuture <vector<vector<string>>:
+    1st line: SNIP info 
+    2nd - endNth: people's DNA info
+  */
+  auto personInfo = EPTree->AnalyzeSNIP(SNIPFile, selectedSNIPFile);
+  auto SNIPHeader = personInfo.at(0);
+  /*Now personInfo is only people's DNA info*/
+  personInfo.erase(personInfo.begin());
 
-  std::vector<std::vector<std::string> > myFull = ETHNOPRED::IO::analyzeCSVFile(inputFile);
-  std::vector<std::vector<std::string>> resultAllPatient;
+  /*The second parameter true make sure: there is a line break '\n' at the end
+  '\n' is used to seperated each tree structure
+  */
+  std::string treeInfo = EPTree->ReadFile(std::string(treeName), true);
+  EPTree->SetTreesInfo(treeInfo);
+  EPTree->CreateEPTreeArray();
+  EPTree->SetSNIPInfo(SNIPHeader);
+  EPTree->EmptyDecisionPool();
 
-  for(int count=1; count < myFull.size(); count++){
-    std::vector<std::vector<std::string> > my;
-    my.resize(2);
-    my[0]=myFull[0];
-    my[1]=myFull[count];
+  for(auto &p : personInfo){
+    EPTree->SetPersonInfo(p);
+    EPTree->MakeDecision();
+    EPTree->Add2DecisionPool();
+  }
 
-
-		std::vector<std::string> resultOnePatient;
-
-		std::string treeWordBreak(",");
-	  std::string treeLineBreak("\n");
-	  std::string treeNodeBreak("_");
-
-    //treeName must be accordance with finename udner the tree_structure folder
-		std::string treeInfo = EPTree->ReadFile(std::string(treeName));
-    std::cout << "treeInfo" << treeInfo;
-
-		std::string treeLineInfo;
-	  std::string treeWordInfo;
-	  std::vector<std::string> treeNodeInfo;
-	  size_t treeNodePos;
-	  size_t treeWordPos;
-	  size_t treeLinePos;
-	  treeLinePos = treeInfo.find(treeLineBreak);
-
-	  while(treeLinePos != std::string::npos){
-
-	    treeLineInfo = treeInfo.substr(0, treeLinePos + treeLineBreak.length());
-			DecisionTree* newTree = new DecisionTree();
-	    treeWordPos = treeLineInfo.find(treeWordBreak);
-
-	    while(treeWordPos != std::string::npos){
-	      treeWordInfo = treeLineInfo.substr(0, treeWordPos + treeWordBreak.length());
-	      treeNodePos = treeWordInfo.find(treeNodeBreak);
-	      treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-
-        //Yes_rs7573555_rs7561423_Q_6 forward 4 times based on '-'
-        //Create_rs7570971_Q_1.5 is still find, even if it is shorter
-        for ( auto i = 0; i < 4 ; ++i){
-          treeWordInfo.erase(0, treeNodePos + treeNodeBreak.length());
-          treeNodePos = treeWordInfo.find(treeNodeBreak);
-          treeNodeInfo.push_back(treeWordInfo.substr(0, treeNodePos));
-        }
-
-	      if(treeNodeInfo[0] == "Create"){
-	        double a = std::stof(treeNodeInfo[3]);
-	        newTree->CreateRootNode(treeNodeInfo[1], treeNodeInfo[2], a);
-	        treeNodeInfo.clear();
-	      } else if (treeNodeInfo[0] == "Yes"){
-	        double a = std::stof(treeNodeInfo[4]);
-	        newTree->AddYesNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
-	        treeNodeInfo.clear();
-	      } else if (treeNodeInfo[0] == "No"){
-	        double a = std::stof(treeNodeInfo[4]);
-	        newTree->AddNoNode(treeNodeInfo[1], treeNodeInfo[2], treeNodeInfo[3], a);
-	        treeNodeInfo.clear();
-	      } else {
-          //add warning
-        }
-
-	      treeLineInfo.erase(0, treeWordPos + treeWordBreak.length());
-	      treeWordPos = treeLineInfo.find(treeWordBreak);
-	    }
-	    //newTree->Output();
-			std::string result;
-			result = newTree->Query(my);
-
-			delete newTree;
-			resultOnePatient.push_back(result);
-
-			treeInfo.erase(0, treeLinePos + treeLineBreak.length());
-	    treeLinePos = treeInfo.find(treeLineBreak);
-	  }
-
-  resultAllPatient.push_back(resultOnePatient);
-}
-
-  ETHNOPRED::IO::getJSONResult(resultAllPatient);
-	//system("pause");
+  EPTree->PrintStat();
 	return 0;
 
 }
