@@ -238,7 +238,43 @@ void DecisionTree::RemoveNode(TreeNode *node)
 
 double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a){
 	for (int i = 0; i <= (inputVector[0].size()-1); i++){
-		if (inputVector[0][i] == a){
+
+		if (a == "rs1679012" || a == "rs4787645" || a == "rs6437783" || a == "rs735480" ){
+			if (inputVector[0][i] == a){
+				if (inputVector[1][i] == "C_C") return 1;
+				else if (inputVector[1][i] == "C_T") return 2;
+				else if (inputVector[1][i] == "T_T") return 3;
+			}
+		}
+		else if (a == "rs1986420" || a == "rs35389" || a == "rs4847428" ){
+			if (inputVector[0][i] == a){
+				if (inputVector[1][i] == "G_G") return 1;
+				else if (inputVector[1][i] == "A_G") return 2;
+				else if (inputVector[1][i] == "A_A") return 3;
+			}
+		}
+		else if (a == "rs12135904" ){
+			if (inputVector[0][i] == a){
+				if (inputVector[1][i] == "T_T") return 1;
+				else if (inputVector[1][i] == "C_T") return 2;
+				else if (inputVector[1][i] == "C_C") return 3;
+			}
+		}
+		else if (a == "rs1726254" ){
+			if (inputVector[0][i] == a){
+				if (inputVector[1][i] == "A_A") return 1;
+				else if (inputVector[1][i] == "A_G") return 2;
+				else if (inputVector[1][i] == "G_G") return 3;
+			}
+		}
+		else if (a == "rs4835141" ){
+			if (inputVector[0][i] == a){
+				if (inputVector[1][i] == "C_C") return 1;
+				else if (inputVector[1][i] == "C_G") return 2;
+				else if (inputVector[1][i] == "G_G") return 3;
+			}
+		}
+		else if (inputVector[0][i] == a){
 			if (inputVector[1][i] == "A_A") return 1;
 			else if (inputVector[1][i] == "A_B") return 2;
 			else if (inputVector[1][i] == "B_B") return 3;
@@ -259,6 +295,7 @@ double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > i
 			else if (inputVector[1][i] == "T_T") return 10;
 			else return 0;
 		}
+
 
 	}
 	return 0;

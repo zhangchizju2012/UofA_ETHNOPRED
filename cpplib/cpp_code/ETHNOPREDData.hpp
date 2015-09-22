@@ -27,8 +27,8 @@ namespace ETHNOPRED {
         map<string, pair<string, int>> voteNum =
         {
           {"CEU", { "1", 0 }},
-          {"CHB/JPT", { "2", 0 }},
-          {"YRI", { "3", 0 }},
+          {"YRII", { "2", 0 }},
+          {"CHB/JPT", { "3", 0 }},
           {"NoValue", { "No Value", 0 }}
         };
         return voteNum;
