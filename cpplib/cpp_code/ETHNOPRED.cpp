@@ -32,6 +32,9 @@ namespace ETHNOPRED{
     	return str;
 	}
 
+	ETHNOPREDTree::ETHNOPREDTree(){}
+	ETHNOPREDTree::~ETHNOPREDTree(){}
+
 	vector<vector<string>> ETHNOPREDTree::AnalyzeSNIP(const string& SNIPFileAll, const string& SNIPFileSelected){
 		string SNIPAll = this->ReadFile(SNIPFileAll);
 		//cout << SNIPAll;
@@ -61,8 +64,7 @@ namespace ETHNOPRED{
     			postree.push_back(i);
     		}
     	}
-    	cout << "postree length";
-    	cout << postree.size();
+
     	postree.push_back(SNPId.find(delLine) - delLine.length());
 
 
@@ -192,6 +194,54 @@ namespace ETHNOPRED{
 	    }
 
 	    return newTree;
+	}
+
+	void ETHNOPREDTree::CreateEPTreeArray(){
+		//make a copy of the m_treesInfo
+		string treesInfo = this->m_treesInfo;
+		string treeLineDelimiter("\n");
+	    auto treeLinePos = treesInfo.find(treeLineDelimiter);
+
+	    while(treeLinePos != std::string::npos){
+
+		    auto treeInfo = treesInfo.substr(0, treeLinePos + treeLineDelimiter.length());
+
+		    m_DecisionTreeArray.push_back(this->CreateEPTree(treeInfo));
+
+			treesInfo.erase(0, treeLinePos + treeLineDelimiter.length());
+		    treeLinePos = treesInfo.find(treeLineDelimiter);
+	    }
+	}
+
+	void ETHNOPREDTree::SetTreesInfo(const string& treesInfo){
+		this->m_TreesInfo = treesInfo;
+	}
+
+	vector<DecisionTree*> ETHNOPREDTree::GetTreeArray(){
+		return m_DecisionTreeArray;
+	}
+
+	void ETHNOPREDTree::SetPersonInfo(const vector<string>& personInfo){
+		this->m_PersonInfo = personInfo;
+	}
+
+	void ETHNOPREDTree::SetSNIPInfo(const vector<string>& SNIPInfo){
+		this->m_SNIPInfo = SNIPInfo;
+	}
+
+	void ETHNOPREDTree::MakeDecision(){
+
+		if(!m_Decisions.empty()){
+			m_Decisions.clear();
+		}
+
+		for (auto & tree :m_DecisionTreeArray){
+			vector<vector<string> info;
+			info.push_back(m_SNIPInfo);
+			info.push_back(m_PersonInfo);
+			string decision = tree->Query(info);
+			m_Decisions.push_back(decision);
+		}
 	}
 
 }
