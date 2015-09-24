@@ -18,7 +18,7 @@ namespace ETHNOPRED{
 			str = ss.str();
 			file.close();
         } else {
-        	string errMessage = string("[ Error ]  cannot openfile") + filename; 
+        	string errMessage = string("[ Error ]  cannot openfile") + filename;
         	throw runtime_error(errMessage.c_str());
         }
 
@@ -38,11 +38,46 @@ namespace ETHNOPRED{
 	vector<vector<string>> ETHNOPREDTree::AnalyzeSNIP(const string& SNIPFileAll, const string& SNIPFileSelected){
 		string SNIPAll = this->ReadFile(SNIPFileAll);
 		//cout << SNIPAll;
-		string SNPId = this->ReadFile(SNIPFileSelected);
+		string SNPInfo = this->ReadFile(SNIPFileSelected);
 		//cout << SNPId;
 		string delComma(",");
     	string delLine("\n");
         vector<vector<string>> myvector;
+
+				auto breakPosInfo = SNPInfo.find(delLine);
+				auto SNPId = SNPInfo.substr(0, breakPosInfo + delLine.length());
+				SNPInfo.erase(0, breakPosInfo + delLine.length());
+
+				vector<vector<string>> DNAInfo;
+				std::vector<size_t> DNAPos;
+				vector<string> EachDNA;
+
+				breakPosInfo = SNPInfo.find(delLine);
+				while (breakPosInfo != std::string::npos){
+					auto SNPInfoLine = SNPInfo.substr(0, breakPosInfo + delLine.length());
+					SNPInfo.erase(0, breakPosInfo + delLine.length());
+					DNAPos.push_back(-1);
+					for (size_t i = 0; i < SNPInfoLine.length(); ++i)
+		    	{
+		    		if (SNPInfoLine.at(i) == ','){
+		    			DNAPos.push_back(i);
+		    		}
+		    	}
+					DNAPos.push_back(SNPInfoLine.find(delLine) - delLine.length());
+					for (int j = 0; j < (DNAPos.size() - 2); j++){
+		    		EachDNA.push_back(SNPInfoLine.substr(DNAPos[j] + delComma.length(), DNAPos[j + 1] - DNAPos[j] - 1));
+		    	}
+					DNAInfo.push_back(EachDNA);
+					breakPosInfo = SNPInfo.find(delLine);
+					DNAPos.clear();
+					EachDNA.clear();
+				}
+
+				//std::cout << DNAInfo[2][0] << std::endl;
+				//std::cout << DNAInfo[1][3] << std::endl;
+				//std::cout << DNAInfo[0][7] << std::endl;
+
+				//std::cout << SNPInfo.erase(0, breakPosInfo + delLine.length()) << std::endl;
 
     	auto breakPos = SNIPAll.find(delLine);
     	auto line1 = SNIPAll.substr(0, breakPos + delLine.length());
@@ -84,6 +119,8 @@ namespace ETHNOPRED{
         vector<string>SNPIdArray;
 
     	posvector1.push_back(line1.find(delLine) - delLine.length());
+			posvector1.push_back(line1.find(delLine));
+
     	for (int j = 0; j < (posvector1.size() - 2); j++){
     		//myvectorinitial[0].push_back(line1.substr(posvector1[j] + delComma.length(), posvector1[j + 1] - posvector1[j] - 1));
     		//if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delComma.length(), posvector1[j + 1] - posvector1[j] - 1))){
@@ -115,6 +152,7 @@ namespace ETHNOPRED{
     			}
     		}
     		posvector2.push_back(line2.find(delLine) - delLine.length());
+				posvector2.push_back(line2.find(delLine));
 
     		for (int j = 0; j < (posvector2.size() - 2); j++){
     			myvectorinitial.push_back(line2.substr(posvector2[j] + delComma.length(), posvector2[j + 1] - posvector2[j] - 1));
@@ -132,13 +170,29 @@ namespace ETHNOPRED{
     		breakPos = SNIPAll.find(delLine);
     	}
 
+			vector<vector<string>> myvectorBack = myvector;
+			for(int k = 1; k < myvectorBack.size(); ++k){
+				myvector[k].clear();
+			}
+			for(int k = 1; k < myvectorBack.size(); ++k){
+				for(int i = 0; i < myvector[0].size(); ++i){
+					for(int j = 0; j < treevector.size(); ++j){
+						if(myvectorBack[0][i] == treevector[j]){
+							if(myvectorBack[k][i] == DNAInfo[0][j]){myvector[k].push_back("A_A");}
+							if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back("A_B");}
+							if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back("B_B");}
+						}
+					}
+				}
+			}
+
     	return myvector;
 	}
 
 	DecisionTree* ETHNOPREDTree::CreateEPTree(string treeStructure){
 		//example of tree structure string
 		//Yes or No branch Yes_rs7573555_rs7561423_Q_6
-		//Create branch reate_rs7570971_Q_1.5 
+		//Create branch reate_rs7570971_Q_1.5
 		string wordDelimiter(",");
 		string lineDelimiter("\n");
 	    string treeNodeBreak("_");
@@ -197,9 +251,10 @@ namespace ETHNOPRED{
 	}
 
 	void ETHNOPREDTree::CreateEPTreeArray(){
-		//make a copy of the m_treesInfo
-		string treesInfo = this->m_TreesInfo;
-		string treeLineDelimiter("\n");
+		  //make a copy of the m_treesInfo
+		  string treesInfo = this->m_TreesInfo;
+		  string treeLineDelimiter("\n");
+			this->m_DecisionTreeArray.clear();
 	    auto treeLinePos = treesInfo.find(treeLineDelimiter);
 
 	    while(treeLinePos != std::string::npos){
@@ -250,7 +305,7 @@ namespace ETHNOPRED{
 		}
 	}
 
-	void ETHNOPREDTree::Add2DecisionPool(){	
+	void ETHNOPREDTree::Add2DecisionPool(){
 		this->m_DecisionsPool.push_back(this->m_Decisions);
 
 	}
@@ -261,7 +316,7 @@ namespace ETHNOPRED{
 		}
 	}
 
-	void ETHNOPREDTree::PrintStat(const string& classifierType = "country"){
+	void ETHNOPREDTree::Stat(const string& classifierType = "continent"){
         //use boost property_tree lib to report final result
         using boost::property_tree::ptree;
         using boost::property_tree::basic_ptree;
@@ -289,10 +344,15 @@ namespace ETHNOPRED{
 
             voteNumAll.push_back(votedNum);
         }
-        
+
         ptree JSONResultAll;
         ptree JSONVoteForEach;
         ptree JSONWinnerForEach;
+
+				//Empty WinnerGrouup
+				if(!this->m_WinnerGroup.empty()){
+					this->m_WinnerGroup.clear();
+				}
 
         for(auto &voteEachPatient : voteNumAll){
             ptree JSONResultEach;
@@ -316,6 +376,8 @@ namespace ETHNOPRED{
                 }
             }
 
+						this->m_WinnerGroup.push_back(winnerName);
+
             JSONWinnerEach.put(winnerName, winnerCount);
             JSONWinnerForEach.push_back(make_pair("", JSONWinnerEach));
             JSONVoteForEach.push_back(make_pair("", JSONResultEach));
@@ -330,21 +392,25 @@ namespace ETHNOPRED{
         std::cout << ss.str() << std::endl;
 	}
 
+	vector<string> ETHNOPREDTree::GetWinner(){
+		return this->m_WinnerGroup;
+	}
+
 	map<string, pair<string, int>> ETHNOPREDTree::GetVoteMap(const string& classifierType){
         if (classifierType == "country"){
 	        map<string, pair<string, int>> voteNum =
 	        {
-	            {"EUR", { "1", 0 }},
-	            {"?", { "2", 0 }},
-	            {"?", { "3", 0 }},
-	            {"?", { "4", 0 }},
-	            {"?", { "5", 0 }},
-	            {"JPN", { "6", 0 }},
-	            {"AMR", { "7", 0 }},
-	            {"?", { "8", 0 }},
-	            {"CHN", { "9", 0 }},
-	            {"?", { "10", 0 }},
-	            {"?", { "11", 0 }},
+	            {"ASW", { "1", 0 }},
+	            {"CEU", { "2", 0 }},
+	            {"CHB", { "3", 0 }},
+	            {"CHD", { "4", 0 }},
+	            {"GIH", { "5", 0 }},
+	            {"JPT", { "6", 0 }},
+	            {"LWK", { "7", 0 }},
+	            {"MXL", { "8", 0 }},
+	            {"MKK", { "9", 0 }},
+	            {"TSI", { "10", 0 }},
+	            {"YRI", { "11", 0 }},
 	            {"No Value", { "No Value", 0 }}
 	        };
 	        return voteNum;
@@ -352,8 +418,8 @@ namespace ETHNOPRED{
 	        map<string, pair<string, int>> voteNum =
 	        {
 	            {"CEU", { "1", 0 }},
-	            {"CHB/JPT", { "2", 0 }},
-	            {"YRI", { "3", 0 }},
+	            {"YRI", { "2", 0 }},
+	            {"CHB/JPT", { "3", 0 }},
 	            {"NoValue", { "No Value", 0 }}
 	        };
 

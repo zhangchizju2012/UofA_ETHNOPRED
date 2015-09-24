@@ -25,8 +25,8 @@ namespace ETHNOPRED{
 			void SetTreesInfo(const string&);
 			void SetPersonInfo(const vector<string>&);
 			void SetSNIPInfo(const vector<string>&);
-			void PrintStat(const string&);
-
+			void Stat(const string&);
+		  vector<string> GetWinner();
 			void PrintDecision();
 
 			map<string, pair<string, int>> GetVoteMap(const string&);
@@ -40,6 +40,7 @@ namespace ETHNOPRED{
 			vector<string> m_SNIPInfo;
 			vector<string> m_Decisions;
 			vector<vector<string>> m_DecisionsPool;
+			vector<string> m_WinnerGroup;
 	};
 }
 

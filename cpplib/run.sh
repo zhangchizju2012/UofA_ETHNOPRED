@@ -1,2 +1,2 @@
 make remove && make
-./ethnopred -i cpp_code/csv/test.csv -t $PWD/cpp_code/tree_and_SNIP/Hapmap
+time ./ethnopred -i cpp_code/csv/test4.csv -t $PWD/cpp_code/tree_and_SNIP/sub1

@@ -55,13 +55,13 @@ int main(int argc, char *argv[]) {
       return 1;
     }
   }
-  
+
   //Create EP Tree
   std::unique_ptr<ETHNOPRED::ETHNOPREDTree> EPTree(new ETHNOPRED::ETHNOPREDTree());
 
   std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
   /*personInfo strcuture <vector<vector<string>>:
-    1st line: SNIP info 
+    1st line: SNIP info
     2nd - endNth: people's DNA info
   */
   auto personInfo = EPTree->AnalyzeSNIP(SNIPFile, selectedSNIPFile);
@@ -84,7 +84,39 @@ int main(int argc, char *argv[]) {
     EPTree->Add2DecisionPool();
   }
 
-  EPTree->PrintStat();
-	return 0;
+  EPTree->Stat("continent");
+  auto Winners = EPTree ->GetWinner();
+/*
+  for(auto pId = 0; pId < personInfo.size(); ++pId){
+    std::cout << Winners.at(pId) << std::endl;
+    if(Winners.at(pId) == "CEU"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_Euro"), true);}
+    else if (Winners.at(pId) == "YRI"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_African"), true);}
+    else if (Winners.at(pId) == "CHB/JPT"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_East_Asian"), true);}
+    EPTree->SetTreesInfo(treeInfo);
+    EPTree->CreateEPTreeArray();
+    EPTree->EmptyDecisionPool();
+    EPTree->SetPersonInfo(personInfo.at(pId));
+    EPTree->MakeDecision();
+    EPTree->Add2DecisionPool();
+    EPTree->Stat("country");
+  }
+  */
+    //EPTree->Stat("country");
+    //auto Winners = EPTree ->GetWinner();
+/*
+  treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("map"), true);
+  EPTree->SetTreesInfo(treeInfo);
+  EPTree->CreateEPTreeArray();
+  //EPTree->SetSNIPInfo(SNIPHeader);
+  EPTree->EmptyDecisionPool();
 
+  for(auto &p : personInfo){
+    EPTree->SetPersonInfo(p);
+    EPTree->MakeDecision();
+    EPTree->Add2DecisionPool();
+  }
+
+  EPTree->Stat("continent");
+*/
+	return 0;
 }
