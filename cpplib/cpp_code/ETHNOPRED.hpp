@@ -25,11 +25,12 @@ namespace ETHNOPRED{
 			void SetTreesInfo(const string&);
 			void SetPersonInfo(const vector<string>&);
 			void SetSNIPInfo(const vector<string>&);
-			void Stat(const string&);
+			void Stat();
 		  vector<string> GetWinner();
 			void PrintDecision();
+			void SetClassifierType(const char*);
 
-			map<string, pair<string, int>> GetVoteMap(const string&);
+			map<string, pair<string, int>> GetVoteMap();
 
 			vector<DecisionTree* > GetTreeArray();
 		private:
@@ -41,6 +42,7 @@ namespace ETHNOPRED{
 			vector<string> m_Decisions;
 			vector<vector<string>> m_DecisionsPool;
 			vector<string> m_WinnerGroup;
+			string m_ClassifierType;
 	};
 }
 

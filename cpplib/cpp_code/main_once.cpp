@@ -12,8 +12,10 @@ int main(int argc, char *argv[]) {
   char * SNIPFile = NULL;
   char * outputFile = NULL;
   char * treeName = NULL;
+  const char * SelectedSNIPFile = NULL;
+  const char * ClassifierType = NULL;
 
-  while ((c = getopt (argc, argv, "i:o:t:")) != -1){
+  while ((c = getopt (argc, argv, "i:s:T:o:t:")) != -1){
     switch (c)
       {
 
@@ -27,6 +29,28 @@ int main(int argc, char *argv[]) {
         SNIPFile = optarg;
 
         break;
+
+      case 's':
+          if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
+              fprintf (stderr,
+                 "Found illegal or NULL parameter for the option -s.\n");
+              return 1;
+          }
+
+          SelectedSNIPFile = optarg;
+
+          break;
+
+      case 'T':
+          if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
+              fprintf (stderr,
+                 "Found illegal or NULL parameter for the option -T.\n");
+              return 1;
+          }
+
+          ClassifierType = optarg;
+
+          break;
 
       case 'o':
         if (strcmp (optarg, "(null)") == 0 || optarg[0] == '-'){
@@ -59,14 +83,17 @@ int main(int argc, char *argv[]) {
   //Create EP Tree
   std::unique_ptr<ETHNOPRED::ETHNOPREDTree> EPTree(new ETHNOPRED::ETHNOPREDTree());
 
-  std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
+  //std::string selectedSNIPFile(std::string(treeName) + std::string("_SNIP"));
   /*personInfo strcuture <vector<vector<string>>:
     1st line: SNIP info
     2nd - endNth: people's DNA info
   */
-  auto personInfo = EPTree->AnalyzeSNIP(SNIPFile, selectedSNIPFile);
+  EPTree->SetClassifierType(ClassifierType);
+  auto personInfo = EPTree->AnalyzeSNIP(SNIPFile, SelectedSNIPFile);
   auto SNIPHeader = personInfo.at(0);
+
   /*Now personInfo is only people's DNA info*/
+  personInfo.erase(personInfo.begin());
   personInfo.erase(personInfo.begin());
 
   /*The second parameter true make sure: there is a line break '\n' at the end
@@ -84,10 +111,11 @@ int main(int argc, char *argv[]) {
     EPTree->Add2DecisionPool();
   }
 
-  EPTree->Stat("continent");
+  EPTree->Stat();
   auto Winners = EPTree ->GetWinner();
 /*
   for(auto pId = 0; pId < personInfo.size(); ++pId){
+    EPTree->SetClassifierType("country");
     std::cout << Winners.at(pId) << std::endl;
     if(Winners.at(pId) == "CEU"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_Euro"), true);}
     else if (Winners.at(pId) == "YRI"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_African"), true);}
@@ -98,9 +126,9 @@ int main(int argc, char *argv[]) {
     EPTree->SetPersonInfo(personInfo.at(pId));
     EPTree->MakeDecision();
     EPTree->Add2DecisionPool();
-    EPTree->Stat("country");
+    EPTree->Stat();
   }
-  */
+*/
     //EPTree->Stat("country");
     //auto Winners = EPTree ->GetWinner();
 /*

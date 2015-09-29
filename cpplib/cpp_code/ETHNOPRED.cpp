@@ -171,21 +171,54 @@ namespace ETHNOPRED{
     	}
 
 			vector<vector<string>> myvectorBack = myvector;
-			for(int k = 1; k < myvectorBack.size(); ++k){
+			for(int k = 2; k < myvectorBack.size(); ++k){
 				myvector[k].clear();
 			}
-			for(int k = 1; k < myvectorBack.size(); ++k){
-				for(int i = 0; i < myvector[0].size(); ++i){
-					for(int j = 0; j < treevector.size(); ++j){
-						if(myvectorBack[0][i] == treevector[j]){
-							if(myvectorBack[k][i] == DNAInfo[0][j]){myvector[k].push_back("A_A");}
-							if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back("A_B");}
-							if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back("B_B");}
+		
+			if(this->m_ClassifierType == "continent"){
+				for(int k = 2; k < myvectorBack.size(); ++k){
+					for(int i = 0; i < myvector[0].size(); ++i){
+						for(int j = 0; j < treevector.size(); ++j){
+							if(myvectorBack[0][i] == treevector[j]){
+								if(myvectorBack[1][i] == DNAInfo[0][j]){
+									if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back("A_A");}
+									else if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back("A_B");}
+									else if(myvectorBack[k][i] == DNAInfo[3][j]){myvector[k].push_back("B_B");}
+									else {myvector[k].push_back(myvectorBack[k][i]);}
+								}
+								else{
+									if(myvectorBack[k][i] == DNAInfo[4][j]){myvector[k].push_back("A_A");}
+									else if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back("A_B");}
+									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back("B_B");}
+									else {myvector[k].push_back(myvectorBack[k][i]);}
+								}
+							}
 						}
 					}
 				}
 			}
-
+			if(this->m_ClassifierType == "country"){
+				for(int k = 2; k < myvectorBack.size(); ++k){
+					for(int i = 0; i < myvector[0].size(); ++i){
+						for(int j = 0; j < treevector.size(); ++j){
+							if(myvectorBack[0][i] == treevector[j]){
+								if(myvectorBack[1][i] == DNAInfo[0][j]){
+									if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back(DNAInfo[1][j]);}
+									else if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back(DNAInfo[2][j]);}
+									else if(myvectorBack[k][i] == DNAInfo[3][j]){myvector[k].push_back(DNAInfo[3][j]);}
+									else {myvector[k].push_back(myvectorBack[k][i]);}
+								}
+								else{
+									if(myvectorBack[k][i] == DNAInfo[4][j]){myvector[k].push_back(DNAInfo[1][j]);}
+									else if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back(DNAInfo[2][j]);}
+									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back(DNAInfo[3][j]);}
+									else {myvector[k].push_back(myvectorBack[k][i]);}
+								}
+							}
+						}
+					}
+				}
+			}
     	return myvector;
 	}
 
@@ -316,7 +349,7 @@ namespace ETHNOPRED{
 		}
 	}
 
-	void ETHNOPREDTree::Stat(const string& classifierType = "continent"){
+	void ETHNOPREDTree::Stat(){
         //use boost property_tree lib to report final result
         using boost::property_tree::ptree;
         using boost::property_tree::basic_ptree;
@@ -328,7 +361,7 @@ namespace ETHNOPRED{
 
         for (auto &eachPatient : this->m_DecisionsPool){
 
-            auto votedNum = this->GetVoteMap(classifierType);
+            auto votedNum = this->GetVoteMap();
 
             for(auto &identifier: eachPatient){
                 /* votedNum -> data structure: map<string, pair<string, int>>
@@ -396,8 +429,8 @@ namespace ETHNOPRED{
 		return this->m_WinnerGroup;
 	}
 
-	map<string, pair<string, int>> ETHNOPREDTree::GetVoteMap(const string& classifierType){
-        if (classifierType == "country"){
+	map<string, pair<string, int>> ETHNOPREDTree::GetVoteMap(){
+        if (this->m_ClassifierType == "country"){
 	        map<string, pair<string, int>> voteNum =
 	        {
 	            {"ASW", { "1", 0 }},
@@ -414,7 +447,7 @@ namespace ETHNOPRED{
 	            {"No Value", { "No Value", 0 }}
 	        };
 	        return voteNum;
-        } else if (classifierType == "continent"){
+        } else if (this->m_ClassifierType == "continent"){
 	        map<string, pair<string, int>> voteNum =
 	        {
 	            {"CEU", { "1", 0 }},
@@ -425,5 +458,9 @@ namespace ETHNOPRED{
 
 	        return voteNum;
         }
+	}
+
+	void ETHNOPREDTree::SetClassifierType(const char * ClassifierType){
+		this->m_ClassifierType = string(ClassifierType);
 	}
 }
