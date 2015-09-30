@@ -14,7 +14,7 @@ module.exports = function( options ) {
     //login page
     getJSONDtree.apply( dtreeJSONRut );
     postJSONDtree.apply( dtreeJSONRut, [ rootFolder ] );
-    pageNavigation.apply( dtreeRut, [ "./ETHNOPRED/ETHNOPRED.ejs", "Welcome to UofA ETHNOPRED"] );
+    pageNavigation.apply( dtreeRut, [ "./ETHNOPRED/ETHNOPRED.ejs", "Welcome to UofA ETHNOPRED" ] );
 
     function getJSONDtree(){
         this.get( function( req, res, next ) {
@@ -38,6 +38,7 @@ module.exports = function( options ) {
 
             var fs = require( 'fs' );
             console.log(req.files);
+            var classifierTyep = req.body.classifierType;
 
             var filePath = req.files.file.path;
             console.log(filePath);
@@ -47,10 +48,53 @@ module.exports = function( options ) {
             function readFile( callback ){
 
                 //req.pipe( req.busboy );
+                
+                var dataFolder = rootFolder + '/cpplib/tree_and_SNIP';
+                var SNIPsuffix = '_SNIP';
+
+                var fileMap = {
+                  Euro : {
+                    type : 'contry',
+                    SNIPFilePath : ( dataFolder + '/Euro' + SNIPsuffix ),
+                    TreeFilePath : ( dataFolder + '/Euro')
+                  },
+
+                  East_Asian  : {
+                    type : 'contry',
+                    SNIPFilePath : ( dataFolder + '/East_Asian' + SNIPsuffix ),
+                    TreeFilePath : ( dataFolder + '/East_Asian' )
+                  },
+
+                 Continent : {
+                    type : 'contry',
+                    SNIPFilePath : ( dataFolder + '/Continent' + SNIPsuffix ),
+                    TreeFilePath : ( dataFolder + '/Continent' )
+                  },
+
+                  American : {
+                    type : 'contry',
+                    SNIPFilePath : ( dataFolder + '/American' + SNIPsuffix ),
+                    TreeFilePath : ( dataFolder + '/American')
+                  },
+
+                 African : {
+                    type : 'contry',
+                    SNIPFilePath : ( dataFolder + '/African' + SNIPsuffix ),
+                    TreeFilePath : ( dataFolder + '/African' )
+                  }
+                }
+
+                var Type = 'Euro';
                 var exec = require( 'child_process' ).exec;
-                var cmd = rootFolder + "/cpplib/ethnopred -i " + filePath;
-                console.log(rootFolder);
-                exec( cmd, function( err, stdout, stderr ) {
+                //cmd_one is a 'country' based calculator
+                var cmd_once = rootFolder + "/cpplib/ethnopred_once -i " + filePath;
+                cmd_once += ' -T  ' + fileMap[ Type ].type;
+                cmd_once += ' -s ' + fileMap[ Type ].SNIPFilePath;
+                cmd_once += ' -t ' + fileMap[ Type ].type;
+                
+                console.log( rootFolder );
+                console.log( cmd_once );
+                exec( cmd_once, function( err, stdout, stderr ) {
                   if( err ) {
                       console.log( err );
                       callback( true, "" );
@@ -60,7 +104,6 @@ module.exports = function( options ) {
                       callback( null, stdout );
                   }
               });
-
             },
 
             ], function( err, results ) {
