@@ -1,6 +1,6 @@
 CC=g++
-#CFLAGS=-g -std=c++11 --static -O4
-CFLAGS=-std=c++11
+CFLAGS=-g -std=c++11 --static -O4
+#CFLAGS=-std=c++11
 
 all: ethnopred_once ethnopred_twice
 

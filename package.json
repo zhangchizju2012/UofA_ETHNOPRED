@@ -33,7 +33,11 @@
     "grunt-mocha-test": "*",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "0.5.1",
-    "grunt-run": "*",
+    "grunt-mocha-test": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-express-server": "0.5.1",
+    "grunt-execute": "*",
+    "grunt-concurrent": "*",
     "request": "*"
   },
   "devDependencies": {
