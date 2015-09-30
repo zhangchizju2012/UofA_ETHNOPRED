@@ -1,16 +1,23 @@
 CC=g++
-CFLAGS=-g -std=c++11 --static -O4
+#CFLAGS=-g -std=c++11 --static -O4
+CFLAGS=-std=c++11
 
-all: ethnopred
+all: ethnopred_once ethnopred_twice
 
-ethnopred: main.o
-		$(CC) $(CFLAGS) main.o -o ethnopred
+ethnopred_once: main_once.o
+		$(CC) $(CFLAGS) main_once.o -o ethnopred_once
 
-main.o: ./cpp_code/main.cpp
-		$(CC) -c $(CFLAGS)  ./cpp_code/main.cpp -o main.o
+main_once.o: ./cpp_code/main_once.cpp
+		$(CC) -c $(CFLAGS)  ./cpp_code/main_once.cpp -o main_once.o
+
+ethnopred_twice: main_twice.o
+		$(CC) $(CFLAGS) main_twice.o -o ethnopred_twice
+
+main_twice.o: ./cpp_code/main_twice.cpp
+		$(CC) -c $(CFLAGS)  ./cpp_code/main_twice.cpp -o main_twice.o
 
 clean:
-	rm -f main.o
+	rm -f main_once.o main_twice.o
 
 remove:
-	rm -f main.o ethnopred
+	rm -f main_once.o ethnopred_once main_twice.o ethnopred_twice

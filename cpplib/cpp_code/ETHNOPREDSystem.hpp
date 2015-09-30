@@ -5,20 +5,21 @@
 namespace ETHNOPRED {
   namespace IO {
     typedef std::vector<std::vector<std::string>> VVS;
-    typedef std::vector<std::string> VS;
+    typedef std::vector<std::vector<std::string>> VS;
 
     VVS analyzeCSVFile(const char * fileName){
-      VVS myvectorinitial;
-    	myvectorinitial.resize(6);
+        using namespace std;
     	VVS myvector;
-    	myvector.resize(6);
     	std::ifstream file;
     	std::stringstream ss;
     	std::string str;
     	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
     	try {
-    		file.open(fileName);
+            //lock mutex before accessing file
+            static std::mutex mutex;
+            std::lock_guard<std::mutex> lock(mutex);
+            file.open(fileName);
     		ss << file.rdbuf();
     		str = ss.str();
     		file.close();
@@ -80,25 +81,34 @@ namespace ETHNOPRED {
     			posvector1.push_back(i);
     		}
     	}
+
+        //read first line to get the SNPId
+        vector<string>SNPIdArray;
+
     	posvector1.push_back(line1.find(linebreak) - linebreak.length());
     	for (int j = 0; j < (posvector1.size() - 2); j++){
     		//myvectorinitial[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
     		//if (inTheTreeOrNot(treevector, line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1))){
     		std::vector<std::string>::iterator it;
+
+
     		it = find(treevector.begin(), treevector.end(), (line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1)));
     		if (it != treevector.end()){
     			dataposvector.push_back(j);
-    			myvector[0].push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
+    			SNPIdArray.push_back(line1.substr(posvector1[j] + delimiter.length(), posvector1[j + 1] - posvector1[j] - 1));
     		}
     	}
 
+        myvector.push_back(SNPIdArray);
+
     	breakPos = str.find(linebreak);
 
-    	int h = 1;
     	while (breakPos != std::string::npos){
     		auto line2 = str.substr(0, breakPos + linebreak.length());
-
+            vector<string> myvectorinitial;
+            vector<string> geneEachPatient;
     		posvector2.push_back(-1);
+
     		for (size_t i = 0; i < line2.length(); ++i)
     		{
     			//std::cout << str.at(i);
@@ -109,13 +119,15 @@ namespace ETHNOPRED {
     		posvector2.push_back(line2.find(linebreak) - linebreak.length());
 
     		for (int j = 0; j < (posvector2.size() - 2); j++){
-    			myvectorinitial[h].push_back(line2.substr(posvector2[j] + delimiter.length(), posvector2[j + 1] - posvector2[j] - 1));
+    			myvectorinitial.push_back(line2.substr(posvector2[j] + delimiter.length(), posvector2[j + 1] - posvector2[j] - 1));
     		}
     		for (int k = 0; k <= dataposvector.size() - 1; k++){
     			//myvector[0].push_back(myvectorinitial[0][dataposvector[k]]);
-    			myvector[h].push_back(myvectorinitial[h][dataposvector[k]]);
+    			geneEachPatient.push_back(myvectorinitial[dataposvector[k]]);
     		}
-    		h = h + 1;
+
+            myvector.push_back(geneEachPatient);
+
     		posvector2.clear();
     		str = str.erase(0, breakPos + linebreak.length());
     		breakPos = str.find(linebreak);
@@ -124,35 +136,79 @@ namespace ETHNOPRED {
     	return myvector;
     }
 
-    void getJSONResult(VS result,  const std::string& classifierType = "continent"){
-      //use boost property_tree lib to report final result
-      using boost::property_tree::ptree;
-      using boost::property_tree::basic_ptree;
+    void getJSONResult(VVS resultAll,  const std::string& classifierType = "continent"){
 
-      /* votedNum -> data structure: map<string, pair<string, int>>
-      <Name_of_Human_Species, <code_number, number_of_voted>>
-      e.g <"EUR", <"1", 20>>
-      */
-      auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
+        //use boost property_tree lib to report final result
+        using boost::property_tree::ptree;
+        using boost::property_tree::basic_ptree;
+        using namespace std;
 
-      for (auto &r : result){
-        for (auto &v : votedNum){
-           if (r == v.second.first){
-             v.second.second++;
-           }
+        //initial vote vector for all patients
+        vector<map<string, pair<string, int>>> voteNumAll;
+
+        //store the winner for each patients
+        vector<string> voteWinner;
+
+        for (auto &eachPatient : resultAll){
+
+            auto votedNum = ETHNOPRED::Data::initVoteNum(classifierType);
+
+            for(auto &identifier: eachPatient){
+                /* votedNum -> data structure: map<string, pair<string, int>>
+                <Name_of_Human_Species, <code_number, number_of_voted>>
+                e.g <"EUR", <"1", 20>>
+                */
+                for (auto &v : votedNum){
+                   if (identifier == v.second.first){
+                     v.second.second++;
+                   }
+                }
+            }
+
+            voteNumAll.push_back(votedNum);
         }
-      }
+        
+        ptree JSONResultAll;
+        ptree JSONVoteForEach;
+        ptree JSONWinnerForEach;
 
-      ptree JSONResult;
-      for(auto &v : votedNum){
-        JSONResult.put(v.first, v.second.second);
-      }
+        for(auto &voteEachPatient : voteNumAll){
+            ptree JSONResultEach;
 
-      //print out json
-      std::stringstream ss;
-      write_json(ss, JSONResult);
-      std::cout << ss.str() << std::endl;
+            //append vote info to JSON file
+            for( auto &vote : voteEachPatient){
+                //vote.second.second is the final vote for the given patient
+                JSONResultEach.put(vote.first, vote.second.second);
+            }
 
+
+            //find the best voted category (winner) for each patient
+            ptree JSONWinnerEach;
+
+            int winnerCount = 0;
+            std::string winnerName("");
+
+            for( auto &vote : voteEachPatient){
+                if (winnerCount < vote.second.second){
+                    winnerCount =  vote.second.second;
+                    winnerName = vote.first;
+                }
+            }
+
+            JSONWinnerEach.put(winnerName, winnerCount);
+
+            JSONWinnerForEach.push_back(make_pair("", JSONWinnerEach));
+            JSONVoteForEach.push_back(make_pair("", JSONResultEach));
+
+        }
+
+        JSONResultAll.add_child("vote", JSONVoteForEach);
+        JSONResultAll.add_child("winner", JSONWinnerForEach);
+
+        //print out json
+        std::stringstream ss;
+        write_json(ss, JSONResultAll);
+        std::cout << ss.str() << std::endl;
     }
   }
 }

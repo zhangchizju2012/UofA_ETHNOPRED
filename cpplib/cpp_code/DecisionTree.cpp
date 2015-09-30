@@ -238,7 +238,8 @@ void DecisionTree::RemoveNode(TreeNode *node)
 
 double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a){
 	for (int i = 0; i <= (inputVector[0].size()-1); i++){
-		if (inputVector[0][i] == a){
+
+if (inputVector[0][i] == a){
 			if (inputVector[1][i] == "A_A") return 1;
 			else if (inputVector[1][i] == "A_B") return 2;
 			else if (inputVector[1][i] == "B_B") return 3;
@@ -259,6 +260,7 @@ double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > i
 			else if (inputVector[1][i] == "T_T") return 10;
 			else return 0;
 		}
+
 
 	}
 	return 0;

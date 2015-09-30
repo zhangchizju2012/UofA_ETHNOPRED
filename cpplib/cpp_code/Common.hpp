@@ -1,6 +1,5 @@
 #ifndef ETHNOPRED_COMMON
 #define ETHNOPRED_COMMON
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -12,6 +11,9 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <mutex>
+#include <stdexcept>
+#include <memory>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 

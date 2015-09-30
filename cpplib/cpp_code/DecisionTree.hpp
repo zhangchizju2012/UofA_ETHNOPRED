@@ -28,7 +28,7 @@ class DecisionTree
 		double findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a);
 		TreeNode* m_pRootNode;
 		DecisionTree();
-		~DecisionTree();
+		virtual ~DecisionTree();
 };
 
 #endif
