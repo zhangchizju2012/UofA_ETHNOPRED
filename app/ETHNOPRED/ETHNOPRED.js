@@ -38,63 +38,75 @@ module.exports = function( options ) {
 
             var fs = require( 'fs' );
             console.log(req.files);
-            var classifierTyep = req.body.classifierType;
+            var classifierType = req.body.classifierType;
 
             var filePath = req.files.file.path;
-            console.log(filePath);
-
+            console.log( filePath );
+            console.log( classifierType );
             async.waterfall([
 
             function readFile( callback ){
 
                 //req.pipe( req.busboy );
                 
-                var dataFolder = rootFolder + '/cpplib/tree_and_SNIP';
+                var dataFolder = rootFolder + '/cpplib/cpp_code/tree_and_SNIP';
                 var SNIPsuffix = '_SNIP';
 
                 var fileMap = {
                   Euro : {
-                    type : 'contry',
+                    type : 'country',
                     SNIPFilePath : ( dataFolder + '/Euro' + SNIPsuffix ),
                     TreeFilePath : ( dataFolder + '/Euro')
                   },
 
                   East_Asian  : {
-                    type : 'contry',
+                    type : 'country',
                     SNIPFilePath : ( dataFolder + '/East_Asian' + SNIPsuffix ),
                     TreeFilePath : ( dataFolder + '/East_Asian' )
                   },
 
                  Continent : {
-                    type : 'contry',
+                    type : 'country',
                     SNIPFilePath : ( dataFolder + '/Continent' + SNIPsuffix ),
                     TreeFilePath : ( dataFolder + '/Continent' )
                   },
 
                   American : {
-                    type : 'contry',
+                    type : 'country',
                     SNIPFilePath : ( dataFolder + '/American' + SNIPsuffix ),
                     TreeFilePath : ( dataFolder + '/American')
                   },
 
                  African : {
-                    type : 'contry',
+                    type : 'country',
                     SNIPFilePath : ( dataFolder + '/African' + SNIPsuffix ),
                     TreeFilePath : ( dataFolder + '/African' )
                   }
                 }
 
-                var Type = 'Euro';
                 var exec = require( 'child_process' ).exec;
-                //cmd_one is a 'country' based calculator
-                var cmd_once = rootFolder + "/cpplib/ethnopred_once -i " + filePath;
-                cmd_once += ' -T  ' + fileMap[ Type ].type;
-                cmd_once += ' -s ' + fileMap[ Type ].SNIPFilePath;
-                cmd_once += ' -t ' + fileMap[ Type ].type;
+                var classifier = fileMap[ classifierType ];
+
+                if( classifier.type === 'country' ){
+                  
+                  //cmd_one is a 'country' based calculator
+                  var cmd = rootFolder + "/cpplib/ethnopred_once -i " + filePath;
+                  cmd += ' -T  ' + classifier.type;
+                  cmd += ' -s ' + classifier.SNIPFilePath;
+                  cmd += ' -t ' + classifier.TreeFilePath;
+
+                } else if ( classifier.type === 'continent' ){
+                      
+                  //cmd_one is a 'country' based calculator
+                  var cmd = rootFolder + "/cpplib/ethnopred_twice -i " + filePath;
+
+                } else {
+                
+                }
                 
                 console.log( rootFolder );
-                console.log( cmd_once );
-                exec( cmd_once, function( err, stdout, stderr ) {
+                console.log( cmd );
+                exec( cmd, function( err, stdout, stderr ) {
                   if( err ) {
                       console.log( err );
                       callback( true, "" );
