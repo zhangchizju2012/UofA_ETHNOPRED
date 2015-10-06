@@ -12,7 +12,7 @@ app.use( express.static( path.join(__dirname, 'public')) );
 app.set( 'views', path.join( __dirname, 'app') );
 
 /* Use in-house prepated query lib*/
-app.get( ( '/' + app.ProjectName ) + function( req,res ){
+app.get('/', function( req,res ){
     res.send( 'Welcome to EP server!' );
 });
 
