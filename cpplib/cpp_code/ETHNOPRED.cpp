@@ -174,51 +174,86 @@ namespace ETHNOPRED{
 			for(int k = 2; k < myvectorBack.size(); ++k){
 				myvector[k].clear();
 			}
-		
-			if(this->m_ClassifierType == "continent"){
-				for(int k = 2; k < myvectorBack.size(); ++k){
-					for(int i = 0; i < myvector[0].size(); ++i){
-						for(int j = 0; j < treevector.size(); ++j){
-							if(myvectorBack[0][i] == treevector[j]){
+
+			if(this->m_ClassifierType == "subcontinent" || this->m_ClassifierType == "continent"){
+				for(int i = 0; i < myvector[0].size(); ++i){
+					for(int j = 0; j < treevector.size(); ++j){
+						if(myvectorBack[0][i] == treevector[j]){
+							for(int k = 2; k < myvectorBack.size(); ++k){
 								if(myvectorBack[1][i] == DNAInfo[0][j]){
 									if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back("A_A");}
 									else if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back("A_B");}
 									else if(myvectorBack[k][i] == DNAInfo[3][j]){myvector[k].push_back("B_B");}
-									else {myvector[k].push_back(myvectorBack[k][i]);}
+									else {myvector[k].push_back("1");}
 								}
-								else{
-									if(myvectorBack[k][i] == DNAInfo[4][j]){myvector[k].push_back("A_A");}
-									else if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back("A_B");}
-									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back("B_B");}
-									else {myvector[k].push_back(myvectorBack[k][i]);}
+								else if(myvectorBack[1][i] == DNAInfo[4][j]){
+									if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back("A_A");}
+									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back("A_B");}
+									else if(myvectorBack[k][i] == DNAInfo[7][j]){myvector[k].push_back("B_B");}
+									else {myvector[k].push_back("1");}
 								}
+								else if(myvectorBack[1][i] == "?"){
+									if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back("A_A");}
+									else if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back("A_B");}
+									else if(myvectorBack[k][i] == DNAInfo[3][j]){myvector[k].push_back("B_B");}
+									else if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back("A_A");}
+									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back("A_B");}
+									else if(myvectorBack[k][i] == DNAInfo[7][j]){myvector[k].push_back("B_B");}
+									else {myvector[k].push_back("1");}
+								}
+								else{myvector[k].push_back("1");}
 							}
+							break;
 						}
 					}
 				}
 			}
+
 			if(this->m_ClassifierType == "country"){
-				for(int k = 2; k < myvectorBack.size(); ++k){
+				//for(int k = 2; k < myvectorBack.size(); ++k){//each sample
 					for(int i = 0; i < myvector[0].size(); ++i){
 						for(int j = 0; j < treevector.size(); ++j){
 							if(myvectorBack[0][i] == treevector[j]){
 								if(myvectorBack[1][i] == DNAInfo[0][j]){
-									if(myvectorBack[k][i] == DNAInfo[1][j]){myvector[k].push_back(DNAInfo[1][j]);}
-									else if(myvectorBack[k][i] == DNAInfo[2][j]){myvector[k].push_back(DNAInfo[2][j]);}
-									else if(myvectorBack[k][i] == DNAInfo[3][j]){myvector[k].push_back(DNAInfo[3][j]);}
-									else {myvector[k].push_back(myvectorBack[k][i]);}
+										for(int k = 2; k < myvectorBack.size(); ++k){
+										myvector[k].push_back(myvectorBack[k][i]);
+									}
 								}
 								else{
-									if(myvectorBack[k][i] == DNAInfo[4][j]){myvector[k].push_back(DNAInfo[1][j]);}
-									else if(myvectorBack[k][i] == DNAInfo[5][j]){myvector[k].push_back(DNAInfo[2][j]);}
-									else if(myvectorBack[k][i] == DNAInfo[6][j]){myvector[k].push_back(DNAInfo[3][j]);}
-									else {myvector[k].push_back(myvectorBack[k][i]);}
+									for(int k = 2; k < myvectorBack.size(); ++k){
+										if(myvectorBack[k][i] == "A_A"){myvector[k].push_back("T_T");}
+										else if(myvectorBack[k][i] == "T_T"){myvector[k].push_back("A_A");}
+										else if(myvectorBack[k][i] == "C_C"){myvector[k].push_back("G_G");}
+										else if(myvectorBack[k][i] == "G_G"){myvector[k].push_back("C_C");}
+										else if(myvectorBack[k][i] == "A_C" || myvectorBack[k][i] == "C_A"){myvector[k].push_back("G_T");}
+										else if(myvectorBack[k][i] == "A_G" || myvectorBack[k][i] == "G_A"){myvector[k].push_back("C_T");}
+										else if(myvectorBack[k][i] == "A_T" || myvectorBack[k][i] == "T_A"){myvector[k].push_back("A_T");}
+										else if(myvectorBack[k][i] == "C_G" || myvectorBack[k][i] == "G_C"){myvector[k].push_back("C_G");}
+										else if(myvectorBack[k][i] == "C_T" || myvectorBack[k][i] == "T_C"){myvector[k].push_back("A_G");}
+										else if(myvectorBack[k][i] == "G_T" || myvectorBack[k][i] == "T_G"){myvector[k].push_back("A_C");}
+										else {myvector[k].push_back("1");}
+									}
 								}
+								break;
 							}
 						}
 					}
 				}
-			}
+/*
+			for(int i=0; i < myvector[0].size(); ++i){
+				std::cout<<myvector[0][i]<<" ";
+				std::cout<<myvector[1][i]<<" ";
+				std::cout<<myvector[2][i]<<" ";
+				std::cout<<myvector[3][i]<<" ";
+				std::cout<<myvector[4][i]<<" ";
+				std::cout<<myvector[5][i]<<" ";
+				std::cout<<myvector[6][i]<<" "<<std::endl;
+				//std::cout<<myvector[7][i]<<" ";
+				//std::cout<<myvector[8][i]<<std::endl;
+			}*/
+			//std::cout<<myvector[0].size()<<std::endl;
+			//std::cout<<myvector[1].size()<<std::endl;
+			//std::cout<<myvector[2].size()<<std::endl;
     	return myvector;
 	}
 
@@ -447,13 +482,13 @@ namespace ETHNOPRED{
 	            {"No Value", { "No Value", 0 }}
 	        };
 	        return voteNum;
-        } else if (this->m_ClassifierType == "continent"){
+        } else if (this->m_ClassifierType == "continent" || this->m_ClassifierType == "subcontinent"){
 	        map<string, pair<string, int>> voteNum =
 	        {
 	            {"CEU", { "1", 0 }},
 	            {"YRI", { "2", 0 }},
 	            {"CHB/JPT", { "3", 0 }},
-	            {"NoValue", { "No Value", 0 }}
+	            //{"No Value", { "No Value", 0 }}
 	        };
 
 	        return voteNum;

@@ -1,4 +1,12 @@
-#include "TreeNode.hpp"
+// TreeNode.cpp: implementation of the TreeNode class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "TreeNode.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
 
 TreeNode::TreeNode()
 {
@@ -13,7 +21,7 @@ TreeNode::~TreeNode()
 
 }
 
-TreeNode::TreeNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue)
+TreeNode::TreeNode(string nodeID, string newQorA, double nodeValue)
 {
 	//create a tree node with a specific node id and string
 	m_iNodeID = nodeID;

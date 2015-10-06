@@ -1,2 +1,0 @@
-compile: g++ -std=c++11 -o run main.cpp
-run: time ./run -i $PWD/csv/5_samples_CEU_905385.csv

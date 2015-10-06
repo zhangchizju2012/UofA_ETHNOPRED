@@ -1,4 +1,0 @@
-# !/bin/bash
-docker build -t="ethnopred/decision_tree" .
-docker rm -f ethnopred
-docker run -it -v /$PWD/cpp_code:/ethnopred/src --name ethnopred ethnopred/decision_tree

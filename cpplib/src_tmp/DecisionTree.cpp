@@ -1,4 +1,16 @@
-#include "DecisionTree.hpp"
+// DecisionTree.cpp: implementation of the DecisionTree class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "DecisionTree.h"
+#include "TreeNode.h"
+#include "common.hpp"
+#include <iostream>
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
 
 DecisionTree::DecisionTree()
 {
@@ -12,58 +24,58 @@ DecisionTree::~DecisionTree()
 	RemoveNode(m_pRootNode);
 }
 
-void DecisionTree::CreateRootNode(const std::string & nodeID, const std::string & newQorA, const double & nodeValue)
+void DecisionTree::CreateRootNode(string nodeID, string newQorA, double nodeValue)
 {
 	//create the root node with a specific ID and string
 	m_pRootNode = new TreeNode(nodeID, newQorA, nodeValue);
 }
 
-void DecisionTree::AddYesNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const	double & newNodeValue)
+void DecisionTree::AddYesNode(string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
 {
 	//if you dont have a root node you cant add another node
 	if (m_pRootNode == NULL)
 	{
-		std::cout << "Error - no root node in AddYesNode()\n";
+		cout << "Error - no root node in AddYesNode()\n";
 		return;
 	}
 
 	//otherwise query tree and add node
 	if (SearchTreeAndAddYesNode(m_pRootNode, existingNodeID, newNodeID, newQorA, newNodeValue))
 	{
-		//cout << "Added 'yes' node";
-		//cout << newNodeID;
-		//cout << " onto 'yes' branch of node ";
-		//cout << existingNodeID;
-		//cout << endl;
+		cout << "Added 'yes' node";
+		cout << newNodeID;
+		cout << " onto 'yes' branch of node ";
+		cout << existingNodeID;
+		cout << endl;
 	}
 	else
 	{
-		std::cout << "Node ";
-		std::cout << existingNodeID;
-		std::cout << " not found \n";
+		cout << "Node ";
+		cout << existingNodeID;
+		cout << " not found \n";
 	}
 }
 
-bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
+bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
 {
 
-	if (currentNode->m_iNodeID == existingNodeID)//for root
+	if (currentNode->m_iNodeID == existingNodeID)
 	{
 		//create node
 		if (currentNode->m_pYesBranch == NULL)
 		{
 			currentNode->m_pYesBranch = new TreeNode(newNodeID, newQorA, newNodeValue);
 		}
-		else//take the place
+		else
 		{
 			currentNode->m_pYesBranch = new TreeNode(newNodeID, newQorA, newNodeValue);
 		}
 		return true;
 	}
-	else//for not root
+	else
 	{
 		//try yes branch if it exists
-		if (currentNode->m_pYesBranch != NULL)//可以一层一层查进去
+		if (currentNode->m_pYesBranch != NULL)
 		{
 			if (SearchTreeAndAddYesNode(currentNode->m_pYesBranch, existingNodeID, newNodeID, newQorA, newNodeValue))
 			{
@@ -84,31 +96,31 @@ bool DecisionTree::SearchTreeAndAddYesNode(TreeNode* currentNode, const std::str
 	}
 }
 
-void DecisionTree::AddNoNode(const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
+void DecisionTree::AddNoNode(string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
 {
 	if (m_pRootNode == NULL)
 	{
-		std::cout << "Error no root node in AddNoNode()\n";
+		cout << "Error no root node in AddNoNode()\n";
 		return;
 	}
 	if (SearchTreeAndAddNoNode(m_pRootNode, existingNodeID, newNodeID, newQorA, newNodeValue))
 	{
-		//cout << "Added 'no' node";
-		//cout << newNodeID;
-		//cout << " onto 'no' branch of node ";
-		//cout << existingNodeID;
-		//cout << endl;
+		cout << "Added 'no' node";
+		cout << newNodeID;
+		cout << " onto 'no' branch of node ";
+		cout << existingNodeID;
+		cout << endl;
 	}
 	else
 	{
-		std::cout << "Node ";
-		std::cout << existingNodeID;
-		std::cout << " not found \n";
+		cout << "Node ";
+		cout << existingNodeID;
+		cout << " not found \n";
 	}
 
 }
 
-bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, const std::string & existingNodeID, const std::string & newNodeID, const std::string & newQorA, const double & newNodeValue)
+bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, string existingNodeID, string newNodeID, string newQorA, double newNodeValue)
 {
 	if (currentNode->m_iNodeID == existingNodeID)
 	{
@@ -146,73 +158,70 @@ bool DecisionTree::SearchTreeAndAddNoNode(TreeNode* currentNode, const std::stri
 	}
 }
 
-std::string DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<std::vector<std::string> > inputVector)
+void DecisionTree::QueryBinaryTree(TreeNode* currentNode, std::vector<vector<string> > inputVector)
 {
 	if (currentNode->m_pYesBranch == NULL)
 	{
 		//if both the yes and no branch pointers are NULL
 		//the tree is at a decision outcome state so output
 		//the string
-		if (currentNode->m_pNoBranch == NULL){
-			//cout << currentNode->m_strQuestOrAns << endl;
-			std::string a = currentNode->m_strQuestOrAns;
-			return a;
-		}
-		else{//useless if the tree I built is right
-			std::cout << "Missing yes branch at " + currentNode->m_strQuestOrAns + " question\n";
-			return "0";
-		}
+		if (currentNode->m_pNoBranch == NULL)
+			cout << currentNode->m_strQuestOrAns << endl;
+		else
+			cout << "Missing yes branch at " + currentNode->m_strQuestOrAns + " question\n";
+		return;
 	}
 	if (currentNode->m_pNoBranch == NULL)
 	{
-		std::cout << "Missing no branch at " + currentNode->m_strQuestOrAns + " question\n";
-		return "0";
+		cout << "Missing no branch at " + currentNode->m_strQuestOrAns + " question\n";
+		return;
 	}
 
 	//otherwise default to asking the question at the currentNode
-	std::string a;
-	a = AskQuestion(currentNode, inputVector);
-	return a;
+	AskQuestion(currentNode, inputVector);
 }
 
-std::string DecisionTree::Query(std::vector<std::vector<std::string> > inputVector)
+void DecisionTree::Query(std::vector<vector<string> > inputVector)
 {
-	std::string result = QueryBinaryTree(m_pRootNode, inputVector);
-	return result;
+	QueryBinaryTree(m_pRootNode, inputVector);
 }
 
-std::string DecisionTree::AskQuestion(TreeNode *node, std::vector<std::vector<std::string> > inputVector)
+void DecisionTree::AskQuestion(TreeNode *node, std::vector<vector<string> > inputVector)
 {
-	//cout << node->m_strQuestOrAns + " (enter yes or no)\n";
+	cout << node->m_strQuestOrAns + " (enter yes or no)\n";
 	double answer;
 	answer = findPosReturnValue(inputVector, (node->m_iNodeID));
-
-	if (answer == 30){
-		std::string a = "No Value";
-		return a;
+	//string b = "3";
+	//cout << inputVector[1][4];
+	//cout << findPosReturnValue(inputVector, b);
+	if (answer < (node->m_NodeValue))
+		QueryBinaryTree(node->m_pYesBranch, inputVector);
+	else if (answer >(node->m_NodeValue))
+		QueryBinaryTree(node->m_pNoBranch, inputVector);
+	else
+	{
+		cout << "Error please answer yes or no\n";
+		AskQuestion(node, inputVector);
 	}
-	else {
-		if (answer < (node->m_NodeValue)){
-			std::string a = QueryBinaryTree(node->m_pYesBranch, inputVector);
-			return a;
-		}
-		else if (answer >= (node->m_NodeValue)){
-			std::string a = QueryBinaryTree(node->m_pNoBranch, inputVector);
-			return a;
-		}
-	}
-
 }
-//not use now
+
 void DecisionTree::Output()
 {
 	OutputBinaryTree("1", m_pRootNode);
 }
-//not use now
-void DecisionTree::OutputBinaryTree(const std::string & tag, TreeNode* currentNode)
+
+void DecisionTree::OutputBinaryTree(string tag, TreeNode* currentNode)
 {
 	if (currentNode == NULL)
 		return;
+
+	cout << "[" + tag + "] node id = ";
+
+	cout << currentNode->m_iNodeID;
+	cout << ", question/answer = ";
+	cout << currentNode->m_strQuestOrAns;
+	cout << endl;
+
 	// Go down yes branch
 	OutputBinaryTree(tag + ".1", currentNode->m_pYesBranch);
 	// Go down no branch
@@ -230,38 +239,19 @@ void DecisionTree::RemoveNode(TreeNode *node)
 		if (node->m_pNoBranch != NULL)
 			RemoveNode(node->m_pNoBranch);
 
-		//cout << "deleting node " << node->m_iNodeID << endl;
+		cout << "deleting node " << node->m_iNodeID << endl;
 		delete node;
 		node = NULL;
 	}
 }
 
-double DecisionTree::findPosReturnValue(std::vector<std::vector<std::string> > inputVector, const std::string & a){
-	for (int i = 0; i <= (inputVector[0].size()-1); i++){
-
-if (inputVector[0][i] == a){
-			if (inputVector[1][i] == "A_A") return 1;
-			else if (inputVector[1][i] == "A_B") return 2;
-			else if (inputVector[1][i] == "B_B") return 3;
-			else if (inputVector[1][i] == "A_C") return 2;
-			else if (inputVector[1][i] == "A_G") return 3;
-			else if (inputVector[1][i] == "A_T") return 4;
-			else if (inputVector[1][i] == "C_A") return 2;
-			else if (inputVector[1][i] == "C_C") return 5;
-			else if (inputVector[1][i] == "C_G") return 6;
-			else if (inputVector[1][i] == "C_T") return 7;
-			else if (inputVector[1][i] == "G_A") return 3;
-			else if (inputVector[1][i] == "G_C") return 6;
-			else if (inputVector[1][i] == "G_G") return 8;
-			else if (inputVector[1][i] == "G_T") return 9;
-			else if (inputVector[1][i] == "T_A") return 4;
-			else if (inputVector[1][i] == "T_C") return 7;
-			else if (inputVector[1][i] == "T_G") return 9;
-			else if (inputVector[1][i] == "T_T") return 10;
-			else return 30;
+double DecisionTree::findPosReturnValue(std::vector<vector<string> > inputVector, string a){
+	for (int i = 0; i <= (inputVector[0].size() + 1); i++){
+		if (inputVector[0][i] == a){
+			if (inputVector[1][i] == "AA") return 1;
+			else if (inputVector[1][i] == "Aa") return 2;
+			else if (inputVector[1][i] == "aa") return 3;
 		}
-
-
+		//return 20;
 	}
-	return 30;
 }

@@ -1,6 +1,11 @@
 CC=g++
+<<<<<<< HEAD
+#CFLAGS=-std=c++11 --static -O4
+CFLAGS=-std=c++11 -g --static
+=======
 CFLAGS=-g -std=c++11 --static -O4
 #CFLAGS=-std=c++11
+>>>>>>> origin/dev
 
 all: ethnopred_once ethnopred_twice
 

@@ -187,7 +187,7 @@ std::string DecisionTree::AskQuestion(TreeNode *node, std::vector<std::vector<st
 	double answer;
 	answer = findPosReturnValue(inputVector, (node->m_iNodeID));
 
-	if (answer == 0){
+	if (answer == 30){
 		std::string a = "No Value";
 		return a;
 	}
@@ -258,10 +258,10 @@ if (inputVector[0][i] == a){
 			else if (inputVector[1][i] == "T_C") return 7;
 			else if (inputVector[1][i] == "T_G") return 9;
 			else if (inputVector[1][i] == "T_T") return 10;
-			else return 0;
+			else return 30;
 		}
 
 
 	}
-	return 0;
+	return 30;
 }
