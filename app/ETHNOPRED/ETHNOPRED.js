@@ -11,7 +11,6 @@ module.exports = function( options ) {
     var dtreeJSONRut = router.route( host + 'dtree.json');
     var dtreeRut = router.route( host + 'dtree');
 
-    //login page
     getJSONDtree.apply( dtreeJSONRut );
     postJSONDtree.apply( dtreeJSONRut, [ rootFolder ] );
     pageNavigation.apply( dtreeRut, [ "./ETHNOPRED/ETHNOPRED.ejs", "Welcome to UofA ETHNOPRED" ] );
@@ -20,8 +19,6 @@ module.exports = function( options ) {
         this.get( function( req, res, next ) {
             if ( typeof async !== 'object')
                 var async = require( 'async' );
-
-            console.log("Good");
 
             return next();
 
