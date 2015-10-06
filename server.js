@@ -1,78 +1,40 @@
-var allowCrossDomain = function( req, res, next ) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+var express = require( 'express' );
+var app = express();
+var router = express.Router();
+var path = require( 'path' );
 
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send( 200 );
-    }
-    else {
-      next();
-    }
-};
+app.ProjectName = 'ETHNOPRED';
+//Set root url
+app.RootRut = '/' +  app.ProjectName + '/';
+//app.use( '/app', router );
 
-var express  = require( 'express' ),
-    path = require( 'path' ),
-    bodyParser = require( 'body-parser' ),
-    app = express(),
-    expressValidator = require( 'express-validator' );
-    //connect-busy used to uploaded file
-  var busboy = require( 'connect-busboy' );
-  app.use(busboy());
-
-/*Set EJS template Engine*/
-app.set( 'views', path.join(__dirname, 'app') );
-app.set( 'view engine','ejs' );
-
-app.use( express.static( path.join(__dirname, '/bower_components')) );
-app.use( bodyParser.urlencoded({ extended: true }) ); //support x-www-form-urlencoded
-app.use( bodyParser() );
-app.use( expressValidator() );
-app.use( allowCrossDomain );
-
-//No MySql
-
+app.use( express.static( path.join(__dirname, 'public')) );
+app.set( 'views', path.join( __dirname, 'app') );
 
 /* Use in-house prepated query lib*/
-app.get( '/',function( req,res ){
-    res.send( 'Welcome to ETHNOPRED server!' );
+app.get( ( '/' + app.ProjectName ) + function( req,res ){
+    res.send( 'Welcome to EP server!' );
 });
 
-//RESTful route
-var router = express.Router();
+//register user defined module
+app.Modules = [
+    'EP'
+]
 
-/*process.env.PORT for production*/
-var port = process.env.PORT || 3001;
+//extend functions for app, app.Ext
+require( './app/extend.js')( app );
 
-var options = new globalOption( __dirname ).getGlobalOption();
+//load config information
+require( './app/config.js')( app );
 
+//load router for each module
+require( './app/router.js')( app );
 
-//Bind routing to the whole
-app.use( require( './app/ETHNOPRED/ETHNOPRED.js' )( options ) );
+//load helper for each module
+require( './app/helper.js')( app );
 
-var server = app.listen( port, '0.0.0.0', function() {
+require( './build/app.js' )( app );
+
+var server = app.listen( app.Port, '0.0.0.0', function() {
    console.log( "Listening to port %s", server.address().port );
 });
-
-function globalOption( rootFolder ){
-    var instance;
-    //singlton
-    function init(){
-        return {
-            rootFolder: rootFolder,
-            rootRut: '/ETHNOPRED/',
-            debug: true
-        }
-    }
-
-    return {
-        getGlobalOption : function(){
-            if ( typeof instance === "undefined" ){
-                instance = new init();
-            }
-
-            return instance;
-        }
-    }
-}
