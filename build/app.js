@@ -1,8 +1,40 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-06
+Built on 2015-10-07
 */
+'use strict'
+module.exports = function( app ){
+
+  console.log( app );
+  function SendFile( req, res, next ) {  
+    console.log( 'running' );
+    var reqData = req.body.data;
+    var classifierType = JSON.parse( reqData ).classifierType;
+    var SNPFolder = app.RootFolder + '/public/SNP_file/SNP_list';
+
+    var SNPFileMap = {
+      'Continent' : 'Continent_149.csv',
+      'Sub_continent' : 'Subcontinent_1488.csv',
+      'Euro' : 'European_180.csv',
+      'East_Asian' : 'EastAsian_606.csv',
+      'American' : 'NorthAmerican_266.csv',
+      'African' : 'African_553.csv',
+      'Kenyann' : 'Kenyan_341.csv',
+    }
+
+    if ( typeof SNPFileMap[ classifierType ] === 'undefined' )
+    {
+      console.warn( ' [ERROR] cannot find classifier type ' ); 
+    
+    }
+    var SNPFile = SNPFolder + '/' + SNPFileMap[ classifierType ];
+    console.log( SNPFile );
+    res.sendFile( SNPFile );
+  }
+
+}
+;
 //Router for the ETHNOPRED
 'use strict'
 
@@ -27,74 +59,82 @@ module.exports = function( app ) {
 
   function PostJSONDtree( req, res, next ) {
     var fs = require( 'fs' );
-    console.log(req.files);
-    var classifierType = req.body.classifierType;
+    console.log( req.files );
+
+    var reqData = req.body.data;
+    var classifierType = JSON.parse( reqData ).classifierType;
 
     var filePath = req.files.file.path;
 
     console.log( filePath );
     console.log( classifierType );
+    console.log( reqData );
 
-    app.Waterfall([
+    app.waterfall([
 
     function readFile( callback ){
         
-      var dataFolder = app.RootFolder + '/cpplib/cpp_code/tree_and_SNIP';
+      var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP'; 
+      var binaryName = 'ethnopred_once';
+      var binPath = app.RootFolder + '/public/SNP_bin/'
+      var binaryFile = binPath + binaryName;
       var SNIPsuffix = '_SNIP';
 
       var fileMap = {
+        Continent : {
+          type : 'continent',
+          SNIPFilePath : ( dataFolder + '/Sub' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub' )
+        },
+
+        Sub_continent : {
+          type : 'subcontinent',
+          SNIPFilePath : ( dataFolder + '/Sub' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub' )
+        },
+
         Euro : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/Euro' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/Euro')
+          SNIPFilePath : ( dataFolder + '/Sub_Euro' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_Euro')
         },
 
         East_Asian  : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/East_Asian' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/East_Asian' )
-        },
-
-       Continent : {
-          type : 'country',
-          SNIPFilePath : ( dataFolder + '/Continent' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/Continent' )
+          SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_Asian' )
         },
 
         American : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/American' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/American')
+          SNIPFilePath : ( dataFolder + '/Sub_American' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_American')
         },
 
        African : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/African' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/African' )
+          SNIPFilePath : ( dataFolder + '/Sub_African' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_African' )
+        },
+
+        Kenyann : {
+          type : 'country',
+          SNIPFilePath : ( dataFolder + '/Sub_Kenyan' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_Kenyan')
         }
       }
 
       var exec = require( 'child_process' ).exec;
       var classifier = fileMap[ classifierType ];
-
-      if( classifier.type === 'country' ){
-        
-        //cmd_one is a 'country' based calculator
-        var cmd = rootFolder + "/cpplib/ethnopred_once -i " + filePath;
-        cmd += ' -T  ' + classifier.type;
-        cmd += ' -s ' + classifier.SNIPFilePath;
-        cmd += ' -t ' + classifier.TreeFilePath;
-
-      } else if ( classifier.type === 'continent' ){
-            
-        //cmd_one is a 'country' based calculator
-        var cmd = rootFolder + "/cpplib/ethnopred_twice -i " + filePath;
-
-      } else {
-      
+      if ( typeof classifier === 'undefined' ) {
+        console.warning( '[ Error ]: Cannot find given classifier type' );
       }
-      
-      console.log( rootFolder );
+
+      var cmd = binaryFile + ' -i ' + filePath;
+      cmd += ' -T  ' + classifier.type;
+      cmd += ' -s ' + classifier.SNIPFilePath;
+      cmd += ' -t ' + classifier.TreeFilePath;
+
       console.log( cmd );
 
       exec( cmd, function( err, stdout, stderr ) {
@@ -111,17 +151,16 @@ module.exports = function( app ) {
 
     ], function( err, results ) {
         if ( err ){
-          if(debug){
+          if( app.DEBUG ){
             console.log( err );
           }
         } else {
-
-          if( debug ){
-            console.log( debug );
+          if( app.DEBUG ){
+            console.log( results );
+           
           }
 
-          console.log(results);
-          res.send( {data: results} );
+          res.send( { data: results } );
           return next();
       }
     });
