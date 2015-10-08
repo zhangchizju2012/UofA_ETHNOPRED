@@ -1,11 +1,23 @@
 'use strict'
 module.exports = function( app ){
+  var Module = app.Module[ 'EP.download' ];
+  var Router = Module.router;
+  var SNPRut = Router.SNP;
 
-  console.log( app );
+  app
+    .get( SNPRut, GetSNP );
+  app
+    .post( SNPRut, SendFile );
+
+  function GetSNP(){
+    console.log( 'runningi2i2' );
+  }
+
   function SendFile( req, res, next ) {  
-    console.log( 'running' );
+    console.log( req.body );
     var reqData = req.body.data;
     var classifierType = JSON.parse( reqData ).classifierType;
+    console.log( classifierType );
     var SNPFolder = app.RootFolder + '/public/SNP_file/SNP_list';
 
     var SNPFileMap = {
