@@ -1,27 +1,37 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-08
+Built on 2015-10-09
 */
 'use strict'
 module.exports = function( app ){
   var Module = app.Module[ 'EP.download' ];
   var Router = Module.router;
   var SNPRut = Router.SNP;
+  var sampleRut = Router.sample;
 
   app
-    .get( SNPRut, GetSNP );
+    .get( SNPRut, GetSNPFile );
   app
-    .post( SNPRut, SendFile );
+    .post( SNPRut, SendSNPFile );
+  
+  app
+    .get( sampleRut, GetSampleFile );
+  app
+    .post( sampleRut, SendSampleFile );
 
-  function GetSNP(){
-    console.log( 'runningi2i2' );
+  function GetSNPFile(){
+    console.log( "Get SNP file" );
   }
 
-  function SendFile( req, res, next ) {  
+  function GetSampleFile() {
+    console.log( "Get sample file" );
+    
+  }
+
+  function SendSNPFile( req, res, next ) {  
     console.log( req.body );
-    var reqData = req.body.data;
-    var classifierType = JSON.parse( reqData ).classifierType;
+    var classifierType = req.body.classifierType;
     console.log( classifierType );
     var SNPFolder = app.RootFolder + '/public/SNP_file/SNP_list';
 
@@ -38,11 +48,48 @@ module.exports = function( app ){
     if ( typeof SNPFileMap[ classifierType ] === 'undefined' )
     {
       console.warn( ' [ERROR] cannot find classifier type ' ); 
-    
     }
+
     var SNPFile = SNPFolder + '/' + SNPFileMap[ classifierType ];
     console.log( SNPFile );
-    res.sendFile( SNPFile );
+    var fs = require( 'fs' );
+    var stat = fs.statSync( SNPFile);
+    var fileToSend = fs.readFileSync( SNPFile );
+    res.set('Content-Type', 'text/csv');
+    res.set('Content-Length', stat.size);
+    res.set('Content-Disposition', SNPFile );
+    console.log( fileToSend);
+    res.send(fileToSend);
+  }
+
+  function SendSampleFile( req, res, next ) {
+    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var classifierType = req.body.classifierType;
+    console.log( classifierType );
+
+    var sampleFlieMap = {
+      'Continent' : 'Continent.csv',
+      'Sub_continent' : 'All.csv',
+      'Euro' : 'European.csv',
+      'East_Asian' : 'EastAsian.csv',
+      'American' : 'NorthAmerican.csv',
+      'African' : 'African.csv',
+      'Kenyann' : 'Kenyan.csv',
+    }
+
+    if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
+    {
+      console.warn( ' [ERROR] cannot find classifier type ' ); 
+    }
+
+    var sampleFile = sampleFlieFolder + '/' + sampleFlieMap[ classifierType ];
+    var fs = app.fs;
+    var stat = fs.statSync( sampleFile );
+    var fileToSend = fs.readFileSync( sampleFile );
+    res.set( 'Content-Type', 'text/csv' );
+    res.set( 'Content-Length', stat.size);
+    res.set( 'Content-Disposition', sampleFile );
+    res.send( fileToSend );
   }
 
 }
