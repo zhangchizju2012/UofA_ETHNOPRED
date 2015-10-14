@@ -383,7 +383,7 @@ namespace ETHNOPRED{
 		}
 	}
 
-	void ETHNOPREDTree::Stat(){
+	void ETHNOPREDTree::Stat( const bool isPrintJSON){
         //use boost property_tree lib to report final result
         using boost::property_tree::ptree;
         using boost::property_tree::basic_ptree;
@@ -454,9 +454,14 @@ namespace ETHNOPRED{
         JSONResultAll.add_child("winner", JSONWinnerForEach);
 
         //print out json
-        std::stringstream ss;
-        write_json(ss, JSONResultAll);
-        std::cout << ss.str() << std::endl;
+        if (isPrintJSON)
+        {
+          std::stringstream ss;
+          write_json(ss, JSONResultAll);
+          std::cout << ss.str() << std::endl;
+          
+        }
+        
 	}
 
 	vector<string> ETHNOPREDTree::GetWinner(){
@@ -498,3 +503,4 @@ namespace ETHNOPRED{
 		this->m_ClassifierType = string(ClassifierType);
 	}
 }
+

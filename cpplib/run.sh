@@ -1,4 +1,4 @@
-#make remove && make
+make remove && make
 snip_path=$PWD/cpp_code/tree_and_SNIP/Sub
 #snip_path=$PWD/cpp_code/tree_and_SNIP/Sub_East_Asian
 #snip_path=$PWD/cpp_code/tree_and_SNIP/Sub_American

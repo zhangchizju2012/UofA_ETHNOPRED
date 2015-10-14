@@ -112,10 +112,21 @@ int main(int argc, char *argv[]) {
     EPTree->Add2DecisionPool();
   }
 
-  EPTree->Stat();
+
+  if(std::string(ClassifierType) == "subcontinent")
+  {
+    /*----do not print out the result when classifiertype is subcontinent ----*/
+    EPTree->Stat(false);
+    
+  } else {
+    EPTree->Stat();
+  }
+  
   auto Winners = EPTree ->GetWinner();
 
-  if(std::string(ClassifierType)=="subcontinent")
+  EPTree->EmptyDecisionPool();
+
+  if(std::string(ClassifierType) == "subcontinent")
   {
 
     EPTree->SetClassifierType("country");
@@ -130,7 +141,6 @@ int main(int argc, char *argv[]) {
     for(auto pId = 0; pId < personInfo.size(); ++pId)
     {
 
-      std::cout << Winners.at(pId) << std::endl;
       if(Winners.at(pId) == "CEU")
       {
         treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_Euro"), true);
@@ -145,12 +155,13 @@ int main(int argc, char *argv[]) {
       EPTree->SetTreesInfo(treeInfo);
       EPTree->CreateEPTreeArray();
       EPTree->SetSNIPInfo(SNIPHeader);
-      EPTree->EmptyDecisionPool();
+      //EPTree->EmptyDecisionPool();
       EPTree->SetPersonInfo(personInfo.at(pId));
       EPTree->MakeDecision();
       EPTree->Add2DecisionPool();
-      EPTree->Stat();
     }
+
+    EPTree->Stat();
   }
 /*
   for(auto pId = 0; pId < personInfo.size(); ++pId){
