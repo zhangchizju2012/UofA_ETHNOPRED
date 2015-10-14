@@ -105,7 +105,8 @@ int main(int argc, char *argv[]) {
   EPTree->SetSNIPInfo(SNIPHeader);
   EPTree->EmptyDecisionPool();
 
-  for(auto &p : personInfo){
+  for(auto &p : personInfo)
+  {
     EPTree->SetPersonInfo(p);
     EPTree->MakeDecision();
     EPTree->Add2DecisionPool();
@@ -114,7 +115,8 @@ int main(int argc, char *argv[]) {
   EPTree->Stat();
   auto Winners = EPTree ->GetWinner();
 
-  if(std::string(ClassifierType)=="subcontinent"){
+  if(std::string(ClassifierType)=="subcontinent")
+  {
 
     EPTree->SetClassifierType("country");
     std::string selectedSNIPFile(std::string(treeName) + std::string("_EuEaAf_SNIP"));
@@ -125,12 +127,21 @@ int main(int argc, char *argv[]) {
     personInfo.erase(personInfo.begin());
     personInfo.erase(personInfo.begin());
 
-    for(auto pId = 0; pId < personInfo.size(); ++pId){
+    for(auto pId = 0; pId < personInfo.size(); ++pId)
+    {
 
       std::cout << Winners.at(pId) << std::endl;
-      if(Winners.at(pId) == "CEU"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_Euro"), true);}
-      else if (Winners.at(pId) == "YRI"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_African"), true);}
-      else if (Winners.at(pId) == "CHB/JPT"){treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_East_Asian"), true);}
+      if(Winners.at(pId) == "CEU")
+      {
+        treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_Euro"), true);
+      } else if (Winners.at(pId) == "YRI")
+      {
+        treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_African"), true);
+      } else if (Winners.at(pId) == "CHB/JPT")
+      {
+        treeInfo = EPTree->ReadFile(std::string(treeName) + std::string("_East_Asian"), true);
+      }
+
       EPTree->SetTreesInfo(treeInfo);
       EPTree->CreateEPTreeArray();
       EPTree->SetSNIPInfo(SNIPHeader);
