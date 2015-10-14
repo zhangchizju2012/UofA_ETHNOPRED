@@ -1,0 +1,915 @@
+rm -f main_once.o ethnopred_once main_twice.o ethnopred_twice
+g++ -c -g -std=c++11 --static -O4  ./cpp_code/main_once.cpp -o main_once.o
+g++ -g -std=c++11 --static -O4 main_once.o -o ethnopred_once
+g++ -c -g -std=c++11 --static -O4  ./cpp_code/main_twice.cpp -o main_twice.o
+g++ -g -std=c++11 --static -O4 main_twice.o -o ethnopred_twice
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "14",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CEU": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "13",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "1",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CEU": "13"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "14",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CEU": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "14",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CEU": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "14",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CEU": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "46",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "1",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "46"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "44",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "3",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "44"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "45",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "2",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "45"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "46",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "1",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "46"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "47",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "47"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "36",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "11",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "36"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "36",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "11",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "36"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "36",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "11",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "36"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "37",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "10",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "37"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "39",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "8",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "CHB": "39"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "8",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "39",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "JPT": "39"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "7",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "40",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "JPT": "40"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "7",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "40",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "JPT": "40"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "7",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "40",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "JPT": "40"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "7",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "40",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "JPT": "40"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "22",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "LWK": "22"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "22",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "LWK": "22"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "21",
+            "MKK": "1",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "LWK": "21"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "21",
+            "MKK": "1",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "LWK": "21"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "20",
+            "MKK": "1",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "1"
+        }
+    ],
+    "winner":
+    [
+        {
+            "LWK": "20"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "19",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "3"
+        }
+    ],
+    "winner":
+    [
+        {
+            "MKK": "19"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "2",
+            "MKK": "19",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "1"
+        }
+    ],
+    "winner":
+    [
+        {
+            "MKK": "19"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "21",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "1"
+        }
+    ],
+    "winner":
+    [
+        {
+            "MKK": "21"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "1",
+            "MKK": "21",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "MKK": "21"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "2",
+            "MKK": "20",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "0",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "MKK": "20"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "14",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "TSI": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "2",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "12",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "TSI": "12"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "14",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "TSI": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "14",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "TSI": "14"
+        }
+    ]
+}
+
+{
+    "vote":
+    [
+        {
+            "ASW": "0",
+            "CEU": "0",
+            "CHB": "0",
+            "CHD": "0",
+            "GIH": "0",
+            "JPT": "0",
+            "LWK": "0",
+            "MKK": "0",
+            "MXL": "0",
+            "No Value": "0",
+            "TSI": "14",
+            "YRI": "0"
+        }
+    ],
+    "winner":
+    [
+        {
+            "TSI": "14"
+        }
+    ]
+}
+

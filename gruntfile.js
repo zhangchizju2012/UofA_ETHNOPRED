@@ -41,7 +41,7 @@ module.exports = function(grunt) {
     build: {
       files: [{
         //Caution: load module folder by folder
-        src: [ 'app/ethnopred/ethnopred.js' ], 
+        src: [ 'app/**/*.js' ], 
         dest: 'build/app.js'
         }]
       },
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: [ 'app/ethnopred/ethnopred.js' ],
+        files: [ 'app/**/*.js' ],
         tasks: ['concat'],
         options: {
               spawn: false,

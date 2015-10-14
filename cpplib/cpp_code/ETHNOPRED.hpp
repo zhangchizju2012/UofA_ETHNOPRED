@@ -25,7 +25,7 @@ namespace ETHNOPRED{
 			void SetTreesInfo(const string&);
 			void SetPersonInfo(const vector<string>&);
 			void SetSNIPInfo(const vector<string>&);
-			void Stat();
+			void Stat(const bool isPrintJSON=true);
 		  vector<string> GetWinner();
 			void PrintDecision();
 			void SetClassifierType(const char*);

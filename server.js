@@ -6,34 +6,35 @@ var path = require( 'path' );
 app.ProjectName = 'ETHNOPRED';
 //Set root url
 app.RootRut = '/' +  app.ProjectName + '/';
-//app.use( '/app', router );
 
 app.use( express.static( path.join(__dirname, 'public')) );
 app.set( 'views', path.join( __dirname, 'app') );
 
 /* Use in-house prepated query lib*/
-app.get('/', function( req,res ){
-    res.send( 'Welcome to EP server!' );
+app.get( '/', function( req,res ){
+    res.send( 'Welcome to ' + app.ProjectName + ' server!' );
 });
+
+app.RootFolder = __dirname;
 
 //register user defined module
 app.Modules = [
-    'EP'
+    'EP',
+    'EP.download' 
 ]
 
 //extend functions for app, app.Ext
-require( './app/extend.js')( app );
+require( './config/extend.js' )( app );
 
 //load config information
-require( './app/config.js')( app );
+require( './config/config.js' )( app );
 
 //load router for each module
-require( './app/router.js')( app );
+require( './config/router.js' )( app );
 
-//load helper for each module
-require( './app/helper.js')( app );
-
-require( './build/app.js' )( app );
+//load module path
+require( './app/ethnopred/ethnopred.js' )( app );
+require( './app/download/download.js' )( app );
 
 var server = app.listen( app.Port, '0.0.0.0', function() {
    console.log( "Listening to port %s", server.address().port );

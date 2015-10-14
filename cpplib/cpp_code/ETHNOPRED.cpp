@@ -3,37 +3,36 @@
 namespace ETHNOPRED{
 	using namespace std;
 
-	string ETHNOPREDTree::ReadFile(const string& filename, bool isBreaklineLast=false){
-
-		//use mutex to protect file access
-        static std::mutex mutex;
-        std::lock_guard<std::mutex> lock(mutex);
-
-    	ifstream file(filename.c_str(), ifstream::in);
-    	stringstream ss;
-    	string str;
-
-        if (file.is_open()){
-			ss << file.rdbuf();
-			str = ss.str();
-			file.close();
-        } else {
-        	string errMessage = string("[ Error ]  cannot openfile") + filename;
-        	throw runtime_error(errMessage.c_str());
-        }
-
-        if(isBreaklineLast){
-        	//check whether the last character is '\n'
-        	if( !(str.at(str.length()-1) == '\n')){
-				str.push_back('\n');
-        	}
-        }
-
-    	return str;
-	}
-
 	ETHNOPREDTree::ETHNOPREDTree(){}
 	ETHNOPREDTree::~ETHNOPREDTree(){}
+
+	string ETHNOPREDTree::ReadFile(const string& filename, bool isBreaklineLast=false){
+
+    ifstream file(filename.c_str(), ifstream::in);
+    stringstream ss;
+    string str;
+
+    if (file.is_open())
+    {
+      ss << file.rdbuf();
+      str = ss.str();
+      file.close();
+    } else {
+      string errMessage = string("[ Error ]  cannot openfile") + filename;
+      throw runtime_error(errMessage.c_str());
+    }
+
+    if(isBreaklineLast){
+      //check whether the last character is '\n'
+      if( !(str.at(str.length()-1) == '\n'))
+      {
+        str.push_back('\n');
+      }
+    }
+
+    return str;
+	}
+
 
 	vector<vector<string>> ETHNOPREDTree::AnalyzeSNIP(const string& SNIPFileAll, const string& SNIPFileSelected){
 		string SNIPAll = this->ReadFile(SNIPFileAll);
@@ -41,37 +40,37 @@ namespace ETHNOPRED{
 		string SNPInfo = this->ReadFile(SNIPFileSelected);
 		//cout << SNPId;
 		string delComma(",");
-    	string delLine("\n");
-        vector<vector<string>> myvector;
+    string delLine("\n");
+    vector<vector<string>> myvector;
 
-				auto breakPosInfo = SNPInfo.find(delLine);
-				auto SNPId = SNPInfo.substr(0, breakPosInfo + delLine.length());
-				SNPInfo.erase(0, breakPosInfo + delLine.length());
+      auto breakPosInfo = SNPInfo.find(delLine);
+      auto SNPId = SNPInfo.substr(0, breakPosInfo + delLine.length());
+      SNPInfo.erase(0, breakPosInfo + delLine.length());
 
-				vector<vector<string>> DNAInfo;
-				std::vector<size_t> DNAPos;
-				vector<string> EachDNA;
+      vector<vector<string>> DNAInfo;
+      std::vector<size_t> DNAPos;
+      vector<string> EachDNA;
 
-				breakPosInfo = SNPInfo.find(delLine);
-				while (breakPosInfo != std::string::npos){
-					auto SNPInfoLine = SNPInfo.substr(0, breakPosInfo + delLine.length());
-					SNPInfo.erase(0, breakPosInfo + delLine.length());
-					DNAPos.push_back(-1);
-					for (size_t i = 0; i < SNPInfoLine.length(); ++i)
-		    	{
-		    		if (SNPInfoLine.at(i) == ','){
-		    			DNAPos.push_back(i);
-		    		}
-		    	}
-					DNAPos.push_back(SNPInfoLine.find(delLine) - delLine.length());
-					for (int j = 0; j < (DNAPos.size() - 2); j++){
-		    		EachDNA.push_back(SNPInfoLine.substr(DNAPos[j] + delComma.length(), DNAPos[j + 1] - DNAPos[j] - 1));
-		    	}
-					DNAInfo.push_back(EachDNA);
-					breakPosInfo = SNPInfo.find(delLine);
-					DNAPos.clear();
-					EachDNA.clear();
-				}
+      breakPosInfo = SNPInfo.find(delLine);
+      while (breakPosInfo != std::string::npos){
+        auto SNPInfoLine = SNPInfo.substr(0, breakPosInfo + delLine.length());
+        SNPInfo.erase(0, breakPosInfo + delLine.length());
+        DNAPos.push_back(-1);
+        for (size_t i = 0; i < SNPInfoLine.length(); ++i)
+        {
+          if (SNPInfoLine.at(i) == ','){
+            DNAPos.push_back(i);
+          }
+        }
+        DNAPos.push_back(SNPInfoLine.find(delLine) - delLine.length());
+        for (int j = 0; j < (DNAPos.size() - 2); j++){
+          EachDNA.push_back(SNPInfoLine.substr(DNAPos[j] + delComma.length(), DNAPos[j + 1] - DNAPos[j] - 1));
+        }
+        DNAInfo.push_back(EachDNA);
+        breakPosInfo = SNPInfo.find(delLine);
+        DNAPos.clear();
+        EachDNA.clear();
+      }
 
 				//std::cout << DNAInfo[2][0] << std::endl;
 				//std::cout << DNAInfo[1][3] << std::endl;
@@ -384,7 +383,7 @@ namespace ETHNOPRED{
 		}
 	}
 
-	void ETHNOPREDTree::Stat(){
+	void ETHNOPREDTree::Stat( const bool isPrintJSON){
         //use boost property_tree lib to report final result
         using boost::property_tree::ptree;
         using boost::property_tree::basic_ptree;
@@ -455,9 +454,14 @@ namespace ETHNOPRED{
         JSONResultAll.add_child("winner", JSONWinnerForEach);
 
         //print out json
-        std::stringstream ss;
-        write_json(ss, JSONResultAll);
-        std::cout << ss.str() << std::endl;
+        if (isPrintJSON)
+        {
+          std::stringstream ss;
+          write_json(ss, JSONResultAll);
+          std::cout << ss.str() << std::endl;
+          
+        }
+        
 	}
 
 	vector<string> ETHNOPREDTree::GetWinner(){
@@ -499,3 +503,4 @@ namespace ETHNOPRED{
 		this->m_ClassifierType = string(ClassifierType);
 	}
 }
+
