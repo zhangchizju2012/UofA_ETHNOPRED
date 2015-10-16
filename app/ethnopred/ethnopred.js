@@ -80,7 +80,7 @@ module.exports = function( app ) {
           TreeFilePath : ( dataFolder + '/Sub_African' )
         },
 
-        Kenyann : {
+        Kenyan : {
           type : 'country',
           SNIPFilePath : ( dataFolder + '/Sub_Kenyan' + SNIPsuffix ),
           TreeFilePath : ( dataFolder + '/Sub_Kenyan')

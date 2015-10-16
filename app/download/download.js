@@ -37,7 +37,7 @@ module.exports = function( app ){
       'East_Asian' : 'EastAsian_606.csv',
       'American' : 'NorthAmerican_266.csv',
       'African' : 'African_553.csv',
-      'Kenyann' : 'Kenyan_341.csv',
+      'Kenyan' : 'Kenyan_341.csv',
     }
 
     if ( typeof SNPFileMap[ classifierType ] === 'undefined' )
@@ -69,7 +69,7 @@ module.exports = function( app ){
       'East_Asian' : 'EastAsian.csv',
       'American' : 'NorthAmerican.csv',
       'African' : 'African.csv',
-      'Kenyann' : 'Kenyan.csv',
+      'Kenyan' : 'Kenyan.csv',
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
