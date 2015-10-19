@@ -1,7 +1,7 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-16
+Built on 2015-10-19
 */
 module.exports = function( app ){
 
