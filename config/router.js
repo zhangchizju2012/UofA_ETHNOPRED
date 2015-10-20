@@ -8,6 +8,10 @@ module.exports = function( app ) {
     'EP.download' : {
       SNP : 'download/SNP',
       sample: 'download/sample'
+    },
+
+    'EP.demo' : {
+      demo : 'demo'
     }
   }
 

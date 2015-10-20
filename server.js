@@ -20,7 +20,8 @@ app.RootFolder = __dirname;
 //register user defined module
 app.Modules = [
     'EP',
-    'EP.download' 
+    'EP.download',
+    'EP.demo'
 ]
 
 //extend functions for app, app.Ext
@@ -35,6 +36,7 @@ require( './config/router.js' )( app );
 //load module path
 require( './app/ethnopred/ethnopred.js' )( app );
 require( './app/download/download.js' )( app );
+require( './app/demo/demo.js' )( app );
 
 var server = app.listen( app.Port, '0.0.0.0', function() {
    console.log( "Listening to port %s", server.address().port );
