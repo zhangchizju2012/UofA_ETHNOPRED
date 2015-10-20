@@ -36,8 +36,8 @@ module.exports = function( app ) {
     app.waterfall([
 
     function readFile( callback ){
-        
-      var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP'; 
+
+      var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP';
       var binaryName = 'ethnopred_once';
       var binPath = app.RootFolder + '/public/SNP_bin/'
       var binaryFile = binPath + binaryName;
@@ -80,7 +80,7 @@ module.exports = function( app ) {
           TreeFilePath : ( dataFolder + '/Sub_African' )
         },
 
-        Kenyann : {
+        Kenyan : {
           type : 'country',
           SNIPFilePath : ( dataFolder + '/Sub_Kenyan' + SNIPsuffix ),
           TreeFilePath : ( dataFolder + '/Sub_Kenyan')
@@ -120,7 +120,6 @@ module.exports = function( app ) {
         } else {
           if( app.DEBUG ){
             console.log( results );
-           
           }
 
           res.send( { data: results } );

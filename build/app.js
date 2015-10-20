@@ -1,8 +1,251 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-09
+Built on 2015-10-20
 */
+module.exports = function( app ){
+
+	LoadPlugin( app );
+	//LoadCustomerPlugin( app );
+	LoadGlobalAsync( app );
+	LoadGolbalMessage( app );
+
+	ConfigViewEngine( app );
+	ConfigDomain( app );
+	ConfigPort( app );
+	ConfigDebugMode( app );
+	//ConfigMySql( app );
+
+	function LoadPlugin( app ) {
+
+		var pluginArr = [
+			'body-parser', 
+			'express-validator'
+		];
+
+		for ( var i = 0; i < pluginArr.length; i++ ){
+			app.use( require( pluginArr[i])() );
+		}
+	}
+
+	function ConfigViewEngine( app ) {
+		var path = require( 'path' );
+		/*Set EJS template Engine*/
+		app.set( 'view engine','ejs' );
+	}
+
+	function ConfigDomain( app ) {
+		app.use( CrossAllDomain );
+	}
+
+	function CrossAllDomain( req, res, next ){
+		res.header('Access-Control-Allow-Origin', '*');
+	    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+	    // intercept OPTIONS method
+	    if ('OPTIONS' == req.method) {
+	        res.send( 200 );
+	    } else {
+		    next();
+	    }
+	}
+
+	function ConfigMySql( app ){
+		var connection  = require( 'express-myconnection' );
+	    var mysql = require( 'mysql' );
+
+	    var MysqlOptions = {
+	        host     : 'localhost',
+	        user     : 'pssp_idm',
+	        password : 'pssp_idm',
+	        database : 'idm_db_test',
+	        debug    : false //set true if you wanna see debug logger
+	    }
+
+		app
+			.use( connection( mysql,
+				MysqlOptions,
+			    'pool' )
+			);
+	}
+
+	function LoadCustomerPlugin ( app ) {
+		app.SQLQuery = require('../custom_lib/js/mysql_query.js');
+	}
+
+	function ConfigPort( app ) {
+		app.Port = process.env.PORT || 3001;
+	}
+
+	function LoadGlobalAsync ( app ) {
+
+		app.Waterfall = require( 'async' ).waterfall;
+
+	}
+
+	function ConfigDebugMode( app ){
+		app.DEBUG = true;
+	}
+
+	function LoadGolbalMessage( app ){
+		app.MSG = {
+			DB_CONN_SUCCESS: 
+				'[ DATABASE ] SUCCESSFULLY CONNECTED TO DATABASE',
+
+			DB_CONN_FAIL: 
+				'[ DATABASE ] ERROR: CANNOT CONNECT TO DATABASE',				
+			PrintDBData: 
+				function( data ){
+				console.log ( '[ DATABASE ] SUCCESSFULLY EXTRACTED DATA FROM DATABASE' );
+				console.log( 'THE CONTENT IS');
+				console.log( data );
+			}
+		}
+
+	}
+};
+'use strict'
+module.exports = function( app ) {
+  var Demo = app.Module[ 'EP.demo' ];
+  var Router = Demo.router;
+  var DemoUrl = Router.demo;
+
+  app
+    .get( DemoUrl, GetDemo );
+  app
+    .post( DemoUrl, PostDemo );
+
+  function GetDemo() {
+    console.log( "Welcome to Demo page" );
+  }
+
+  function PostDemo ( req, res, next ) {
+
+    var reqData = req.body;
+    console.log( 'Running' );
+    console.log( reqData )
+    var classifierType = reqData.classifierType;
+    console.log( classifierType );
+
+    var resMsg = {
+      process : "EP Demo",
+      err : "",
+      data : ""
+    }
+
+    var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP';
+    var binaryName = 'ethnopred_once';
+    var binPath = app.RootFolder + '/public/SNP_bin/'
+    var binaryFile = binPath + binaryName;
+    var SNIPsuffix = '_SNIP';
+    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+
+    var sampleFlieMap = {
+      'Continent' : 'Continent.csv',
+      'Sub_continent' : 'All.csv',
+      'Euro' : 'European.csv',
+      'East_Asian' : 'EastAsian.csv',
+      'American' : 'NorthAmerican.csv',
+      'African' : 'African.csv',
+      'Kenyan' : 'Kenyan.csv',
+    }
+
+    if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
+    {
+      console.warn( ' [ERROR] cannot find classifier type ' );
+    }
+
+    var sampleFile = sampleFlieFolder + '/' + sampleFlieMap[ classifierType ];
+
+    var fileMap = {
+      Continent : {
+        type : 'continent',
+        SNIPFilePath : ( dataFolder + '/Sub' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub' )
+      },
+
+      Sub_continent : {
+        type : 'subcontinent',
+        SNIPFilePath : ( dataFolder + '/Sub' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub' )
+      },
+
+      Euro : {
+        type : 'country',
+        SNIPFilePath : ( dataFolder + '/Sub_Euro' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_Euro')
+      },
+
+      East_Asian  : {
+        type : 'country',
+        SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_Asian' )
+      },
+
+      American : {
+        type : 'country',
+        SNIPFilePath : ( dataFolder + '/Sub_American' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_American')
+      },
+
+     African : {
+        type : 'country',
+        SNIPFilePath : ( dataFolder + '/Sub_African' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_African' )
+      },
+
+      Kenyan : {
+        type : 'country',
+        SNIPFilePath : ( dataFolder + '/Sub_Kenyan' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_Kenyan')
+      }
+    }
+
+    var classifier = fileMap[ classifierType ];
+    if ( typeof classifier === 'undefined' ) {
+      console.warning( '[ Error ]: Cannot find given classifier type' );
+    }
+
+    var cmd = binaryFile + ' -i ' + sampleFile;
+    cmd += ' -T  ' + classifier.type;
+    cmd += ' -s ' + classifier.SNIPFilePath;
+    cmd += ' -t ' + classifier.TreeFilePath;
+
+    console.log( cmd );
+
+    app.waterfall([
+      function RunDemo( callback ) {
+        var exec = require( 'child_process' ).exec;
+        exec( cmd, function( err, stdout, stderr ) {
+          if( err ) {
+              console.log( err );
+              callback( true, "" );
+
+          } else {
+              var stdout = JSON.parse( stdout );
+              callback( null, stdout );
+          }
+        });
+      }
+    ],
+
+    function( err, results ) {
+        if ( err ){
+          if( app.DEBUG ){
+            console.log( err );
+          }
+        } else {
+          if( app.DEBUG ){
+            console.log( results );
+          }
+          res.send( { data: results } );
+          return next();
+      }
+    })
+  }
+}
+;
 'use strict'
 module.exports = function( app ){
   var Module = app.Module[ 'EP.download' ];
@@ -42,7 +285,7 @@ module.exports = function( app ){
       'East_Asian' : 'EastAsian_606.csv',
       'American' : 'NorthAmerican_266.csv',
       'African' : 'African_553.csv',
-      'Kenyann' : 'Kenyan_341.csv',
+      'Kenyan' : 'Kenyan_341.csv',
     }
 
     if ( typeof SNPFileMap[ classifierType ] === 'undefined' )
@@ -74,7 +317,7 @@ module.exports = function( app ){
       'East_Asian' : 'EastAsian.csv',
       'American' : 'NorthAmerican.csv',
       'African' : 'African.csv',
-      'Kenyann' : 'Kenyan.csv',
+      'Kenyan' : 'Kenyan.csv',
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
@@ -132,8 +375,8 @@ module.exports = function( app ) {
     app.waterfall([
 
     function readFile( callback ){
-        
-      var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP'; 
+
+      var dataFolder = app.RootFolder + '/public/SNP_file/tree_and_SNP';
       var binaryName = 'ethnopred_once';
       var binPath = app.RootFolder + '/public/SNP_bin/'
       var binaryFile = binPath + binaryName;
@@ -176,7 +419,7 @@ module.exports = function( app ) {
           TreeFilePath : ( dataFolder + '/Sub_African' )
         },
 
-        Kenyann : {
+        Kenyan : {
           type : 'country',
           SNIPFilePath : ( dataFolder + '/Sub_Kenyan' + SNIPsuffix ),
           TreeFilePath : ( dataFolder + '/Sub_Kenyan')
@@ -216,7 +459,6 @@ module.exports = function( app ) {
         } else {
           if( app.DEBUG ){
             console.log( results );
-           
           }
 
           res.send( { data: results } );
@@ -225,3 +467,6 @@ module.exports = function( app ) {
     });
   }
 }
+;
+'use strict'
+module.exports = {}
