@@ -1,7 +1,7 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-20
+Built on 2015-10-28
 */
 module.exports = function( app ){
 
@@ -179,8 +179,8 @@ module.exports = function( app ) {
 
       East_Asian  : {
         type : 'country',
-        SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-        TreeFilePath : ( dataFolder + '/Sub_Asian' )
+        SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
       },
 
       American : {
@@ -403,8 +403,8 @@ module.exports = function( app ) {
 
         East_Asian  : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/Sub_Asian' )
+          SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
         },
 
         American : {
@@ -469,4 +469,63 @@ module.exports = function( app ) {
 }
 ;
 'use strict'
-module.exports = {}
+module.exports = {};
+'use strict'
+module.exports = function( app ){
+
+	if ( typeof app.Ext === 'undefined' ){
+		app.Ext = {};
+	}
+
+	app.Ext.LoadModule = function( ModuleName ){
+
+		if ( typeof app.Module == 'undefined' ){
+			app.Module = {};
+		}
+
+		if ( app.Modules.lastIndexOf( ModuleName ) === -1 ){
+
+			console.warn( 'Module ' + ModuleName + 'has not been registered' );
+
+		} else {
+
+			if ( typeof app.Module[ ModuleName ] === 'undefined' ){
+				app.Module[ ModuleName ] = {};
+				app.Module[ ModuleName ][ 'helper' ] = {};
+				app.Module[ ModuleName ][ 'router' ] = {};
+			}
+		}
+	}
+
+	app.Ext.LoadHelper = function ( HelperMap ) {
+		var Keys = Object.keys( HelperMap );
+		for( var i = 0; i < Keys.length; ++i ){
+			app.Module[ Keys[i] ].helper 
+				= require( HelperMap[ Keys[i] ] );
+		}
+	}
+
+	app.Ext.extend = require( 'extend' );
+
+};
+module.exports = function( app ) {
+	var HelperMap = {
+		'EP' : './ethnopred/helper.js'
+	}
+
+	app.Ext.LoadHelper( HelperMap );
+};
+module.exports = function( app ) {
+	LoadModules( app );
+
+	app.Module[ 'EP' ].router = {
+		dtree : app.RootRut + 'dtree.json'
+	}
+
+	function LoadModules ( app ) {
+		for ( var i = 0; i < app.Modules.length; i++ ){
+			app.Ext.LoadModule( app.Modules[i], app );
+			console.log( app.Modules[i] );
+		}
+	}
+}

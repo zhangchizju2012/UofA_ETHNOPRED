@@ -72,8 +72,8 @@ module.exports = function( app ) {
 
       East_Asian  : {
         type : 'country',
-        SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-        TreeFilePath : ( dataFolder + '/Sub_Asian' )
+        SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
       },
 
       American : {
