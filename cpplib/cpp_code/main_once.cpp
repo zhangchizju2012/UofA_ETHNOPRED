@@ -123,7 +123,6 @@ int main(int argc, char *argv[]) {
     SNIPHeader = personInfo.at(0);
 
     personInfo.erase(personInfo.begin());
-    personInfo.erase(personInfo.begin());
 
     for(auto pId = 0; pId < personInfo.size(); ++pId){
 
