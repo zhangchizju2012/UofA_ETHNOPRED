@@ -43,6 +43,7 @@ namespace ETHNOPRED{
 			vector<vector<string>> m_DecisionsPool;
 			vector<string> m_WinnerGroup;
 			string m_ClassifierType;
+      vector<string> m_PersonId;
 	};
 }
 

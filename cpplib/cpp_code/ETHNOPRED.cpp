@@ -43,61 +43,60 @@ namespace ETHNOPRED{
     string delLine("\n");
     vector<vector<string>> myvector;
 
-      auto breakPosInfo = SNPInfo.find(delLine);
-      auto SNPId = SNPInfo.substr(0, breakPosInfo + delLine.length());
+    auto breakPosInfo = SNPInfo.find(delLine);
+    auto SNPId = SNPInfo.substr(0, breakPosInfo + delLine.length());
+    SNPInfo.erase(0, breakPosInfo + delLine.length());
+
+    vector<vector<string>> DNAInfo;
+    vector<size_t> DNAPos;
+    vector<string> EachDNA;
+
+    if (!m_PersonId.empty())
+    {
+      m_PersonId.clear();
+    }
+    
+
+    breakPosInfo = SNPInfo.find(delLine);
+    while (breakPosInfo != std::string::npos){
+      auto SNPInfoLine = SNPInfo.substr(0, breakPosInfo + delLine.length());
       SNPInfo.erase(0, breakPosInfo + delLine.length());
-
-      vector<vector<string>> DNAInfo;
-      std::vector<size_t> DNAPos;
-      vector<string> EachDNA;
-
-      breakPosInfo = SNPInfo.find(delLine);
-      while (breakPosInfo != std::string::npos){
-        auto SNPInfoLine = SNPInfo.substr(0, breakPosInfo + delLine.length());
-        SNPInfo.erase(0, breakPosInfo + delLine.length());
-        DNAPos.push_back(-1);
-        for (size_t i = 0; i < SNPInfoLine.length(); ++i)
-        {
-          if (SNPInfoLine.at(i) == ','){
-            DNAPos.push_back(i);
-          }
+      DNAPos.push_back(-1);
+      for (size_t i = 0; i < SNPInfoLine.length(); ++i)
+      {
+        if (SNPInfoLine.at(i) == ','){
+          DNAPos.push_back(i);
         }
-        DNAPos.push_back(SNPInfoLine.find(delLine) - delLine.length());
-        for (int j = 0; j < (DNAPos.size() - 2); j++){
-          EachDNA.push_back(SNPInfoLine.substr(DNAPos[j] + delComma.length(), DNAPos[j + 1] - DNAPos[j] - 1));
-        }
-        DNAInfo.push_back(EachDNA);
-        breakPosInfo = SNPInfo.find(delLine);
-        DNAPos.clear();
-        EachDNA.clear();
       }
+      DNAPos.push_back(SNPInfoLine.find(delLine) - delLine.length());
+      for (int j = 0; j < (DNAPos.size() - 2); j++){
+        EachDNA.push_back(SNPInfoLine.substr(DNAPos[j] + delComma.length(), DNAPos[j + 1] - DNAPos[j] - 1));
+      }
+      DNAInfo.push_back(EachDNA);
+      breakPosInfo = SNPInfo.find(delLine);
+      DNAPos.clear();
+      EachDNA.clear();
+    }
 
-				//std::cout << DNAInfo[2][0] << std::endl;
-				//std::cout << DNAInfo[1][3] << std::endl;
-				//std::cout << DNAInfo[0][7] << std::endl;
+    auto breakPos = SNIPAll.find(delLine);
+    auto line1 = SNIPAll.substr(0, breakPos + delLine.length());
+    SNIPAll.erase(0, breakPos + delLine.length());
 
-				//std::cout << SNPInfo.erase(0, breakPosInfo + delLine.length()) << std::endl;
+    vector<size_t>posvector1;
+    posvector1.push_back(-1);
+    vector<size_t>posvector2;
 
-    	auto breakPos = SNIPAll.find(delLine);
-    	auto line1 = SNIPAll.substr(0, breakPos + delLine.length());
-    	SNIPAll.erase(0, breakPos + delLine.length());
+    vector<string> treevector;
+    vector<size_t>postree;
+    postree.push_back(-1);
+    vector<int> dataposvector;
 
-    	std::vector<size_t>posvector1;
-    	posvector1.push_back(-1);
-    	std::vector<size_t>posvector2;
-
-    	std::vector<std::string> treevector;
-    	std::vector<size_t>postree;
-    	postree.push_back(-1);
-    	std::vector<int> dataposvector;
-
-    	for (size_t i = 0; i < SNPId.length(); ++i)
-    	{
-    		//std::cout << SNIPAll.at(i);
-    		if (SNPId.at(i) == ','){
-    			postree.push_back(i);
-    		}
-    	}
+    for (size_t i = 0; i < SNPId.length(); ++i)
+    {
+      if (SNPId.at(i) == ','){
+        postree.push_back(i);
+      }
+    }
 
     	postree.push_back(SNPId.find(delLine) - delLine.length());
 
@@ -133,28 +132,41 @@ namespace ETHNOPRED{
     		}
     	}
 
-        myvector.push_back(SNPIdArray);
+      myvector.push_back(SNPIdArray);
 
     	breakPos = SNIPAll.find(delLine);
 
-    	while (breakPos != std::string::npos){
-    		auto line2 = SNIPAll.substr(0, breakPos + delLine.length());
-            vector<string> myvectorinitial;
-            vector<string> geneEachPatient;
-    		posvector2.push_back(-1);
+      size_t lineNum = 0;
 
-    		for (size_t i = 0; i < line2.length(); ++i)
+    	while (breakPos != std::string::npos){
+    		auto SNPLine = SNIPAll.substr(0, breakPos + delLine.length());
+        vector<string> myvectorinitial;
+        vector<string> geneEachPatient;
+    		posvector2.push_back(-1);
+        lineNum++;
+
+        /*---- Try to extract the personal ID from the SNP File. Starting from the 3rd line in the SNP File, the initial word represents the person ID
+         *  ----*/
+        /*---- The first line has been deleted, so start from the 2nd line ----*/
+        if(lineNum >= 2)
+        {
+          auto personIDPos = SNPLine.find(delComma);
+          string personID = SNPLine.substr(0, personIDPos);
+          m_PersonId.push_back(personID);
+        }
+
+    		for (size_t i = 0; i < SNPLine.length(); ++i)
     		{
-    			//std::cout << SNIPAll.at(i);
-    			if (line2.at(i) == ','){
+    			if (SNPLine.at(i) == ','){
     				posvector2.push_back(i);
     			}
     		}
-    		posvector2.push_back(line2.find(delLine) - delLine.length());
-				posvector2.push_back(line2.find(delLine));
+
+    		posvector2.push_back(SNPLine.find(delLine) - delLine.length());
+				posvector2.push_back(SNPLine.find(delLine));
 
     		for (int j = 0; j < (posvector2.size() - 2); j++){
-    			myvectorinitial.push_back(line2.substr(posvector2[j] + delComma.length(), posvector2[j + 1] - posvector2[j] - 1));
+    			myvectorinitial.push_back(SNPLine.substr(posvector2[j] + delComma.length(), posvector2[j + 1] - posvector2[j] - 1));
     		}
     		for (int k = 0; k <= dataposvector.size() - 1; k++){
     			//myvector[0].push_back(myvectorinitial[0][dataposvector[k]]);
@@ -450,11 +462,22 @@ namespace ETHNOPRED{
             JSONVoteForEach.push_back(make_pair("", JSONResultEach));
         }
 
+        /*---- Add person Id into JSON output----*/
+        ptree JSONPersonId;
+        size_t personNum = 0;
+        for(auto & personId : m_PersonId)
+        {
+            personNum++;
+            ptree JSONPersonIdEach;
+            JSONPersonIdEach.put(to_string(personNum), personId);
+            JSONPersonId.push_back(make_pair("", JSONPersonIdEach));
+        }
+
         JSONResultAll.add_child("vote", JSONVoteForEach);
         JSONResultAll.add_child("winner", JSONWinnerForEach);
+        JSONResultAll.add_child("personId", JSONPersonId);
 
-        //print out json
-        if (isPrintJSON)
+        //print out json if (isPrintJSON)
         {
           std::stringstream ss;
           write_json(ss, JSONResultAll);
