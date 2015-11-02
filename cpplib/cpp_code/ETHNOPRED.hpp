@@ -31,8 +31,8 @@ namespace ETHNOPRED{
 			void SetClassifierType(const char*);
 
 			map<string, pair<string, int>> GetVoteMap();
-
 			vector<DecisionTree* > GetTreeArray();
+
 		private:
 			string m_StructureFilePath;
 			string m_TreesInfo;
@@ -43,6 +43,7 @@ namespace ETHNOPRED{
 			vector<vector<string>> m_DecisionsPool;
 			vector<string> m_WinnerGroup;
 			string m_ClassifierType;
+      vector<string> m_PersonId;
 	};
 }
 

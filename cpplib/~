@@ -448,13 +448,14 @@ namespace ETHNOPRED{
         {
             personNum++;
             ptree JSONPersonIdEach;
-            JSONPersonIdEach.put(to_string(personNum), personId);
-            JSONPersonId.push_back(make_pair("", JSONPersonIdEach));
+            JSONPersonIdEach.put(to_string(personNum).c_str());
+
+            personIdEach.push_back(make_pair("", personId.c_str()));
         }
 
         JSONResultAll.add_child("vote", JSONVoteForEach);
         JSONResultAll.add_child("winner", JSONWinnerForEach);
-        JSONResultAll.add_child("personId", JSONPersonId);
+        JSONResultAll.add_child("personId", personIdEach);
 
         //print out json
         std::stringstream ss;
