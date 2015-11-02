@@ -116,6 +116,7 @@ module.exports = function( app ) {
               callback( true, "" );
 
           } else {
+              console.log( stdout );
               var stdout = JSON.parse( stdout );
               callback( null, stdout );
           }

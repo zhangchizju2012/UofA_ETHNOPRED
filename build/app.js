@@ -1,7 +1,7 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-28
+Built on 2015-11-02
 */
 module.exports = function( app ){
 
@@ -223,6 +223,7 @@ module.exports = function( app ) {
               callback( true, "" );
 
           } else {
+              console.log( stdout );
               var stdout = JSON.parse( stdout );
               callback( null, stdout );
           }
