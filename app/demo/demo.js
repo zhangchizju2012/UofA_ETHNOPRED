@@ -32,16 +32,16 @@ module.exports = function( app ) {
     var binPath = app.RootFolder + '/public/SNP_bin/'
     var binaryFile = binPath + binaryName;
     var SNIPsuffix = '_SNIP';
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
       'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )

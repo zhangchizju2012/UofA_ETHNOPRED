@@ -1,7 +1,7 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-11-02
+Built on 2015-11-06
 */
 module.exports = function( app ){
 
@@ -139,16 +139,16 @@ module.exports = function( app ) {
     var binPath = app.RootFolder + '/public/SNP_bin/'
     var binaryFile = binPath + binaryName;
     var SNIPsuffix = '_SNIP';
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
       'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
@@ -307,18 +307,18 @@ module.exports = function( app ){
   }
 
   function SendSampleFile( req, res, next ) {
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
     var classifierType = req.body.classifierType;
     console.log( classifierType );
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
       'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
