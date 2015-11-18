@@ -1,7 +1,7 @@
 /*
 ETHNOPRED 0.1.0- 
 https://github.com/solittlework/UofA_ETHNOPRED.git
-Built on 2015-10-20
+Built on 2015-11-18
 */
 module.exports = function( app ){
 
@@ -139,16 +139,16 @@ module.exports = function( app ) {
     var binPath = app.RootFolder + '/public/SNP_bin/'
     var binaryFile = binPath + binaryName;
     var SNIPsuffix = '_SNIP';
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
-      'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
+      'Sub_continent' : 'Sample_file_for_Subcontinent-All_CHB-JPT-LWK-MKK-YRI-CEU-TSI_1479.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
@@ -179,8 +179,8 @@ module.exports = function( app ) {
 
       East_Asian  : {
         type : 'country',
-        SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-        TreeFilePath : ( dataFolder + '/Sub_Asian' )
+        SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
       },
 
       American : {
@@ -223,6 +223,7 @@ module.exports = function( app ) {
               callback( true, "" );
 
           } else {
+              console.log( stdout );
               var stdout = JSON.parse( stdout );
               callback( null, stdout );
           }
@@ -306,18 +307,18 @@ module.exports = function( app ){
   }
 
   function SendSampleFile( req, res, next ) {
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
     var classifierType = req.body.classifierType;
     console.log( classifierType );
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
-      'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
+      'Sub_continent' : 'Sample_file_for_Subcontinent-All_CHB-JPT-LWK-MKK-YRI-CEU-TSI_1479.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
@@ -403,8 +404,8 @@ module.exports = function( app ) {
 
         East_Asian  : {
           type : 'country',
-          SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-          TreeFilePath : ( dataFolder + '/Sub_Asian' )
+          SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+          TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
         },
 
         American : {
@@ -469,4 +470,63 @@ module.exports = function( app ) {
 }
 ;
 'use strict'
-module.exports = {}
+module.exports = {};
+'use strict'
+module.exports = function( app ){
+
+	if ( typeof app.Ext === 'undefined' ){
+		app.Ext = {};
+	}
+
+	app.Ext.LoadModule = function( ModuleName ){
+
+		if ( typeof app.Module == 'undefined' ){
+			app.Module = {};
+		}
+
+		if ( app.Modules.lastIndexOf( ModuleName ) === -1 ){
+
+			console.warn( 'Module ' + ModuleName + 'has not been registered' );
+
+		} else {
+
+			if ( typeof app.Module[ ModuleName ] === 'undefined' ){
+				app.Module[ ModuleName ] = {};
+				app.Module[ ModuleName ][ 'helper' ] = {};
+				app.Module[ ModuleName ][ 'router' ] = {};
+			}
+		}
+	}
+
+	app.Ext.LoadHelper = function ( HelperMap ) {
+		var Keys = Object.keys( HelperMap );
+		for( var i = 0; i < Keys.length; ++i ){
+			app.Module[ Keys[i] ].helper 
+				= require( HelperMap[ Keys[i] ] );
+		}
+	}
+
+	app.Ext.extend = require( 'extend' );
+
+};
+module.exports = function( app ) {
+	var HelperMap = {
+		'EP' : './ethnopred/helper.js'
+	}
+
+	app.Ext.LoadHelper( HelperMap );
+};
+module.exports = function( app ) {
+	LoadModules( app );
+
+	app.Module[ 'EP' ].router = {
+		dtree : app.RootRut + 'dtree.json'
+	}
+
+	function LoadModules ( app ) {
+		for ( var i = 0; i < app.Modules.length; i++ ){
+			app.Ext.LoadModule( app.Modules[i], app );
+			console.log( app.Modules[i] );
+		}
+	}
+}

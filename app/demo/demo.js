@@ -32,16 +32,16 @@ module.exports = function( app ) {
     var binPath = app.RootFolder + '/public/SNP_bin/'
     var binaryFile = binPath + binaryName;
     var SNIPsuffix = '_SNIP';
-    var sampleFlieFolder = app.RootFolder + '/public/SNP_file/csv';
+    var sampleFlieFolder = app.RootFolder + '/public/sample';
 
     var sampleFlieMap = {
-      'Continent' : 'Continent.csv',
-      'Sub_continent' : 'All.csv',
-      'Euro' : 'European.csv',
-      'East_Asian' : 'EastAsian.csv',
-      'American' : 'NorthAmerican.csv',
-      'African' : 'African.csv',
-      'Kenyan' : 'Kenyan.csv',
+      'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
+      'Sub_continent' : 'Sample_file_for_Subcontinent-All_CHB-JPT-LWK-MKK-YRI-CEU-TSI_1479.csv',
+      'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
+      'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
+      'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
+      'African' : 'Sample_file_for_Subcontinent_African-LWK-MKK-YRI_553.csv',
+      'Kenyan' : 'Sample_file_for_Subcontinent_Kenyan-LWK-MKK_341.csv'
     }
 
     if ( typeof sampleFlieMap[ classifierType ] === 'undefined' )
@@ -72,8 +72,8 @@ module.exports = function( app ) {
 
       East_Asian  : {
         type : 'country',
-        SNIPFilePath : ( dataFolder + '/Sub_Asian' + SNIPsuffix ),
-        TreeFilePath : ( dataFolder + '/Sub_Asian' )
+        SNIPFilePath : ( dataFolder + '/Sub_East_Asian' + SNIPsuffix ),
+        TreeFilePath : ( dataFolder + '/Sub_East_Asian' )
       },
 
       American : {
@@ -116,6 +116,7 @@ module.exports = function( app ) {
               callback( true, "" );
 
           } else {
+              console.log( stdout );
               var stdout = JSON.parse( stdout );
               callback( null, stdout );
           }
