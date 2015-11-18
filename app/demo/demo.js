@@ -36,7 +36,7 @@ module.exports = function( app ) {
 
     var sampleFlieMap = {
       'Continent' : 'Sample_file_for_Continent_CEU-CHB-JPT-YRI_149.csv',
-      'Sub_continent' : 'All.csv',
+      'Sub_continent' : 'Sample_file_for_Subcontinent-All_CHB-JPT-LWK-MKK-YRI-CEU-TSI_1479.csv',
       'Euro' : 'Sample_file_for_Subcontinent-European_CEU-TSI_180.csv',
       'East_Asian' : 'Sample_file_for_Subcontinent-East-Asian_CHB-JPT_606.csv',
       'American' : 'Sample_file_for_Subcontinent_North-american_ASW-CEU-CHD-GIH-MXL_266.csv',
