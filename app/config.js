@@ -7,14 +7,13 @@ module.exports = function( app ){
 
 	ConfigViewEngine( app );
 	ConfigDomain( app );
-	ConfigPort( app );
 	ConfigDebugMode( app );
 	//ConfigMySql( app );
 
 	function LoadPlugin( app ) {
 
 		var pluginArr = [
-			'body-parser', 
+			'body-parser',
 			'express-validator'
 		];
 
@@ -69,10 +68,6 @@ module.exports = function( app ){
 		app.SQLQuery = require('../custom_lib/js/mysql_query.js');
 	}
 
-	function ConfigPort( app ) {
-		app.Port = process.env.PORT || 3001;
-	}
-
 	function LoadGlobalAsync ( app ) {
 
 		app.Waterfall = require( 'async' ).waterfall;
@@ -85,12 +80,12 @@ module.exports = function( app ){
 
 	function LoadGolbalMessage( app ){
 		app.MSG = {
-			DB_CONN_SUCCESS: 
+			DB_CONN_SUCCESS:
 				'[ DATABASE ] SUCCESSFULLY CONNECTED TO DATABASE',
 
-			DB_CONN_FAIL: 
-				'[ DATABASE ] ERROR: CANNOT CONNECT TO DATABASE',				
-			PrintDBData: 
+			DB_CONN_FAIL:
+				'[ DATABASE ] ERROR: CANNOT CONNECT TO DATABASE',
+			PrintDBData:
 				function( data ){
 				console.log ( '[ DATABASE ] SUCCESSFULLY EXTRACTED DATA FROM DATABASE' );
 				console.log( 'THE CONTENT IS');

@@ -38,6 +38,7 @@ require( './app/ethnopred/ethnopred.js' )( app );
 require( './app/download/download.js' )( app );
 require( './app/demo/demo.js' )( app );
 
+app.Port = 3003;
 var server = app.listen( app.Port, '0.0.0.0', function() {
-   console.log( "Listening to port %s", server.address().port );
+   console.log( "Listening to port %s", app.Port );
 });
